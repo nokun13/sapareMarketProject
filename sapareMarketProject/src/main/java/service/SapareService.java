@@ -1,0 +1,62 @@
+package service;
+
+import java.util.List;
+
+import dto.boardDTO;
+import dto.itemDTO;
+
+public interface SapareService {
+
+	// 김녹훈 start //////////////////////////////////////////
+	
+	
+	// 김녹훈 end //////////////////////////////////////////
+	
+	
+	
+	
+	// 김소정 start ////////////////////////////////////////
+	public List<boardDTO> listProcess();
+	public void insertProcess(boardDTO dto);
+	public boardDTO contentProcess(int num);
+	public boardDTO updateSelectProcess(int num);
+	public void updateProcess(boardDTO dto);
+	public void deleteProcess(int num);
+	public boardDTO categoryProcess(boardDTO dto);
+	public List<boardDTO> faqlistProcess();
+	
+	// 김소정 end ////////////////////////////////////////
+	
+	
+	
+	
+	// 오용준 start //////////////////////////////////////////
+	
+
+	
+	// 오용준 end //////////////////////////////////////////
+	
+	
+	
+	
+	// 마정협 start //////////////////////////////////////////
+	
+	
+	// 마정협 end //////////////////////////////////////////
+	
+	
+	
+	// 오정우 start //////////////////////////////////////////
+	
+	public void crawlingProcess(itemDTO dto);
+	public List<itemDTO> selectProcess();
+	
+	// 오정우 end //////////////////////////////////////////
+	
+	
+	// 표다몬 start //////////////////////////////////////////
+	
+	
+	// 표다몬 end //////////////////////////////////////////
+	
+} // end interface
