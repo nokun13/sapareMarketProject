@@ -27,4 +27,32 @@
 		update tbl_reply set replytext=#{replytext}
 		where rno=#{rno}
 	</update> -->
+	
+	<select id="info" parameterType="dto.memberDTO" resultType="dto.memberDTO">
+		select * from sapareMember where memberName=#{memberName}
+	</select>
+	
+	<select id="checkNick" parameterType="dto.memberDTO" resultType="int">
+		select count(*) from sapareMember where nickname=#{nickname}
+	</select>
+	
+	<update id="changeNick" parameterType="dto.memberDTO">
+		update saparemember set nickname=#{nickname}
+		where memberName=#{memberName}
+	</update>
+	
+	<update id="changeAbout" parameterType="dto.memberDTO">
+		update saparemember set memberAbout=#{memberAbout}
+		where memberName=#{memberName}
+	</update>
+	
+	<update id="changeProfileImg" parameterType="dto.memberDTO">
+		update saparemember set profileImg=#{profileImg, jdbcType=VARCHAR}
+		where memberName=#{memberName}
+	</update>
+	
+	<update id="changePassword" parameterType="dto.memberDTO">
+		update saparemember set memberPw=#{memberPw}
+		where memberName=#{memberName}
+	</update>
 </mapper>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,7 @@
   	padding: 0;
 }
 
-input{
+.contents input{
 	border: 1px solid #e8ebed;
 	font-size: 16px;
 }
@@ -124,6 +125,23 @@ header ul li a {
 	border-bottom: #8AB8F4 solid 1px;
 }
 
+.profileContainer button{
+    font-size: 15px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: black;
+}
+
+.nicknameBox div {
+    margin-right: 10px;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    flex-direction: row;
+    display: flex;
+}
+
 .memberInfoContainer{
 	display: flex;
 	width: 100%;
@@ -134,10 +152,17 @@ header ul li a {
 .nicknameBox{
 	display: inline-flex;
 	height: 50px;
-	justify-content: space-between;
 	align-items: center;
-	width: 45%;
+	width: 95%;
 	border: #8AB8F4 solid 1px;
+	cursor: default
+}
+
+.nicknameBox div{
+	margin-right: 10px;
+	width: auto;
+	white-space: nowrap; 
+	overflow: hidden;
 }
 
 .memberAbout{
@@ -150,9 +175,12 @@ header ul li a {
 
 .memberAbout textarea{
 	resize: none;
-    font-size: 14px;
+    font-size: 15px;
     border: none;
-	outline: none;
+    outline: none;
+    background-color: lightgray;
+    cursor: default;
+    font-family: Montserrat;
 }
 
 .memberPointArea{
@@ -367,12 +395,6 @@ header ul li a {
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-		// 후기 toggle 기능 
-		$(".reviewToggleBtn").click(function(e){
-	        $('.' + this.id).slideToggle(500);
-	        $('.' + this.id).css('display', 'flex');
-		});
-		
 		// 전화번호 숫자만 입력 가능
 		$(".phoneNumInput").keyup(function() {
 		    this.value = this.value.replace(/[^1-9\.]/g,'');
@@ -403,8 +425,8 @@ header ul li a {
 				$(this).html("변경");
 				x[0].style.display = "none";
 				y[0].style.display = "none";
-				$("#alert-success").hide(); 
-				$("#alert-danger").hide(); 
+				// $("#alert-success").hide(); 
+				// $("#alert-danger").hide(); 
 				$(".memberPwNow").val("");
 				$(".memberPwNew").val("");
 			}
@@ -424,7 +446,7 @@ header ul li a {
 		});
 		
 		// 비밀번호, 새 비밀번호 값 비교하기
-		$("#alert-success").hide(); 
+		/* $("#alert-success").hide(); 
 		$("#alert-danger").hide(); 
 		$(".memberPwNew, .memberPwNow").keyup(function(){ 
 			var pwd1=$(".memberPwNow").val(); 
@@ -442,7 +464,250 @@ header ul li a {
 					$("#submit").attr("disabled", "disabled"); 
 				} 
 			} 
+		}); */
+		
+		// 비밀번호 변경 input 엔터 기능
+		var pw_input1 = document.getElementsByClassName("memberPwNow")[0];
+		var pw_input2 = document.getElementsByClassName("memberPwNew")[0];
+		
+		pw_input1.addEventListener("keyup", function(event){
+		  if (event.keyCode === 13) {
+		    event.preventDefault();
+		    document.getElementById("changePwBtn").click();
+		  }
 		});
+		
+		pw_input2.addEventListener("keyup", function(event){
+		  if (event.keyCode === 13) {
+		    event.preventDefault();
+		    document.getElementById("changePwBtn").click();
+		  }
+		});
+		
+		// 현재/신규 비밀번호 일치, 확인 버튼 누를 시 현재 비밀번호 가지고 온다
+		$("#changePwBtn").click(function(){
+			$.ajax({
+				type:'GET',
+				dataType:'json',
+				url:'memberInfoGet.do?memberName=${member.memberName}',
+				success: change_password
+			});
+		});
+		
+		function change_password(res){
+			
+			var pwd1=$(".memberPwNow").val(); 
+			var pwd2=$(".memberPwNew").val(); 
+			var reg = /^(?=.*?[a-zA-Z])(?=.*?[0-9]).{6,15}$/;
+			
+			if(pwd1 === pwd2){
+				alert("새 비밀번호를 입력해 주세요.");
+			} else if(reg.test(pwd2) === false){
+				alert("비밀번호는 최소 6-15자이며 문자와 숫자가 포함되어야 합니다.");
+				$(".memberPwNew").val("");
+			} else if(pwd1 === res.memberPw){
+				$.ajax({
+					type:'GET',
+					dataType:'json',
+					url:'memberPwChange.do?memberName=${member.memberName}&memberPw='+$(".memberPwNew").val()
+				});
+				alert("비밀번호가 성공적으로 변경되었습니다.");
+				$(".memberPwNow").val("");
+				$(".memberPwNew").val("");
+				$(".changePwBtn").click();
+			} else{
+				alert("현재 비밀번호가 틀렸습니다.");
+				$(".memberPwNow").val("");
+			}
+		};
+			
+		// 닉네임 변경 버튼 클릭 후 현재 닉네임 가져오기
+		$("#changeNick").click(function(){
+			
+			$.ajax({
+				type:'GET',
+				dataType:'json',
+				url:'memberInfoGet.do?memberName=${member.memberName}',
+				success: change_nickname
+			});
+			
+		});
+		
+		// 닉네임 중복 체크
+		function change_nickname(res){
+			
+			$("#changeNick").prev().html('<input type="text" id="newNickname" maxlength="15" value="'+res.nickname+'" style="font-size:16px;outline:none;"> <button type="button" id="submitNick" style="cursor:pointer;">확인</button>');
+			$("#changeNick").hide();
+			
+			// 닉네임 변경 엔터 버튼 클릭 기능
+			var input = document.getElementById("newNickname");
+			
+			input.addEventListener("keyup", function(event){
+			  if (event.keyCode === 13) {
+			    event.preventDefault();
+			    document.getElementById("submitNick").click();
+			  }
+			});
+			
+			$('#submitNick').click(function(){
+				$.ajax({
+					type:'GET',
+					dataType:'json',
+					url:'checkNickname.do?nickname=' + $("#newNickname").val(),
+					success: get_new_nickname
+				});
+			});
+		};
+		
+		// 닉네임 변경
+		function get_new_nickname(res){
+			if(res == 1){
+				alert("이미 존재하는 닉네임입니다.");
+			} else{
+				$.ajax({
+					type:'GET',
+					dataType:'json',
+					url:'changeNickname.do?memberName=${member.memberName}&nickname=' + $("#newNickname").val(),
+					success: change_to_new_nickname
+				});
+			}
+		};
+		
+		// 닉네임 변경 후 변경 된 닉네임으로 바꿔주고 수정버튼 재생성
+		function change_to_new_nickname(res){
+			$('.nickname').html(res.nickname);
+			$('#changeNick').show();
+		};
+		
+		
+		// 소개글 변경 버튼 클릭 후 소개글 가져오기
+		$("#changeAbout").click(function(){
+			
+			$.ajax({
+				type:'GET',
+				dataType:'json',
+				url:'memberInfoGet.do?memberName=${member.memberName}',
+				success: change_about_content
+			});
+			
+		});
+		
+		// textarea 변경가능으로 바꾸고 소개글 뿌려주기, 확인 버튼 누르면 저장
+		function change_about_content(res){
+			
+			$(".memberAbout").html('<textarea id="aboutContent" rows="8" cols="65" maxlength="80" style="background-color:white;border:1px solid black;cursor:auto;">'+res.memberAbout+'</textarea>')
+			$(".aboutChangeBox").append('<button type="button" id="submitAbout" style="margin: 10px; cursor:pointer;">확인</button>');
+			
+			$("#changeAbout").hide();
+			
+			$("#submitAbout").click(function(){
+				$.ajax({
+					type:'GET',
+					dataType:'json',
+					url:'changeMemberAbout.do?memberName=${member.memberName}&memberAbout='+$("#aboutContent").val(),
+					success: after_about_change
+				});
+			});
+			
+		};
+		
+		// 소개글 저장 후 textarea 복구, 버튼 복구
+		function after_about_change(res){
+			
+			$("#submitAbout").remove();
+			$("#changeAbout").show();
+			$(".memberAbout").html('<textarea readonly id="aboutContent" rows="8" cols="65" maxlength="80">'+res.memberAbout+'</textarea>');
+		};
+		
+		// 프로필 사진이나 사진수정버튼 누르면 '사진 고르기' 버튼 클릭
+		$("#profileImgChange").click(function() {
+		    $("#filepath").click();
+		});
+		$("#memberImg").click(function() {
+		    $("#filepath").click();
+		});
+		
+		// 새로운 프로필 사진 선택 후
+		$('#filepath').on('change', function(){
+			var str = $('#filepath').val();
+		
+			// 이미지 첨부파일인지 체크
+			var patt = /(.jpeg$|.jpg$|.gif$|.png$)/gi;
+			var result = str.match(patt);
+			
+			if($("#filepath").val() === ""){
+				alert("프로필 사진 변경을 취소하였습니다.")
+				$('#memberImg').attr("src", "image/${member.profileImg }");
+				$(".imgChangeBox").html('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
+				return false;
+			}
+			
+			if(!result){
+				alert('jpeg, jpg, gif, png만 가능합니다.');
+				$('#filepath').val("");
+				$('#memberImg').attr("src", "image/${member.profileImg }");
+				$(".imgChangeBox").html('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
+				return false;
+			}
+			
+			// 파일첨부 사이즈 체크
+			if(this.files[0].size > 100000000){
+				alert('100MB 이하만 가능합니다.');
+				$('#filepath').val("");
+				$('#memberImg').attr("src", "image/${member.profileImg }");
+				$(".imgChangeBox").html('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
+				return false;
+			}
+			
+			// 파일을 읽기 위한 FileReader객체 생성
+			var reader = new FileReader();
+			
+			// File내용을 읽어 dataURL형식의 문자열 저장
+			reader.readAsDataURL(this.files[0]); // 배열 형식이기에 꼭 [i] 배열의 순서를 알려줘야한다.
+			
+			// 파일 일거들이기를 성공했을 때 호출되는 이벤트 메소드
+			reader.onload = function(e){
+				// img요소의 src속성에 읽어들인 File내용을 지정해준다.
+				$('#memberImg').attr('src', e.target.result);
+			};
+			
+			// 프로필사진수정 버튼을 확인 버튼으로 교체
+			if(!($("#submitProfileImg").length)){
+				$("#profileImgChange").hide();
+				$(".imgChangeBox").append('<button type="button" id="submitProfileImg" style="margin: 5px; cursor:pointer;">확인</button>')
+			}
+		
+			$("#submitProfileImg").click(function(){
+				// 첨부파일을 Form안에 담아내기 위해서 작성한다.
+				var form_data = new FormData();
+				form_data.append('memberName', '${member.memberName}');
+				form_data.append('profileFile', $("#filepath")[0].files[0]);
+				
+				// 변경된 프로필 사진 저장
+				$.ajax({
+					type:'POST',
+					dataType:'json',
+					// 첨부파일을 ajax로 보내기 위하여 아래 3개의 문을 사용한다. 
+					contentType:false,
+					enctype:'filename/form-data',
+					processData:false,
+					url:'profileImgChange.do',
+					// data는 첨부파일을 포함한 form_data를 사용할 수 있다
+					data:form_data,
+					success:profile_img_change,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					   }
+				});
+			});	
+		}); // end change()
+		
+		// 변경된 프로필 사진으로 보이게끔 한다
+		function profile_img_change(res){
+			$("#memberImg").attr('src', "image/"+res.profileImg);
+			$("#submitProfileImg").remove();
+			$("#profileImgChange").show();
+		};
 		
 	}); // end ready()
 </script>
@@ -453,14 +718,14 @@ header ul li a {
 			<span style="font-size: 40px; cursor: pointer; margin-right: 7px;"
 				class="side-open-btn">&#9776;</span> <a
 				href="http://localhost:8090/sapare/mainPage.do" class="logo"><img
-				src="image/header/sapare.jpg" width=50px; height=50px;></a>
+				src="image/sapare.jpg" width=50px; height=50px;></a>
 		</div>
 
 		<div class="text">
 			<input type="text" placeholder="검색어를 입력해 주세요"
 				style="width: 300px; height: 23px;">
 			<button>
-				<img src="image/header/search.gif" width=20px; height=20px;>
+				<img src="image/search.gif" width=20px; height=20px;>
 			</button>
 		</div>
 		<ul>
@@ -481,25 +746,39 @@ header ul li a {
 			
 			<div class="profileContainer">
 				<div id="profileImageBox">
-					<img class="memberImg" style="height: 55%; width: 55%; border-radius: 15px;" src="/sapareMarket/images/${dto.profileImg }">
-					<button type="button" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>
-					<div class="memberStars" style="margin-top: 10px;">별점 총점</div>
+					<img id="memberImg" style="height: 70%; width: 70%; border-radius: 15px;margin-bottom: 5px;cursor:pointer;" src="image/${member.profileImg }">
+					<div class="nickname">
+						${member.nickname }
+					</div>
+					<div class="imgChangeBox">
+						<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>
+					</div>
+					<input type="file" name="filepath" id="filepath" style="display:none;"/>
+					<div class="memberStars" style="margin-top: 10px;">
+					<!-- 회원이 받은 총 별점을 계산, avg를 찾고 이쪽으로 리턴해준다. -->
+					</div>
 				</div>
 				<div class="memberInfoContainer">
 					<div class="nicknameBox">
-						<div class="nickname">닉네임</div>
-							<button type="button" id="changeNick" style="cursor:pointer;">닉네임수정</button>
-						<div class="memberRank">회원등급</div>
-						<div class="premiumIcon">프리미엄</div>
+						<div class="nickname">
+							${member.nickname }
+						</div>
+							<button type="button" id="changeNick" style="cursor:pointer;margin-right:10px;">닉네임수정</button>
+						<div class="memberRank">${status.memberRank }</div>
+						<div class="premiumIcon">
+							<c:if test="${fn:contains(status.memberPremium, 'n')}">
+								프리미엄 아님/나중에 변경
+							</c:if>
+						</div>
 					</div>
 					<div class="memberAbout">
-						<textarea rows="10" cols="65" maxlength="80">자기 소개 ${dto.memberAbout }</textarea>
+						<textarea readonly id="aboutContent" rows="8" cols="65" maxlength="80">${member.memberAbout }</textarea>
 					</div>
 					<div class="aboutChangeBox">
 						<button type="button" id="changeAbout" style="margin: 10px; cursor:pointer;">소개수정</button>
 					</div>
 					<div class="memberPointArea">
-						<div class="memberPoint">포인트</div>
+						<div class="memberPoint" style="margin: 10px; white-space: nowrap; overflow: hidden;">${status.memberPoint }</div>
 						<button class="pointCharge" style="cursor:pointer;">포인트 충전</button>
 					</div>
 				</div>
@@ -528,7 +807,7 @@ header ul li a {
 								<li class="box1">
 									<div>아이디/이메일</div>
 									<div>
-										<div class="memberId">임시아이디 ${dto.memberId }</div>
+										<div class="memberId">${member.memberId }</div>
 									</div>
 									<div>
 										<button type="button" class="changeIdBtn">변경</button>
@@ -538,7 +817,7 @@ header ul li a {
 								<li class="box2" style="display:none;">
 									<div>&nbsp;</div>
 									<div>
-										<input type="email" placeholder="이메일 주소 입력" class="memberIdInput" maxlength="30" />
+										<input type="email" placeholder="이메일 주소 입력" class="memberIdInput" maxlength="30" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
 									</div>
 									<div>
 										<button type="button" class="memberIdCheck">인증요청</button>
@@ -558,27 +837,27 @@ header ul li a {
 								<li class="box4" style="display:none;">
 									<div>현재 비밀번호</div>
 									<div>
-										<input type="password" placeholder="현재 비밀번호를 입력해주세요" class="memberPwNow" maxlength="30" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="비밀번호는 최소 8자 이상이며 반드시 숫자 , 대문자, 소문자를 1개는 포함해야 합니다."/>
+										<input type="password" placeholder="현재 비밀번호를 입력해주세요" class="memberPwNow" maxlength="30" pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,15}" title="비밀번호는 최소 6자에서 15자이며 숫자, 문자를 1개씩 포함해야 합니다."/>
 									</div>
 								</li>
 								
 								<li class="box5" style="display:none;">
 									<div>신규 비밀번호</div>
 									<div>
-										<input type="password" placeholder="신규 비밀번호를 입력해주세요" class="memberPwNew" maxlength="30" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="비밀번호는 최소 8자 이상이며  반드시 숫자 , 대문자, 소문자를 1개는 포함해야 합니다."/>
-										<div class="alert alert-success" id="alert-success" style="color: red; font-size: 13px;">비밀번호가 일치합니다.</div> 
-										<div class="alert alert-danger" id="alert-danger" style="color: red; font-size: 13px;">비밀번호가 일치하지 않습니다.</div>
-										<div style="font-size: 13px; width: max-content">최소 8~20자 이하의 숫자, 대문자, 소문자 1개 이상씩 포함</div>
+										<input type="password" placeholder="신규 비밀번호를 입력해주세요" class="memberPwNew" maxlength="30" pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,15}" title="비밀번호는 최소 6자에서 15자이며 숫자, 문자를 1개씩 포함해야 합니다."/>
+										<!-- <div class="alert alert-success" id="alert-success" style="color: red; font-size: 13px;">비밀번호가 일치합니다.</div>  -->
+										<!-- <div class="alert alert-danger" id="alert-danger" style="color: red; font-size: 13px;">비밀번호가 일치하지 않습니다.</div>  -->
+										<div style="font-size: 13px; width: max-content">최소 6~15자 이하 숫자와 문자 포함</div>
 									</div>
 									<div>
-										<button type="button">확인</button>
+										<button type="button" id="changePwBtn">확인</button>
 									</div>
 								</li>
 								
 								<li class="box6">
 									<div>휴대폰</div>
 									<div>
-										<div>01012345678 ${dto.phoneNum }</div>
+										<div>0${member.phoneNum }</div>
 									</div>
 									<div>
 										<button type="button" class="changePhoneNumBtn">변경</button>

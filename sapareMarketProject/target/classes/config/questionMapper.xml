@@ -3,7 +3,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
-<mapper namespace="order">
+<mapper namespace="auction">
 <!-- 참고용으로 아래 쿼리문은 남겨놓았습니다! -->
 <!-- 	<insert id="r_insert" parameterType="dto.ReplyDTO">
 		insert into tbl_reply
@@ -27,8 +27,4 @@
 		update tbl_reply set replytext=#{replytext}
 		where rno=#{rno}
 	</update> -->
-	
-	<select id="get" parameterType="dto.memberDTO" resultType="java.util.HashMap">
-		select * from sapareorder where memberName=#{memberName}
-	</select>
 </mapper>

@@ -1,9 +1,12 @@
 package dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class memberDTO {
 	
-	private String memberName, memberId, memberPw, birthday, profileImg, memberAbout;
+	private String memberName, memberId, memberPw, birthday, profileImg, memberAbout, nickname;
 	private int phoneNum;
+	private MultipartFile profileFile;
 	
 	public memberDTO() {
 	}
@@ -62,6 +65,22 @@ public class memberDTO {
 
 	public void setMemberAbout(String memberAbout) {
 		this.memberAbout = memberAbout;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public MultipartFile getProfileFile() {
+		return profileFile;
+	}
+
+	public void setProfileFile(MultipartFile profileFile) {
+		this.profileFile = profileFile;
 	}
 	
 } // end class

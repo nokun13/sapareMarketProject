@@ -124,7 +124,6 @@
 		    <version>1.9.2</version>
 		</dependency>
 		
-		<!-- mvn repository 野꺜??=> spring jdbc 野꺜??=> ?癒곕릭??甕곌쑴???醫뤾문??揶쎛?紐꾩긾 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 		<dependency>
 		    <groupId>org.springframework</groupId>

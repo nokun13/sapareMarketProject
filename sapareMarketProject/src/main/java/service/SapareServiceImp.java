@@ -5,6 +5,9 @@ import java.util.List;
 import dao.SapareDAO;
 import dto.boardDTO;
 import dto.itemDTO;
+import dto.memberDTO;
+import dto.memberStatusDTO;
+import dto.orderDTO;
 
 public class SapareServiceImp implements SapareService{
 
@@ -20,6 +23,55 @@ public class SapareServiceImp implements SapareService{
 	
 	// 김녹훈 start //////////////////////////////////////////
 	
+		// 회원정보 리턴
+	@Override
+	public memberDTO memberInfoProcess(memberDTO dto) {
+		return dao.memberInfoMethod(dto);
+	}
+	@Override
+	public memberStatusDTO memberStatInfoProcess(memberStatusDTO dto) {
+		return dao.memberStatInfoMethod(dto);
+	}
+	
+		// 회원이 구매한 상품 리턴
+	@Override
+	public List<orderDTO> buyInfoProcess(memberDTO dto) {
+		return dao.buyInfoMethod(dto);
+	}
+		// 회원이 판매한 상품 리턴
+	@Override
+	public List<itemDTO> sellInfoProcess(memberDTO dto) {
+		return dao.sellInfoMethod(dto);
+	}
+	
+		// 닉네임 중복 체크
+	@Override
+	public int checkNicknameProcess(memberDTO dto) {
+		return dao.checkNicknameMethod(dto);
+	}
+	
+		// 닉네임 변경
+	@Override
+	public void changeNicknameProcess(memberDTO dto) {
+		dao.changeNicknameMethod(dto);
+	}
+	
+		// 소개글 변경
+	@Override
+	public void changeAboutProcess(memberDTO dto) {
+		dao.changeAboutMethod(dto);
+	}
+	
+		// 프로필 사진 변경
+	@Override
+	public void changeProfileImgProcess(memberDTO dto) {
+		dao.changeProfileImgMethod(dto);
+	}
+	
+	@Override
+	public void changePasswordProcess(memberDTO dto) {
+		dao.changePasswordMethod(dto);
+	}
 	
 	// 김녹훈 end //////////////////////////////////////////
 	
@@ -103,7 +155,7 @@ public class SapareServiceImp implements SapareService{
 	public List<itemDTO> selectProcess() {
 		return dao.selectMethod();
 	}
-	
+
 	// 오정우 end //////////////////////////////////////////
 	
 	

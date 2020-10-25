@@ -27,4 +27,8 @@
 		update tbl_reply set replytext=#{replytext}
 		where rno=#{rno}
 	</update> -->
+	
+	<select id="get" parameterType="dto.memberDTO" resultType="java.util.HashMap">
+		select * from sapareorder where memberName=#{memberName}
+	</select>
 </mapper>

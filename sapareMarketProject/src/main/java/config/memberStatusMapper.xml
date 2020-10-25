@@ -27,4 +27,7 @@
 		update tbl_reply set replytext=#{replytext}
 		where rno=#{rno}
 	</update> -->
+	<select id="sInfo" parameterType="dto.memberStatusDTO" resultType="dto.memberStatusDTO">
+		select * from sapareMemberStatus where memberName=#{memberName}
+	</select>
 </mapper>

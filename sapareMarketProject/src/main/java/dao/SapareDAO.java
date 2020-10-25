@@ -4,11 +4,36 @@ import java.util.List;
 
 import dto.boardDTO;
 import dto.itemDTO;
+import dto.memberDTO;
+import dto.memberStatusDTO;
+import dto.orderDTO;
 
 public interface SapareDAO {
 	
 	// 김녹훈 start //////////////////////////////////////////
 	
+		// 회원정보 리턴
+	public memberDTO memberInfoMethod(memberDTO dto);
+	public memberStatusDTO memberStatInfoMethod(memberStatusDTO dto);
+	
+		// 회원이 구매한 상품 리턴
+	public List<orderDTO> buyInfoMethod(memberDTO dto);
+		// 회원이 판매한 상품 리턴
+	public List<itemDTO> sellInfoMethod(memberDTO dto);
+	
+		// 닉네임 중복체크
+	public int checkNicknameMethod(memberDTO dto);
+		// 닉네임 변경
+	public void changeNicknameMethod(memberDTO dto);
+	
+		// 소개글 변경
+	public void changeAboutMethod(memberDTO dto);
+	
+		// 프로필 사진 변경
+	public void changeProfileImgMethod(memberDTO dto);
+	
+		// 비밀번호 변경
+	public void changePasswordMethod(memberDTO dto);
 	
 	// 김녹훈 end //////////////////////////////////////////
 	

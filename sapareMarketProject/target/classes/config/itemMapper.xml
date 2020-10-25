@@ -12,4 +12,9 @@
 	<select id="selectProcess" resultType="dto.itemDTO">
 		select * from sapareItem
 	</select>
+	
+	<select id="get" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select * from sapareItem where memberName=#{memberName}
+	</select>
+	
 </mapper>
