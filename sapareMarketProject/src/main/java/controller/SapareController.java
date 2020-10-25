@@ -57,9 +57,7 @@ public class SapareController {
 		memberStatusDTO sdto = new memberStatusDTO();
 		sdto.setMemberName("test");
 
-		System.out.println(service.sellInfoProcess(dto).get(0).getItemAbout());
-		System.out.println(service.sellInfoProcess(dto).get(1).getItemAbout());
-		System.out.println(service.sellInfoProcess(dto).get(2).getItemAbout());
+		System.out.println(service.sellInfoProcess(dto).get(0).getOrderDate());
 		mav.addObject("iList", service.sellInfoProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(sdto));
@@ -78,7 +76,7 @@ public class SapareController {
 		memberStatusDTO sdto = new memberStatusDTO();
 		sdto.setMemberName("test");
 		
-		mav.addObject("oList", service.buyInfoProcess(dto));
+		mav.addObject("bList", service.buyInfoProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(sdto));
 		mav.setViewName("profileBuyPage");

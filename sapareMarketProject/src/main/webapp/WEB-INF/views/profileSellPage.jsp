@@ -172,7 +172,7 @@ header ul li a {
 	display: flex;
     width: 100%;
     flex-direction: row;
-    height: 1150px;
+    height: auto;
 }
 
 .profileMenu{
@@ -241,6 +241,7 @@ header ul li a {
 	height: 5%;
 	align-items: center;
 	justify-content: flex-end;
+	padding-top: 5px;
 }
 
 .contents{
@@ -250,6 +251,7 @@ header ul li a {
 	height: 100%;
 	margin-top: 10px;
 	overflow: hidden;
+	margin-bottom: 15px;
 }
 
 .contentOptions select{
@@ -281,6 +283,7 @@ header ul li a {
 .sellItemImg a img{
 	height: 100%;
 	width: 100%;
+	border-radius: 5px;
 }
 
 .sellItemInfo{
@@ -726,55 +729,41 @@ form{
 										<div class="allItemInfo">
 											<div class="itemName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis; white-space: nowrap;">${dto.itemName }</div>
 											<div class="itemAbout" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis; white-space: nowrap;">${dto.itemAbout }</div>
-											<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 14px; color: orange;text-overflow: ellipsis;white-space: nowrap;">${dto.itemPrice }원</div>
-											<c:if test="${dto.reviewNo }">
+											<c:if test="${fn:contains(dto.itemStatus, 'y')}">
+												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange;text-overflow: ellipsis;white-space: nowrap;">${dto.itemPrice }원 판매가격</div>
+											</c:if>
+											<c:if test="${fn:contains(dto.itemStatus, 'n')}">
+												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange;text-overflow: ellipsis;white-space: nowrap;">${dto.orderPrice }원 주문가격</div>
+											</c:if>
+											<c:if test="${dto.reviewNo != 0}">
 												<button id="reviewBox${dto.reviewNo }" class="reviewToggleBtn" style="width:20%; margin: 5px auto; cursor:pointer;">후기 보기</button>
 											</c:if>
 										</div>
 										
 										<div class="itemStatusBox">
-											<p style="color:orange;">
-												<c:if test="${dto.itemStatus == 'y'}">
+											<p style="color:orange;text-align:center;">
+												<c:if test="${fn:contains(dto.itemStatus, 'y')}">
 													판매중
 												</c:if>
-												<c:if test="${dto.itemStatus == 'n'}">
-													판매완료
+												<c:if test="${fn:contains(dto.itemStatus, 'n')}">
+													판매날짜: ${dto.orderDate }
 												</c:if>
 											</p>
-											<!-- 나중에 데이터 갖고 올 데 아래 두 라인으로 위 button 감싸주기 !!! -->
-											<c:if test="${dto.itemStatus == 'n' && dto.reviewNo == null}">
-												<button type="button" id="writeReviewWrapper${dto.itemId }" class="leaveReviewBtn" style="cursor:pointer; margin-top:10px">후기 남기기</button>
-											</c:if>
 										</div>
 									</div>
 								</div>
-							
-								<div class="reviewBox${dto.reviewNo }">
-									<div class="buyerImgBox">
-										<a href="#"><img class="buyerImg" src="image/${dto.profileImg }"></a>
-									</div>
-									<div class="buyerReviewBox">
-										<div class="buyerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.nickname }구매자 닉네임</div>
-										<div class="buyerReviewContent" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.reviewContent }후기 내용</div>
-										<div class="buyerReviewStar" style="margin-top:5px; margin-left: 5px; height: 18%; font-size: 14px;">${dto.reviewStar} 별점 5개</div>
-									</div>
-								</div>
-								
-								<div class="writeReviewWrapper${dto.itemId }">
-									<form>
-										<div class="reviewWriteBox">
-											<div class="reviewContent">
-												<textarea class="writeReview" rows="5" cols="70" maxlength="75" placeholder="후기 내용을 입력해주세요"></textarea>
-											</div>
-											<div class="reviewStarBox">
-												<div>임시 별점 장소</div>
-											</div>
+								<c:if test="${dto.reviewNo != 0}">
+									<div class="reviewBox${dto.reviewNo }" style="display:none;width: 100%;height: 150px;background-color: #F0F8FF;flex-direction: row;margin-bottom: 2%;border-radius: 5px;">
+										<div class="buyerImgBox">
+											<a href="#"><img class="buyerImg" src="image/${dto.profileImg }"></a>
 										</div>
-										<div class="reviewInsertBox">
-											<button type="button" class="reviewInsertBtn">후기 올리기</button>
+										<div class="buyerReviewBox">
+											<div class="buyerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.nickname }구매자 닉네임</div>
+											<div class="buyerReviewContent" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.reviewContent }후기 내용</div>
+											<div class="buyerReviewStar" style="margin-top:5px; margin-left: 5px; height: 18%; font-size: 14px;">${dto.reviewStar} 별점 5개</div>
 										</div>
-									</form>
-								</div>
+									</div>
+								</c:if>
 							</c:forEach>
 						</div>
 					</div>

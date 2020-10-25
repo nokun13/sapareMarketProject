@@ -28,7 +28,16 @@
 		where rno=#{rno}
 	</update> -->
 	
-	<select id="get" parameterType="dto.memberDTO" resultType="java.util.HashMap">
-		select * from sapareorder where memberName=#{memberName}
+	<select id="get" parameterType="dto.memberDTO" resultType="dto.orderDTO">
+		select b.*, a.*, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where b.memberName=#{memberName}
+		order by a.itemId desc
 	</select>
 </mapper>

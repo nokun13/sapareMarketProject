@@ -196,7 +196,7 @@ header ul li a {
 	display: flex;
     width: 100%;
     flex-direction: row;
-    height: 1150px;
+    height: auto;
 }
 
 .profileMenu{
@@ -251,9 +251,10 @@ header ul li a {
 .profileContent{
 	display: flex;
 	width: 80%;
-	height: 1150px;
+	height: auto;
 	margin-left: 15px;
 	margin-top: 30px;
+	margin-right: 10px;
 	flex-direction: column;
 }
 
@@ -264,6 +265,7 @@ header ul li a {
 	height: 100%;
 	margin-top: 35px;
 	margin-left: 15px;
+	margin-bottom: 15px;
 }
 
 .contents ul{

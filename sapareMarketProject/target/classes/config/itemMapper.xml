@@ -14,7 +14,16 @@
 	</select>
 	
 	<select id="get" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select * from sapareItem where memberName=#{memberName}
+		select a.*, b.orderDate, b.orderPrice, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where a.memberName=#{memberName}
+		order by a.itemId desc
 	</select>
 	
 </mapper>

@@ -179,7 +179,7 @@ header ul li a {
 	display: flex;
     width: 100%;
     flex-direction: row;
-    height: 1150px;
+    height: auto;
 }
 
 .profileMenu{
@@ -248,6 +248,7 @@ header ul li a {
 	height: 5%;
 	align-items: center;
 	justify-content: flex-end;
+	padding-top: 5px;
 }
 
 .contents{
@@ -257,6 +258,7 @@ header ul li a {
 	height: 100%;
 	margin-top: 10px;
 	overflow: hidden;
+	margin-bottom: 15px;
 }
 
 .contentOptions select{
@@ -287,6 +289,7 @@ header ul li a {
 .buyItemImg a img{
 	height: 100%;
 	width: 100%;
+	border-radius: 5px;
 }
 
 .buyItemInfo{
@@ -321,23 +324,23 @@ header ul li a {
     border-radius: 5px;
 }
 
-.sellerImgBox{
+.buyerImgBox{
 	height: 100%;
     width: 20%;
     border-radius: 5px;
 }
 
-.sellerImgBox a{
+.buyerImgBox a{
 	height: 100%;
     width: 100%;
 }
 
-.sellerImgBox a img{
+.buyerImgBox a img{
 	height: 100%;
     width: 100%;
 }
 
-.sellerReviewBox{
+.buyerReviewBox{
 	display: flex;
     flex-direction: column;
     width: 80%;
@@ -723,47 +726,39 @@ form{
 							</select>
 						</div>
 						<div class="contents">
-							<div class="buyItemBox">
+							<c:forEach items="${bList}" var="dto">
+								<div class="buyItemBox">
 									<div class="buyItemImg">
 										<a href="#"><img class="itemImg" src="image/${dto.itemImagePath }"></a>
 									</div>
 									<div class="buyItemInfo">
 										<div class="allItemInfo">
-											<div class="itemName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.itemName }상품명</div>
-											<div class="itemAbout" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.itemAbout }상품소개</div>
-											<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 14px; color: orange; text-overflow: ellipsis;white-space: nowrap;">${dto.itemPrice }10,000원</div>
-											<button id="reviewBox${dto.reviewNo }" class="reviewToggleBtn" style="width:20%; margin: 5px auto; cursor:pointer;">후기 보기</button>
-											<!-- 후기가 있을 경우 후기보기 버튼 보여주기 아래 코드로 위 button을 감싸기 -->
-											<!-- <c:if test="${dto.reviewNo }"> -->
-											<!-- </c:if> -->
+											<div class="itemName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.itemName }</div>
+											<div class="itemAbout" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.itemAbout }</div>
+											<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange; text-overflow: ellipsis;white-space: nowrap;">${dto.orderPrice }원</div>
+											<c:if test="${dto.reviewNo != 0}">
+												<button id="reviewBox${dto.reviewNo }" class="reviewToggleBtn" style="width:20%; margin: 5px auto; cursor:pointer;">후기 보기</button>
+											</c:if>
 										</div>
 										
 										<div class="itemStatusBox">
-											<p style="color:orange;">${dto.itemStatus }</p>
-											<button type="button" id="writeReviewWrapper${dto.itemId }" class="leaveReviewBtn" style="cursor:pointer; margin-top:10px">후기 남기기</button>
-											<!-- 나중에 데이터 갖고 올 데 아래 두 라인으로 위 button 감싸주기 !!! -->
-											<!-- <c:if test="${dto.itemStatus == '판매완료' }"> -->
-											<!-- </c:if> -->
+											<p style="color:orange;text-align:center;">
+												<c:if test="${fn:contains(dto.itemStatus, 'n')}">
+													구매날짜: ${dto.orderDate }
+												</c:if>
+											</p>
+											<c:if test="${fn:contains(dto.itemStatus, 'n') && dto.reviewNo == 0}">
+												<button type="button" id="writeReviewWrapper${dto.itemId }" class="leaveReviewBtn" style="cursor:pointer; margin-top:10px">후기 남기기</button>
+											</c:if>
+											<c:if test="${fn:contains(dto.itemStatus, 'n') && dto.reviewNo != 0}">
+												후기 작성 완료
+											</c:if>
 										</div>
 									</div>
 								</div>
-							<!-- move the code below within the class=contents afterwards -->
-							<!--<c:forEach items="${buyItemList}" var="dto"> -->
-							<!-- </c:forEach> -->
-							
-								<div class="reviewBox${dto.reviewNo }">
-									<div class="sellerImgBox">
-										<a href="#"><img class="sellerImg" src="image/${dto.profileImg }"></a>
-									</div>
-									<div class="sellerReviewBox">
-										<div class="sellerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.nickname }판매자 닉네임</div>
-										<div class="sellerReviewContent" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.reviewContent }후기 내용</div>
-										<div class="sellerReviewStar" style="margin-top:5px; margin-left: 5px; height: 18%; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.reviewStar} 별점 5개</div>
-									</div>
-								</div>
 								
-								<div class="writeReviewWrapper${dto.itemId }">
-									<form>
+								<c:if test="${fn:contains(dto.itemStatus, 'n') && dto.reviewNo == 0}">
+									<div class="writeReviewWrapper${dto.itemId }" style="display:none;width: 100%;height: 150px;background-color: #F0F8FF;flex-direction: row;margin-bottom: 3%;border-radius: 5px;">
 										<div class="reviewWriteBox">
 											<div class="reviewContent">
 												<textarea class="writeReview" rows="5" cols="70" maxlength="75" placeholder="후기 내용을 입력해주세요"></textarea>
@@ -775,8 +770,22 @@ form{
 										<div class="reviewInsertBox">
 											<button type="button" class="reviewInsertBtn">후기 올리기</button>
 										</div>
-									</form>
-								</div>
+									</div>
+								</c:if>
+								
+								<c:if test="${dto.reviewNo != 0}">
+									<div class="reviewBox${dto.reviewNo }" style="display:none;width: 100%;height: 150px;background-color: #F0F8FF;flex-direction: row;margin-bottom: 2%;border-radius: 5px;">
+										<div class="buyerImgBox">
+											<a href="#"><img class="buyerImg" src="image/${dto.profileImg }"></a>
+										</div>
+										<div class="buyerReviewBox">
+											<div class="buyerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.nickname }</div>
+											<div class="buyerReviewContent" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.reviewContent }</div>
+											<div class="buyerReviewStar" style="margin-top:5px; margin-left: 5px; height: 18%; font-size: 14px;">${dto.reviewStar}</div>
+										</div>
+									</div>
+								</c:if>
+							</c:forEach>
 						</div>
 					</div>
 				</div>

@@ -179,7 +179,7 @@ header ul li a {
 	display: flex;
     width: 100%;
     flex-direction: row;
-    height: 1150px;
+    height: auto;
 }
 
 .profileMenu{
@@ -249,6 +249,7 @@ header ul li a {
 	height: 100%;
 	margin-top: 10px;
 	overflow: hidden;
+	margin-bottom: 15px;
 }
 
 .contentOptions{
@@ -257,6 +258,7 @@ header ul li a {
 	height: 5%;
 	align-items: center;
 	justify-content: flex-end;
+	padding-top: 5px;
 }
 
 .contentOptions select{
