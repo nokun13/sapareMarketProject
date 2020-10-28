@@ -23,6 +23,100 @@
 		left outer join
 		    sapareMember d on b.memberName = d.memberName
 		where a.memberName=#{memberName}
+		order by a.itemUploadDate desc
+	</select>
+	
+	<select id="getWeek" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select a.*, b.orderDate, b.orderPrice, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where a.memberName=#{memberName} and
+        trunc(a.itemUploadDate) BETWEEN trunc(sysdate-7) and trunc(sysdate)
+		order by a.itemUploadDate desc
+	</select>
+	
+	<select id="getMonth" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select a.*, b.orderDate, b.orderPrice, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where a.memberName=#{memberName, jdbcType=VARCHAR} and
+        trunc(a.itemUploadDate) BETWEEN trunc(sysdate-30) and trunc(sysdate)
+		order by a.itemUploadDate desc
+	</select>
+	
+	<select id="getSixMonths" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select a.*, b.orderDate, b.orderPrice, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where a.memberName=#{memberName} and
+        trunc(a.itemUploadDate) BETWEEN trunc(sysdate-180) and trunc(sysdate)
+		order by a.itemUploadDate desc
+	</select>
+	
+	<select id="wantItem" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select b.*
+		from saparewantitem a
+		inner join sapareitem b on b.itemId=a.itemId
+		where a.memberName=#{memberName}
+		order by b.itemId desc
+	</select>
+	
+	<select id="wantNumItem" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select b.*
+		from saparewantitem a
+		inner join sapareitem b on b.itemId=a.itemId
+		where a.memberName=#{memberName}
+        order by b.itemwantcnt desc
+	</select>
+	
+	<select id="wantPriceItem" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select b.*
+		from saparewantitem a
+		inner join sapareitem b on b.itemId=a.itemId
+		where a.memberName=#{memberName}
+        order by b.itemPrice asc
+	</select>
+	
+	<select id="sellingOnly" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select a.*, b.orderDate, b.orderPrice, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where a.memberName=#{memberName} and
+        a.itemStatus = 'y'
+		order by a.itemId desc
+	</select>
+	
+	<select id="soldOnly" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select a.*, b.orderDate, b.orderPrice, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where a.memberName=#{memberName} and
+        a.itemStatus = 'n'
 		order by a.itemId desc
 	</select>
 	

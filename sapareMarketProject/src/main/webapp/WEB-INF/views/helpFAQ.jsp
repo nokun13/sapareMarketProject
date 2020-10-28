@@ -20,9 +20,11 @@
 	float: left;
 	/* border-bottom: 2px solid rgb(255, 80, 88); */
 	width: 400px;
+	font-size: 18px;
 }
 
 .faq {
+    font-size: 18px;
 	padding-bottom: 5px;
 	display: flex;
 	-webkit-box-align: center;
@@ -30,10 +32,10 @@
 	-webkit-box-pack: center;
 	font-weight: 600;
 	justify-content: center;
-	color: rgb(255, 80, 88);
+	color: #FF0000;
 	width: 400px;
 	text-align: center;
-    border-bottom: 2px solid rgb(255, 80, 88); 
+    border-bottom: 3px solid #FF0000; 
 }
 
 a {
@@ -52,7 +54,7 @@ a {
 	background: rgb(255, 255, 255);
 }
 
-.wrap {
+.wrap1 {
 	margin-top: 100px;
 	margin-bottom: 5px;
 	display: flex;
@@ -162,6 +164,115 @@ justify-content: center;
 
 .no_1{
 overflow: auto;}
+.hh {
+	margin-top: 50px;
+	display: flex;
+	justify-content: center;
+	display: flex;
+}
+
+#myBtn {
+	width: 200px;
+	height: 10px;
+	background-color: white;
+	color: #29ABE2;
+	border: none;
+	font-weight: bolder;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.ask {
+	font-size: 14px;
+}
+
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 23%;
+	height: 53%;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.emailid {
+	margin-top: 12%
+}
+
+input[type=email]{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.contenttext {
+  width: 100%;
+  height:95%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  outline: none;
+  resize: none;
+}
+.content_area{
+height: 63%;
+}
+
+.ll{
+display: grid;
+height: 50px;
+margin-bottom: 15px;
+}
+
+.modalbtn{
+background-color: #29ABE2;
+color:white;
+font-size:18px;
+font-weight: bolder;
+border: 1px solid #29ABE2;
+cursor: pointer;
+outline: none;
+
+}
+
+.mm{
+	margin-top: 30px;
+}
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -171,13 +282,25 @@ $(document).ready(function(){
 	  $(".notice1").click(function(){
 	    $(this).next().slideToggle("slow");
 	  });
-	 
+	  $('#myBtn').on('click', function() {
+			$(".modal").css("display", "block");
+		});
+
+		$('.close').on('click', function() {
+			$(".modal").css("display", "none");
+		});
+		$('.modalbtn').on('click', modalRun);
 	
 	});
+	
+function modalRun() {
+	$('.mo').attr('action', 'helpPage.do').submit();
+}////////////////
 </script>
 </head>
 <body>
-	<div class="wrap">
+<jsp:include page="header.jsp" flush="false" />
+	<div class="wrap1">
 		<div class="menu">
 			<nav class="menu1">
 				<a class="notice" href="http://localhost:8090/sapare/helpPage.do">공지사항
@@ -221,7 +344,35 @@ $(document).ready(function(){
 		
 	</table>
 	</c:forEach>
-	
+	<div class="hh">
+		<div class="ask">
+			&nbsp;&nbsp;&nbsp;그래도 해결이 안되시나요?<br />
+			<button type="button" id="myBtn">고객센터에 문의하기</button>
+		</div>
+	</div>
+
+	<div id="myModal" class="modal">
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+				<form class="mo" method="post">
+					<div class="emailid">아이디(이메일)</div>
+					<div class="email_area">
+						<input type="email" value="" class="email_sign"
+							placeholder="이메일 주소 입력" name="qEmail">
+					</div>
+
+					<div class="content">문의 내용</div>
+					<div class="content_area">
+						<textarea class="contenttext"rows="21" cols="70"  name="qContent" placeholder="문의 내용 입력"></textarea>
+					</div>
+<div class="ll">
+<input type="button" value="문의하기" class="modalbtn"/>
+
+</div>
+				</form>
+		</div>
+	</div>
 
 </body>
 </html>

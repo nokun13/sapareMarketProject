@@ -251,7 +251,7 @@ header ul li a {
 .profileContent{
 	display: flex;
 	width: 80%;
-	height: auto;
+	height: 100%;
 	margin-left: 15px;
 	margin-top: 30px;
 	margin-right: 10px;
@@ -492,7 +492,10 @@ header ul li a {
 				type:'GET',
 				dataType:'json',
 				url:'memberInfoGet.do?memberName=${member.memberName}',
-				success: change_password
+				success: change_password,
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
 			});
 		});
 		
@@ -511,7 +514,10 @@ header ul li a {
 				$.ajax({
 					type:'GET',
 					dataType:'json',
-					url:'memberPwChange.do?memberName=${member.memberName}&memberPw='+$(".memberPwNew").val()
+					url:'memberPwChange.do?memberName=${member.memberName}&memberPw='+$(".memberPwNew").val(),
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 				alert("비밀번호가 성공적으로 변경되었습니다.");
 				$(".memberPwNow").val("");
@@ -530,7 +536,10 @@ header ul li a {
 				type:'GET',
 				dataType:'json',
 				url:'memberInfoGet.do?memberName=${member.memberName}',
-				success: change_nickname
+				success: change_nickname,
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
 			});
 			
 		});
@@ -556,7 +565,10 @@ header ul li a {
 					type:'GET',
 					dataType:'json',
 					url:'checkNickname.do?nickname=' + $("#newNickname").val(),
-					success: get_new_nickname
+					success: get_new_nickname,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 			});
 		};
@@ -570,7 +582,10 @@ header ul li a {
 					type:'GET',
 					dataType:'json',
 					url:'changeNickname.do?memberName=${member.memberName}&nickname=' + $("#newNickname").val(),
-					success: change_to_new_nickname
+					success: change_to_new_nickname,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 			}
 		};
@@ -589,7 +604,10 @@ header ul li a {
 				type:'GET',
 				dataType:'json',
 				url:'memberInfoGet.do?memberName=${member.memberName}',
-				success: change_about_content
+				success: change_about_content,
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
 			});
 			
 		});
@@ -607,7 +625,10 @@ header ul li a {
 					type:'GET',
 					dataType:'json',
 					url:'changeMemberAbout.do?memberName=${member.memberName}&memberAbout='+$("#aboutContent").val(),
-					success: after_about_change
+					success: after_about_change,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 			});
 			
@@ -715,26 +736,7 @@ header ul li a {
 </script>
 </head>
 <body>
-	<header>
-		<div class="side-logo-container" style="display: flex;">
-			<span style="font-size: 40px; cursor: pointer; margin-right: 7px;"
-				class="side-open-btn">&#9776;</span> <a
-				href="http://localhost:8090/sapare/mainPage.do" class="logo"><img
-				src="image/sapare.jpg" width=50px; height=50px;></a>
-		</div>
-
-		<div class="text">
-			<input type="text" placeholder="검색어를 입력해 주세요"
-				style="width: 300px; height: 23px;">
-			<button>
-				<img src="image/search.gif" width=20px; height=20px;>
-			</button>
-		</div>
-		<ul>
-			<li><a href="log/sign" class="headerba">로그인/회원가입</a></li>
-			<li><a href="my?page=main" class="headerba">마이페이지</a></li>
-		</ul>
-	</header>
+	<jsp:include page="header.jsp" flush="false" />
 	<!-- header 끝 -->
 	
 	<div class="wrap">
@@ -811,9 +813,9 @@ header ul li a {
 									<div>
 										<div class="memberId">${member.memberId }</div>
 									</div>
-									<div>
+									<!-- <div>
 										<button type="button" class="changeIdBtn">변경</button>
-									</div>
+									</div> -->
 								</li>
 								
 								<li class="box2" style="display:none;">

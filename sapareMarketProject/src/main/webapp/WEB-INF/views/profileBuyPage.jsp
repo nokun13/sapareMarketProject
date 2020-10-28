@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,20 +11,6 @@
 	text-decoration: none;
 	margin: 0;
   	padding: 0;
-}
-
-header {
-	position: sticky;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100px;
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	transition: 0.6s;
-	z-index: 100;
-	background-color: cornflowerblue;
 }
 
 footer {
@@ -234,7 +221,7 @@ header ul li a {
 .profileContent{
 	display: flex;
 	width: 80%;
-	height: auto;
+	height: 100%;
 	margin-left: 15px;
 	margin-top: 15px;
 	margin-right: 10px;
@@ -362,6 +349,7 @@ header ul li a {
 	border: 1px solid #e8ebed;
 	font-size: 14px;
 	resize: none;
+	outline: none;
 }
 
 .writeReview:focus{
@@ -412,12 +400,6 @@ header ul li a {
 	background-color: #E6F6FB;
 }
 
-form{
-	display: flex;
-    width: 100%;
-    height: 100%;
-}
-
 </style>
 <meta charset="UTF-8">
 <title>${sessionScope.account_Name }의 프로필 페이지</title>
@@ -444,7 +426,10 @@ form{
 				type:'GET',
 				dataType:'json',
 				url:'memberInfoGet.do?memberName=${member.memberName}',
-				success: change_nickname
+				success: change_nickname,
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
 			});
 			
 		});
@@ -470,7 +455,10 @@ form{
 					type:'GET',
 					dataType:'json',
 					url:'checkNickname.do?nickname=' + $("#newNickname").val(),
-					success: get_new_nickname
+					success: get_new_nickname,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 			});
 		};
@@ -484,7 +472,10 @@ form{
 					type:'GET',
 					dataType:'json',
 					url:'changeNickname.do?memberName=${member.memberName}&nickname=' + $("#newNickname").val(),
-					success: change_to_new_nickname
+					success: change_to_new_nickname,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 			}
 		};
@@ -503,7 +494,10 @@ form{
 				type:'GET',
 				dataType:'json',
 				url:'memberInfoGet.do?memberName=${member.memberName}',
-				success: change_about_content
+				success: change_about_content,
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
 			});
 			
 		});
@@ -521,7 +515,10 @@ form{
 					type:'GET',
 					dataType:'json',
 					url:'changeMemberAbout.do?memberName=${member.memberName}&memberAbout='+$("#aboutContent").val(),
-					success: after_about_change
+					success: after_about_change,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 			});
 			
@@ -613,7 +610,7 @@ form{
 					success:profile_img_change,
 					error:function(request,status,error){
 					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					   }
+					}
 				});
 			});	
 		}); // end change()
@@ -629,26 +626,7 @@ form{
 </script>
 </head>
 <body>
-	<header>
-		<div class="side-logo-container" style="display: flex;">
-			<span style="font-size: 40px; cursor: pointer; margin-right: 7px;"
-				class="side-open-btn">&#9776;</span> <a
-				href="http://localhost:8090/sapare/mainPage.do" class="logo"><img
-				src="image/sapare.jpg" width=50px; height=50px;></a>
-		</div>
-
-		<div class="text">
-			<input type="text" placeholder="검색어를 입력해 주세요"
-				style="width: 300px; height: 23px;">
-			<button>
-				<img src="image/search.gif" width=20px; height=20px;>
-			</button>
-		</div>
-		<ul>
-			<li><a href="log/sign" class="headerba">로그인/회원가입</a></li>
-			<li><a href="my?page=main" class="headerba">마이페이지</a></li>
-		</ul>
-	</header>
+	<jsp:include page="header.jsp" flush="false" />
 	<!-- header 끝 -->
 	
 	<div class="wrap">
@@ -735,23 +713,26 @@ form{
 										<div class="allItemInfo">
 											<div class="itemName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.itemName }</div>
 											<div class="itemAbout" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.itemAbout }</div>
-											<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange; text-overflow: ellipsis;white-space: nowrap;">${dto.orderPrice }원</div>
+											<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange; text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;">${dto.orderPrice }원</div>
 											<c:if test="${dto.reviewNo != 0}">
-												<button id="reviewBox${dto.reviewNo }" class="reviewToggleBtn" style="width:20%; margin: 5px auto; cursor:pointer;">후기 보기</button>
+												<button id="reviewBox${dto.reviewNo }" class="reviewToggleBtn" style="width:27%; margin: 5px auto; cursor:pointer;">내가 작성한 후기</button>
 											</c:if>
 										</div>
 										
 										<div class="itemStatusBox">
 											<p style="color:orange;text-align:center;">
 												<c:if test="${fn:contains(dto.itemStatus, 'n')}">
-													구매날짜: ${dto.orderDate }
+													구매날짜: <br/><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.orderDate }" />
 												</c:if>
+												<br>
 											</p>
 											<c:if test="${fn:contains(dto.itemStatus, 'n') && dto.reviewNo == 0}">
 												<button type="button" id="writeReviewWrapper${dto.itemId }" class="leaveReviewBtn" style="cursor:pointer; margin-top:10px">후기 남기기</button>
 											</c:if>
 											<c:if test="${fn:contains(dto.itemStatus, 'n') && dto.reviewNo != 0}">
+												<p style="color:maroon;text-align:center;">
 												후기 작성 완료
+												</p>
 											</c:if>
 										</div>
 									</div>

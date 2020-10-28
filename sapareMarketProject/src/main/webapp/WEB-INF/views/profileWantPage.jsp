@@ -234,7 +234,7 @@ header ul li a {
 .profileContent{
 	display: flex;
 	width: 80%;
-	height: auto;
+	height: 100%;
 	margin-left: 15px;
 	margin-top: 15px;
 	margin-right: 10px;
@@ -366,7 +366,10 @@ header ul li a {
 				type:'GET',
 				dataType:'json',
 				url:'memberInfoGet.do?memberName=${member.memberName}',
-				success: change_nickname
+				success: change_nickname,
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
 			});
 			
 		});
@@ -392,7 +395,10 @@ header ul li a {
 					type:'GET',
 					dataType:'json',
 					url:'checkNickname.do?nickname=' + $("#newNickname").val(),
-					success: get_new_nickname
+					success: get_new_nickname,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 			});
 		};
@@ -406,7 +412,10 @@ header ul li a {
 					type:'GET',
 					dataType:'json',
 					url:'changeNickname.do?memberName=${member.memberName}&nickname=' + $("#newNickname").val(),
-					success: change_to_new_nickname
+					success: change_to_new_nickname,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 			}
 		};
@@ -425,7 +434,10 @@ header ul li a {
 				type:'GET',
 				dataType:'json',
 				url:'memberInfoGet.do?memberName=${member.memberName}',
-				success: change_about_content
+				success: change_about_content,
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
 			});
 			
 		});
@@ -443,7 +455,10 @@ header ul li a {
 					type:'GET',
 					dataType:'json',
 					url:'changeMemberAbout.do?memberName=${member.memberName}&memberAbout='+$("#aboutContent").val(),
-					success: after_about_change
+					success: after_about_change,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 			});
 			
@@ -547,30 +562,66 @@ header ul li a {
 			$("#profileImgChange").show();
 		};
 		
+		// 찜 순서 옵션 선택
+		$("#chooseOrder").on('change', function(){
+			var option = $("#chooseOrder option:selected").val();
+			if(option == "newWantOrder"){
+				$.ajax({
+					type:'GET',
+					dataType:'json',
+					url:'newWantProcess.do?memberName=${member.memberName}',
+					success: after_review_change,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			} else if(option == "wantNumOrder"){
+				$.ajax({
+					type:'GET',
+					dataType:'json',
+					url:'wantNumProcess.do?memberName=${member.memberName}',
+					success: after_review_change,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			} else if(option == "lowPriceOrder"){
+				$.ajax({
+					type:'GET',
+					dataType:'json',
+					url:'wantPriceProcess.do?memberName=${member.memberName}',
+					success: after_review_change,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			}
+		});
+		
+		// 찜 순서 뿌려주기
+		function after_review_change(res){
+			$(".wantItemBox").remove();
+			$.each(res, function(index, value){
+				var source = "<li class='wantItemBox'><a class='wantItemCard' href='searchItem.do?itemId="+value.itemId+"'>"
+							+ "<div class='wantItemInside'><div class='itemImageBox'><img src='image/"+value.itemImagePath+"'/></div>"
+							+ "<div class='itemDescribeBox'><div><div class='itemName'>"+value.itemName+"</div>"
+							+ "<div class='itemPrice'>"+value.itemPrice+"</div></div>"
+							+ "<div><button type='button' class='wantItemBtn' style='border:none; background-color:lightgray;'>"
+							+ "<svg version='1.0' xmlns='http://www.w3.org/2000/svg' width='35px' height='35px' viewBox='0 0 25 25'"
+							+ "fill='#f44336' fill-opacity='1' stroke='#ffffff' stroke-width='2' focusable='false' aria-label='찜하기'"
+							+ "role='img' stroke-linecap='round' stroke-linejoin='round' preserveAspectRatio='xMidYMid meet'>"
+							+ "<metadata>Created by potrace 1.15, written by Peter Selinger 2001-2017</metadata>"
+							+ "<g><path d='m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6'/>"
+							+ "</g></svg></button></div></div></div></a></li>";
+				$(".wantItemWrapper ul").append(source);
+			});
+		};
+		
 	}); // end ready()
 </script>
 </head>
 <body>
-	<header>
-		<div class="side-logo-container" style="display: flex;">
-			<span style="font-size: 40px; cursor: pointer; margin-right: 7px;"
-				class="side-open-btn">&#9776;</span> <a
-				href="http://localhost:8090/sapare/mainPage.do" class="logo"><img
-				src="image/sapare.jpg" width=50px; height=50px;></a>
-		</div>
-
-		<div class="text">
-			<input type="text" placeholder="검색어를 입력해 주세요"
-				style="width: 300px; height: 23px;">
-			<button>
-				<img src="image/search.gif" width=20px; height=20px;>
-			</button>
-		</div>
-		<ul>
-			<li><a href="log/sign" class="headerba">로그인/회원가입</a></li>
-			<li><a href="my?page=main" class="headerba">마이페이지</a></li>
-		</ul>
-	</header>
+	<jsp:include page="header.jsp" flush="false" />
 	<!-- header 끝 -->
 	
 	<div class="wrap">
@@ -640,8 +691,8 @@ header ul li a {
 					</div>
 					<div class="profileContent">
 						<div class="contentOptions">
-							<select>
-								<option value="wantOrder">찜한 상품순</option>
+							<select id="chooseOrder">
+								<option value="newWantOrder">새 상품순</option>
 								<option value="wantNumOrder">찜이 많은 상품순</option>
 								<option value="lowPriceOrder">저가순</option>
 							</select>
@@ -650,19 +701,19 @@ header ul li a {
 						<div class="contents">
 							<div class="wantItemWrapper">
 								<ul>
-									<li>
+									<c:forEach items="${wantList }" var="dto">
+									<li class="wantItemBox">
 															<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
 										<a class="wantItemCard" href="searchItem.do?itemId=${dto.itemId }">
 											<div class="wantItemInside">
 												<div class="itemImageBox">
-													<!-- 경로 마지막 부분을 ${dto.itemImagePath }로 바꿔준다 -->
-													<img src="image/wombat.jpg" />
+													<img src="image/${dto.itemImagePath }" />
 												</div>
 												
 												<div class="itemDescribeBox">
 													<div>
-														<div class="itemName">찜한 상품이름 ${dto.itemName }</div>
-														<div class="itemPrice">15000 ${dto.itemPrice }</div>
+														<div class="itemName">${dto.itemName }</div>
+														<div class="itemPrice">${dto.itemPrice }</div>
 													</div>
 													
 													<div>
@@ -686,43 +737,7 @@ header ul li a {
 											</div>
 										</a>
 									</li>
-									
-									<li>
-															<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
-										<a class="wantItemCard" href="searchItem.do?itemId=${dto.itemId }">
-											<div class="wantItemInside">
-												<div class="itemImageBox">
-													<!-- 경로 마지막 부분을 ${dto.itemImagePath }로 바꿔준다 -->
-													<img src="image/fox.jpg" />
-												</div>
-												
-												<div class="itemDescribeBox">
-													<div>
-														<div class="itemName">찜한 상품이름 ${dto.itemName }</div>
-														<div class="itemPrice">15000 ${dto.itemPrice }</div>
-													</div>
-													
-													<div>
-														<button type="button" class="wantItemBtn" style="border:none; background-color:lightgray;">
-														<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-															 width="35px" height="35px" viewBox="0 0 25 25"
-															 fill="#f44336" fill-opacity="1" stroke="#ffffff"
-															 stroke-width="2" focusable="false" aria-label="찜하기" 
-															 role="img" stroke-linecap="round" stroke-linejoin="round"
-															 preserveAspectRatio="xMidYMid meet">
-															<metadata>
-															Created by potrace 1.15, written by Peter Selinger 2001-2017
-															</metadata>
-															<g>
-															<path d="m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6"/>
-															</g>
-															</svg>
-														</button>
-													</div>
-												</div>
-											</div>
-										</a>
-									</li>
+									</c:forEach>
 									
 									<li>
 															<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
@@ -744,268 +759,6 @@ header ul li a {
 														<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
 															 width="35px" height="35px" viewBox="0 0 25 25"
 															 fill="#484848" fill-opacity="1" stroke="#ffffff"
-															 stroke-width="2" focusable="false" aria-label="찜하기" 
-															 role="img" stroke-linecap="round" stroke-linejoin="round"
-															 preserveAspectRatio="xMidYMid meet">
-															<metadata>
-															Created by potrace 1.15, written by Peter Selinger 2001-2017
-															</metadata>
-															<g>
-															<path d="m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6"/>
-															</g>
-															</svg>
-														</button>
-													</div>
-												</div>
-											</div>
-										</a>
-									</li>
-									
-									<li>
-															<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
-										<a class="wantItemCard" href="searchItem.do?itemId=${dto.itemId }">
-											<div class="wantItemInside">
-												<div class="itemImageBox">
-													<!-- 경로 마지막 부분을 ${dto.itemImagePath }로 바꿔준다 -->
-													<img src="image/kiwi.jpg" />
-												</div>
-												
-												<div class="itemDescribeBox">
-													<div>
-														<div class="itemName">찜한 상품이름 ${dto.itemName }</div>
-														<div class="itemPrice">15000 ${dto.itemPrice }</div>
-													</div>
-													
-													<div>
-														<button type="button" class="wantItemBtn" style="border:none; background-color:lightgray;">
-														<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-															 width="35px" height="35px" viewBox="0 0 25 25"
-															 fill="#f44336" fill-opacity="1" stroke="#ffffff"
-															 stroke-width="2" focusable="false" aria-label="찜하기" 
-															 role="img" stroke-linecap="round" stroke-linejoin="round"
-															 preserveAspectRatio="xMidYMid meet">
-															<metadata>
-															Created by potrace 1.15, written by Peter Selinger 2001-2017
-															</metadata>
-															<g>
-															<path d="m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6"/>
-															</g>
-															</svg>
-														</button>
-													</div>
-												</div>
-											</div>
-										</a>
-									</li>
-									
-									<li>
-															<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
-										<a class="wantItemCard" href="searchItem.do?itemId=${dto.itemId }">
-											<div class="wantItemInside">
-												<div class="itemImageBox">
-													<!-- 경로 마지막 부분을 ${dto.itemImagePath }로 바꿔준다 -->
-													<img src="image/kiwi2.png" />
-												</div>
-												
-												<div class="itemDescribeBox">
-													<div>
-														<div class="itemName">찜한 상품이름 ${dto.itemName }</div>
-														<div class="itemPrice">15000 ${dto.itemPrice }</div>
-													</div>
-													
-													<div>
-														<button type="button" class="wantItemBtn" style="border:none; background-color:lightgray;">
-														<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-															 width="35px" height="35px" viewBox="0 0 25 25"
-															 fill="#f44336" fill-opacity="1" stroke="#ffffff"
-															 stroke-width="2" focusable="false" aria-label="찜하기" 
-															 role="img" stroke-linecap="round" stroke-linejoin="round"
-															 preserveAspectRatio="xMidYMid meet">
-															<metadata>
-															Created by potrace 1.15, written by Peter Selinger 2001-2017
-															</metadata>
-															<g>
-															<path d="m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6"/>
-															</g>
-															</svg>														</button>
-													</div>
-												</div>
-											</div>
-										</a>
-									</li>
-									
-									<li>
-															<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
-										<a class="wantItemCard" href="searchItem.do?itemId=${dto.itemId }">
-											<div class="wantItemInside">
-												<div class="itemImageBox">
-													<!-- 경로 마지막 부분을 ${dto.itemImagePath }로 바꿔준다 -->
-													<img src="image/kiwi3.png" />
-												</div>
-												
-												<div class="itemDescribeBox">
-													<div>
-														<div class="itemName">찜한 상품이름 ${dto.itemName }</div>
-														<div class="itemPrice">15000 ${dto.itemPrice }</div>
-													</div>
-													
-													<div>
-														<button type="button" class="wantItemBtn" style="border:none; background-color:lightgray;">
-														<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-															 width="35px" height="35px" viewBox="0 0 25 25"
-															 fill="#f44336" fill-opacity="1" stroke="#ffffff"
-															 stroke-width="2" focusable="false" aria-label="찜하기" 
-															 role="img" stroke-linecap="round" stroke-linejoin="round"
-															 preserveAspectRatio="xMidYMid meet">
-															<metadata>
-															Created by potrace 1.15, written by Peter Selinger 2001-2017
-															</metadata>
-															<g>
-															<path d="m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6"/>
-															</g>
-															</svg>
-														</button>
-													</div>
-												</div>
-											</div>
-										</a>
-									</li>
-									
-									<li>
-															<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
-										<a class="wantItemCard" href="searchItem.do?itemId=${dto.itemId }">
-											<div class="wantItemInside">
-												<div class="itemImageBox">
-													<!-- 경로 마지막 부분을 ${dto.itemImagePath }로 바꿔준다 -->
-													<img src="image/kiwi3.png" />
-												</div>
-												
-												<div class="itemDescribeBox">
-													<div>
-														<div class="itemName">찜한 상품이름 ${dto.itemName }</div>
-														<div class="itemPrice">15000 ${dto.itemPrice }</div>
-													</div>
-													
-													<div>
-														<button type="button" class="wantItemBtn" style="border:none; background-color:lightgray;">
-														<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-															 width="35px" height="35px" viewBox="0 0 25 25"
-															 fill="#f44336" fill-opacity="1" stroke="#ffffff"
-															 stroke-width="2" focusable="false" aria-label="찜하기" 
-															 role="img" stroke-linecap="round" stroke-linejoin="round"
-															 preserveAspectRatio="xMidYMid meet">
-															<metadata>
-															Created by potrace 1.15, written by Peter Selinger 2001-2017
-															</metadata>
-															<g>
-															<path d="m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6"/>
-															</g>
-															</svg>
-														</button>
-													</div>
-												</div>
-											</div>
-										</a>
-									</li>
-									
-									<li>
-															<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
-										<a class="wantItemCard" href="searchItem.do?itemId=${dto.itemId }">
-											<div class="wantItemInside">
-												<div class="itemImageBox">
-													<!-- 경로 마지막 부분을 ${dto.itemImagePath }로 바꿔준다 -->
-													<img src="image/kiwi3.png" />
-												</div>
-												
-												<div class="itemDescribeBox">
-													<div>
-														<div class="itemName">찜한 상품이름 ${dto.itemName }</div>
-														<div class="itemPrice">15000 ${dto.itemPrice }</div>
-													</div>
-													
-													<div>
-														<button type="button" class="wantItemBtn" style="border:none; background-color:lightgray;">
-														<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-															 width="35px" height="35px" viewBox="0 0 25 25"
-															 fill="#f44336" fill-opacity="1" stroke="#ffffff"
-															 stroke-width="2" focusable="false" aria-label="찜하기" 
-															 role="img" stroke-linecap="round" stroke-linejoin="round"
-															 preserveAspectRatio="xMidYMid meet">
-															<metadata>
-															Created by potrace 1.15, written by Peter Selinger 2001-2017
-															</metadata>
-															<g>
-															<path d="m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6"/>
-															</g>
-															</svg>
-														</button>
-													</div>
-												</div>
-											</div>
-										</a>
-									</li>
-									
-									<li>
-															<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
-										<a class="wantItemCard" href="searchItem.do?itemId=${dto.itemId }">
-											<div class="wantItemInside">
-												<div class="itemImageBox">
-													<!-- 경로 마지막 부분을 ${dto.itemImagePath }로 바꿔준다 -->
-													<img src="image/kiwi3.png" />
-												</div>
-												
-												<div class="itemDescribeBox">
-													<div>
-														<div class="itemName">찜한 상품이름 ${dto.itemName }</div>
-														<div class="itemPrice">15000 ${dto.itemPrice }</div>
-													</div>
-													
-													<div>
-														<button type="button" class="wantItemBtn" style="border:none; background-color:lightgray;">
-														<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-															 width="35px" height="35px" viewBox="0 0 25 25"
-															 fill="#f44336" fill-opacity="1" stroke="#ffffff"
-															 stroke-width="2" focusable="false" aria-label="찜하기" 
-															 role="img" stroke-linecap="round" stroke-linejoin="round"
-															 preserveAspectRatio="xMidYMid meet">
-															<metadata>
-															Created by potrace 1.15, written by Peter Selinger 2001-2017
-															</metadata>
-															<g>
-															<path d="m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6"/>
-															</g>
-															</svg>
-														</button>
-													</div>
-												</div>
-											</div>
-										</a>
-									</li>
-									
-									<!-- li를 c:forEach로 감싸줌 !!! -->
-									<!--<c:forEach items="${wantItemList}" var="dto"> -->
-									<!-- </c:forEach> -->
-									
-									<li>
-															<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
-										<a class="wantItemCard" href="searchItem.do?itemId=${dto.itemId }">
-											<div class="wantItemInside">
-												<div class="itemImageBox">
-													<!-- 경로 마지막 부분을 ${dto.itemImagePath }로 바꿔준다 -->
-													<img src="image/kiwi3.png" />
-												</div>
-												
-												<div class="itemDescribeBox">
-													<div>
-														<div class="itemName">찜한 상품이름 ${dto.itemName }</div>
-														<div class="itemPrice">15000 ${dto.itemPrice }</div>
-													</div>
-													
-													<div>
-														<button type="button" class="wantItemBtn" style="border:none; background-color:lightgray;">
-														<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-															 width="35px" height="35px" viewBox="0 0 25 25"
-															 fill="#f44336" fill-opacity="1" stroke="#ffffff"
 															 stroke-width="2" focusable="false" aria-label="찜하기" 
 															 role="img" stroke-linecap="round" stroke-linejoin="round"
 															 preserveAspectRatio="xMidYMid meet">

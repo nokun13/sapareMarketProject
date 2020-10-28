@@ -27,4 +27,31 @@
 		update tbl_reply set replytext=#{replytext}
 		where rno=#{rno}
 	</update> -->
+	<select id="receivedReview" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where a.memberName=#{memberName, jdbcType=VARCHAR} and
+		reviewNo is not null
+		order by a.itemId desc
+	</select>
+	
+	<select id="sentReview" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where b.memberName=#{memberName, jdbcType=VARCHAR} and
+		reviewNo is not null
+		order by a.itemId desc
+	</select>
 </mapper>

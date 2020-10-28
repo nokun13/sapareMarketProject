@@ -38,6 +38,6 @@
 		left outer join
 		    sapareMember d on b.memberName = d.memberName
 		where b.memberName=#{memberName}
-		order by a.itemId desc
+		order by b.orderDate desc
 	</select>
 </mapper>

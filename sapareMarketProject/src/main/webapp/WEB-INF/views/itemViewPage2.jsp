@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/itemViewPage2.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="js/itemViewPage2.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -28,12 +29,12 @@
 					<!-- 카테고리 시작점 -->
 					<div class="ctg-start">
 						<a href="http://localhost:8090/sapare/mainPage.do"><img
-							src="image/itemViewPage/home.jpg" width=20px; height=20px alt="홈">
+							src="image/home.jpg" width=20px; height=20px alt="홈">
 							홈</a>
 					</div>
 					<!-- 첫번째 카테고리 구역 -->
 					<div class="ctg1-section">
-						<img src="image/itemViewPage/loc.jpg" width=15px; height=15px;
+						<img src="image/loc.jpg" width=15px; height=15px;
 							alt="카테고리 선택 아이콘">
 						<!-- 첫번째 카테고리 창 길이 -->
 						<div class="ctg1-width">
@@ -41,7 +42,7 @@
 							<div class="ctg1-tle">
 								<!-- 카테고리 옵션 -->
 								<div class="ctg1-op">
-									경매 <img src="image/itemViewPage/down.jpg" width=20px;
+									경매 <img src="image/down.jpg" width=20px;
 										height=15px; alt="카테고리 화살표 아이콘" />
 								</div>
 
@@ -69,7 +70,7 @@
 						<div class="pic-tle">
 							<!-- 상품사진  -->
 							<div class="pic-show">
-								<img src="image/itemViewPage/carrier.jpg" class="sc-pic" />
+								<img src="image/${list.itemImagePath }" class="sc-pic" />
 							</div>
 						</div>
 					</div>
@@ -82,14 +83,14 @@
 								<!-- 제목과 가격 틀-->
 								<div class="title-price-tle">
 									<!-- 제목 -->
-									<div class="title">펭수가방</div>
+									<div class="title">${list.itemName }</div>
 									<!-- 시작가 -->
 									<div class="start-m">시작가</div>
 									<!-- 가격  틀-->
 									<div class="price-tle">
 										<!-- 가격 -->
 										<div class="price">
-											750.000<span>원</span>
+											${list.itemPrice }<span>원</span>
 										</div>
 									</div>
 								</div>
@@ -99,28 +100,96 @@
 									<div class="sa-co-date-de-tle">
 										<!-- 찜 조회수 올린날짜 틀 -->
 										<div class="sa-co-date-tle">
-											<!-- 찜 틀 -->
-											<div class="sa-tle">
-												<img src="image/itemViewPage/sa.png" width=16px;
-													height=16px; alt="상품 상태 아이콘">
-												<div class="sa-count">1</div>
-											</div>
 											<!-- 조회수 틀 -->
 											<div class="co-tle">
-												<img src="image/itemViewPage/eye.jpg" width=16px;
-													height=16px; alt="상품 상태 아이콘">21
+												<img src="image/eye.jpg" width=16px;
+													height=16px; alt="상품 상태 아이콘">${list.itemViewCnt }
 											</div>
 											<!-- 올린 날짜 틀 -->
 											<div class="date-tle">
-												<img src="image/itemViewPage/date.jpg" width=16px;
-													height=16px; alt="상품 상태 아이콘">10월 27일
+												<img src="image/date.jpg" width=16px;
+													height=16px; alt="상품 상태 아이콘">${list.itemUploadPath }
 											</div>
 										</div>
 										<!-- 신고하기 버튼 -->
-										<button class="declaration">
-											<img src="image/itemViewPage/declaration.png" width=15px;
+										<button id="decl-btn" class="declaration">
+											<img src="image/declaration.png" width=15px;
 												height=15px; alt="신고 아이콘">신고하기
 										</button>
+										<div id="decl-modal" class="modal">
+											<div class="modal-content">
+												<span class="close">&times;</span>
+												<div class="auto">
+													<span class="decl-title">신고하기</span>
+												</div>
+												<!-- 신고 전체 틀 -->
+												<div class="decl-content-all-tle">
+													<!-- 신고 틀 -->
+													<div class="decl-content-tle">
+														<div class="span-decl-content1">
+															<span>광고(상점홍보, 낚시글, 도배글)</span>
+														</div>
+														<div class="1" id="sp">
+															<div class="decl-conform">
+																<input class="decl-conform-input" type="text"
+																	placeholder="사유" />
+																<button type="button">등록</button>
+															</div>
+														</div>
+													</div>
+													<div class="decl-content-tle">
+														<div class="span-decl-content2">
+															<span>물품정보 부정확(카테고리, 가격, 사진)</span>
+														</div>
+														<div class="2" id="sp">
+															<div class="decl-conform">
+																<input class="decl-conform-input" type="text"
+																	placeholder="사유" />
+																<button type="button">등록</button>
+															</div>
+														</div>
+													</div>
+													<div class="decl-content-tle">
+														<div class="span-decl-content3">
+															<span>거래 금지 품목(담배, 주류, 장물)</span>
+														</div>
+														<div class="3" id="sp">
+															<div class="decl-conform">
+																<input class="decl-conform-input" type="text"
+																	placeholder="사유" />
+																<button type="button">등록</button>
+															</div>
+														</div>
+													</div>
+													<div class="decl-content-tle">
+														<div class="span-decl-content4">
+															<span>언어폭력(비방, 욕설, 성희롱)</span>
+														</div>
+														<div class="4" id="sp">
+															<div class="decl-conform">
+																<input class="decl-conform-input" type="text"
+																	placeholder="사유" />
+																<button type="button">등록</button>
+															</div>
+														</div>
+													</div>
+													<div class="decl-content-tle">
+														<div class="span-decl-content5">
+															<span>기타사유(직접입력)</span>
+														</div>
+														<div class="5" id="sp">
+															<div class="decl-conform">
+																<input class="decl-conform-input" type="text"
+																	placeholder="사유" />
+																<button type="button">등록</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+
 									</div>
 									<!-- 상품상태 전체 틀 -->
 									<div class="item-state-tle">
@@ -128,14 +197,14 @@
 											<!-- 상품 상태 정보  -->
 											<div class="item-info">거래지역</div>
 											<!-- 상품 상태 -->
-											<div class="item-st">서울특별시/구로구</div>
+											<div class="item-st">${list.itemCity }</div>
 										</div>
 										<!-- 상품 한줄 틀 -->
 										<div class="item-one-tle">
 											<!-- 상품 상태 정보  -->
-											<div class="item-info">상품상태</div>
+											<div class="item-info">상품분류</div>
 											<!-- 상품 상태 -->
-											<div class="item-st">경매</div>
+											<div class="item-st">${list.itemType }</div>
 										</div>
 									</div>
 								</div>
@@ -143,14 +212,14 @@
 								<div class="auc-bar-tle">
 									<!-- 경매 남은시간 문구 틀  -->
 									<div class="auc-timer-info-tle">
-										<div class="auc-timer">00:00:00</div>
+										<div class="auc-timer" id="countdown"></div>
 										<div class="auc-info">마감까지 남은 시간</div>
 									</div>
 								</div>
 								<!-- 현재가 틀 -->
 								<div class="present-price-tle">
 									<!-- 현재가 문구 -->
-									<div class="present-price">현재가 790.000원</div>
+									<div class="present-price">현재가 ${itemPrice }원</div>
 								</div>
 							</div>
 						</div>
@@ -167,7 +236,7 @@
 						<div class="des-div">
 							<button class="des" type="button">-</button>
 						</div>
-						<input type="text" class="bid-price-set" value="2400">
+						<input type="text" class="bid-price-set" value="2400" >
 						<div class="des-ins">
 							<button class="ins" type="button">+</button>
 						</div>
@@ -196,26 +265,14 @@
 							<th>금액</th>
 							<th>시간</th>
 						</tr>
-						<tr>
-							<td>오징어</td>
-							<td>8000000</td>
-							<td>20201021112030</td>
-						</tr>
-						<tr>
-							<td>오용</td>
-							<td>9000000</td>
-							<td>20201021112130</td>
-						</tr>
-						<tr>
-							<td>용가리</td>
-							<td>10000000</td>
-							<td>20201021112230</td>
-						</tr>
-						<tr>
-							<td>쭌</td>
-							<td>11000000</td>
-							<td>20201021112300</td>
-						</tr>
+						<!-- 경매구매자 리스트 가져오기 -->
+						<c:forEach items="${auctionList }" var="dto">
+							<tr>
+								<td>${dto.buyerName }</td>
+								<td>${dto.auctionCallPrice }</td>
+								<td>${dto.auctionDate }</td>
+							</tr>
+						</c:forEach>
 					</table>
 				</div>
 			</div>
@@ -230,7 +287,7 @@
 							연관상품
 							<!-- 광고 틀 -->
 							<div class="ad-tle">AD</div>
-							<img src="image/itemViewPage/ad.png" alt="AD 가이드" width="16"
+							<img src="image/ad.png" alt="AD 가이드" width="16"
 								height="16" style="margin-top: 6px;">
 						</div>
 					</div>
@@ -241,7 +298,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> <!-- 광고 사진 -->
 								<div class="ad-pic">
-									<img src="image/itemViewPage/carrier.jpg" width="155"
+									<img src="image/carrier.jpg" width="155"
 										height="155" alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -252,7 +309,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> <!-- 광고 사진 -->
 								<div class="ad-pic">
-									<img src="image/itemViewPage/carrier.jpg" width="155"
+									<img src="image/carrier.jpg" width="155"
 										height="155" alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -263,7 +320,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> <!-- 광고 사진 -->
 								<div class="ad-pic">
-									<img src="image/itemViewPage/carrier.jpg" width="155"
+									<img src="image/carrier.jpg" width="155"
 										height="155" alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -274,7 +331,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> <!-- 광고 사진 -->
 								<div class="ad-pic">
-									<img src="image/itemViewPage/carrier.jpg" width="155"
+									<img src="image/carrier.jpg" width="155"
 										height="155" alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -285,7 +342,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> <!-- 광고 사진 -->
 								<div class="ad-pic">
-									<img src="image/itemViewPage/carrier.jpg" width="155"
+									<img src="image/carrier.jpg" width="155"
 										height="155" alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -307,31 +364,27 @@
 							<div class="img-nik2-tle">
 								<!-- 회원 이미지-->
 								<div class="member-img">
-									<img src="image/itemViewPage/log.png" width="80" height="80"
+									<a href="profileSell.do">
+									<img src="image/${list.profileImg }" width="80" height="80"
 										alt="회원 이미지">
+									</a>
 								</div>
 								<!-- 회원 닉네임 등급 틀 -->
 								<div class="nik-rank-tle">
-									<div class="nik">회원닉네임</div>
-									<div class="rank">회원등급</div>
+									<div class="nik">${list.nickname }</div>
+									<div class="rank">${list.memberRank }</div>
 								</div>
 							</div>
 						</div>
 						<!-- 상품 정보 -->
 						<div class="more-info-title">상품정보</div>
 						<!-- 상품 내용 -->
-						<div class="more-info-content">한정판 펭수 캐리어입니다. 있을 때 사세요
-							ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ 한정판 펭수 캐리어입니다. 있을 때 사세요 ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ
-							한정판 펭수 캐리어입니다. 있을 때 사세요 ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ 한정판 펭수 캐리어입니다. 있을 때
-							사세요 ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ 한정판 펭수 캐리어입니다. 있을 때 사세요
-							ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ 한정판 펭수 캐리어입니다. 있을 때 사세요 ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ
-							한정판 펭수 캐리어입니다. 있을 때 사세요 ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ 한정판 펭수 캐리어입니다. 있을 때
-							사세요 ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ 한정판 펭수 캐리어입니다. 있을 때 사세요
-							ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ</div>
+						<div class="more-info-content">${list.itemAbout }</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 </body>
 </html>

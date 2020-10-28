@@ -2,6 +2,8 @@ package dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
 import dto.boardDTO;
@@ -9,6 +11,7 @@ import dto.itemDTO;
 import dto.memberDTO;
 import dto.memberStatusDTO;
 import dto.orderDTO;
+import dto.questionDTO;
 
 public class SapareDaoImp implements SapareDAO{
 
@@ -75,6 +78,60 @@ public class SapareDaoImp implements SapareDAO{
 		sqlSession.update("member.changePassword", dto);
 	}
 	
+		// 찜 목록 가져오기
+	@Override
+	public List<itemDTO> wantItemMethod(memberDTO dto) {
+		return sqlSession.selectList("item.wantItem", dto);
+	}
+	
+		// 받은 후기 가져오기
+	@Override
+	public List<itemDTO> receivedReviewMethod(memberDTO dto) {
+		return sqlSession.selectList("review.receivedReview", dto);
+	}
+		// 작성한 후기 가져오기
+	@Override
+	public List<itemDTO> sentReviewMethod(memberDTO dto) {
+		return sqlSession.selectList("review.sentReview", dto);
+	}
+	
+		// 판매중인 상품만 가져오기
+	@Override
+	public List<itemDTO> sellingOnlyMethod(memberDTO dto) {
+		return sqlSession.selectList("item.sellingOnly", dto);
+	}
+		// 판매완료인 상품만 가져오기
+	@Override
+	public List<itemDTO> soldOnlyMethod(memberDTO dto) {
+		return sqlSession.selectList("item.soldOnly", dto);
+	}
+	
+		// 찜 많은 상품순
+	@Override
+	public List<itemDTO> wantNumMethod(memberDTO dto) {
+		return sqlSession.selectList("item.wantNumItem", dto);
+	}
+		// 찜 저가순
+	@Override
+	public List<itemDTO> wantPriceMethod(memberDTO dto) {
+		return sqlSession.selectList("item.wantPriceItem", dto);
+	}
+	
+		// 판매 지난 주까지
+	@Override
+	public List<itemDTO> sellWeekMethod(memberDTO dto) {
+		return sqlSession.selectList("item.getWeek", dto);
+	}
+		// 판매 지난 달까지
+	@Override
+	public List<itemDTO> sellMonthMethod(memberDTO dto) {
+		return sqlSession.selectList("item.getMonth", dto);
+	}
+		// 판매 지난 6개월까지
+	@Override
+	public List<itemDTO> sellSixMonthsMethod(memberDTO dto) {
+		return sqlSession.selectList("item.getSixMonths", dto);
+	}
 	
 	// 김녹훈 end //////////////////////////////////////////
 	
@@ -134,6 +191,56 @@ public class SapareDaoImp implements SapareDAO{
 	public List<boardDTO> faqlist() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("board.boardSelectfaq");
+	}
+
+	@Override
+	public List<itemDTO> itemlist() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("item.itemSelect");
+	}
+
+	@Override
+	public List<questionDTO> questionlist() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("question.questionSelect");
+	}
+
+	@Override
+	public void postq(questionDTO dto) {
+		sqlSession.insert("question.questioninsert", dto);
+		
+	}
+
+	@Override
+	public List<memberDTO> memberlist() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("member.memberSelect");
+	}
+
+	@Override
+	public void signup(memberDTO dto) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("member.signup", dto);
+	}
+
+	@Override
+	public boolean loginCheck(memberDTO dto) {
+		// TODO Auto-generated method stub
+	/*	String name = sqlSession.selectOne("member.loginCheck", dto);*/
+		
+		return (sqlSession.selectOne("member.loginCheck", dto) == null) ? false : true;
+	}
+
+	@Override
+	public memberDTO viewMember(memberDTO dto) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("member.viewMember",dto);
+	}
+
+	@Override
+	public void logout(HttpSession session) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	// 김소정 end ///////////////////////////////////////////

@@ -2,12 +2,15 @@ package service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import dao.SapareDAO;
 import dto.boardDTO;
 import dto.itemDTO;
 import dto.memberDTO;
 import dto.memberStatusDTO;
 import dto.orderDTO;
+import dto.questionDTO;
 
 public class SapareServiceImp implements SapareService{
 
@@ -68,9 +71,65 @@ public class SapareServiceImp implements SapareService{
 		dao.changeProfileImgMethod(dto);
 	}
 	
+		// 비밀번호 변경
 	@Override
 	public void changePasswordProcess(memberDTO dto) {
 		dao.changePasswordMethod(dto);
+	}
+	
+		// 찜 목록 가져오기
+	@Override
+	public List<itemDTO> wantItemProcess(memberDTO dto) {
+		return dao.wantItemMethod(dto);
+	}
+	
+		// 받은 후기 가져오기
+	@Override
+	public List<itemDTO> receivedReviewProcess(memberDTO dto) {
+		return dao.receivedReviewMethod(dto);
+	}
+		// 작성한 후기 가져오기
+	@Override
+	public List<itemDTO> sentReviewProcess(memberDTO dto) {
+		return dao.sentReviewMethod(dto);
+	}
+
+		// 판매중인 상품만 가져오기
+	@Override
+	public List<itemDTO> sellingOnlyProcess(memberDTO dto) {
+		return dao.sellingOnlyMethod(dto);
+	}
+		// 판매완료인 상품만 가져오기
+	@Override
+	public List<itemDTO> soldOnlyProcess(memberDTO dto) {
+		return dao.soldOnlyMethod(dto);
+	}
+		
+		// 찜 많은 상품순
+	@Override
+	public List<itemDTO> wantNumProcess(memberDTO dto) {
+		return dao.wantNumMethod(dto);
+	}
+		// 찜 저가순
+	@Override
+	public List<itemDTO> wantPriceProcess(memberDTO dto) {
+		return dao.wantPriceMethod(dto);
+	}
+	
+		// 판매 지난 주까지
+	@Override
+	public List<itemDTO> sellWeekProcess(memberDTO dto) {
+		return dao.sellWeekMethod(dto);
+	}
+		// 판매 지난 달까지
+	@Override
+	public List<itemDTO> sellMonthProcess(memberDTO dto) {
+		return dao.sellMonthMethod(dto);
+	}
+		// 판매 지난 6개월까지
+	@Override
+	public List<itemDTO> sellSixMonthsProcess(memberDTO dto) {
+		return dao.sellSixMonthsMethod(dto);
 	}
 	
 	// 김녹훈 end //////////////////////////////////////////
@@ -122,6 +181,61 @@ public class SapareServiceImp implements SapareService{
 	public List<boardDTO> faqlistProcess() {
 		// TODO Auto-generated method stub
 		return dao.faqlist();
+	}
+
+	@Override
+	public List<itemDTO> itemlistProcess() {
+		// TODO Auto-generated method stub
+		return dao.itemlist();
+	}
+
+	@Override
+	public List<questionDTO> questionlistProcess() {
+		// TODO Auto-generated method stub
+		return dao.questionlist();
+	}
+
+	@Override
+	public void questioninsertProcess(questionDTO dto) {
+		dao.postq(dto);
+		
+	}
+
+	@Override
+	public List<memberDTO> memberlistProcess() {
+		// TODO Auto-generated method stub
+		return dao.memberlist();
+	}
+
+	@Override
+	public void signupProcess(memberDTO dto) {
+		// TODO Auto-generated method stub
+		dao.signup(dto);
+	}
+
+
+	@Override
+	public memberDTO viewMember(memberDTO dto) {
+		// TODO Auto-generated method stub
+		return dao.viewMember(dto);
+	}
+
+	@Override
+	public void logout(HttpSession session) {
+		// TODO Auto-generated method stub
+		session.invalidate();
+	}
+
+	@Override
+	public boolean loginCheck(memberDTO dto, HttpSession session) {
+		boolean result = dao.loginCheck(dto);
+		if(result) {
+			memberDTO pdto = viewMember(dto);
+			
+			session.setAttribute("memberId", pdto.getMemberId());
+			session.setAttribute("memberPw", pdto.getMemberPw());
+		}
+		return result;
 	}
 	
 	// 김소정 end ////////////////////////////////////////

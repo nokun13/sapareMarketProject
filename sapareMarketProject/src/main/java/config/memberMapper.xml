@@ -55,4 +55,24 @@
 		update saparemember set memberPw=#{memberPw}
 		where memberName=#{memberName}
 	</update>
+	
+	<select id="memberSelect" resultType="dto.memberDTO">
+		select memberId, memberPw from sapareMember
+		where memberId=#{memberId} and memberPw=#{memberPw}
+	</select>
+
+<select id="loginCheck" resultType="dto.memberDTO">
+		select memberId, memberPw from sapareMember
+		where memberId=#{memberId} and memberPw=#{memberPw}
+	</select>
+
+<select id="viewMember" resultType="dto.memberDTO">
+select memberId, memberPw  from sapareMember
+where memberId=#{memberId} and memberPw=#{memberPw}
+</select>
+
+<insert id="signup" parameterType="dto.memberDTO">
+	insert into sapareMember
+	values(#{memberName,jdbcType=VARCHAR},#{memberId},#{memberPw},#{birthday,jdbcType=VARCHAR},#{phoneNum,jdbcType=VARCHAR},#{profileImg,jdbcType=VARCHAR},#{memberAbout,jdbcType=VARCHAR},#{nickname,jdbcType=VARCHAR})
+	</insert>
 </mapper>

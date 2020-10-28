@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -184,7 +185,7 @@ header ul li a {
 .profileContent{
 	display: flex;
 	width: 80%;
-	height: auto;
+	height: 100%;
 	margin-left: 15px;
 	margin-top: 15px;
 	margin-right: 10px;
@@ -257,16 +258,6 @@ header ul li a {
 .contentOptions select{
 	margin-left: 20px;
 	outline: none;
-}
-
-.sellItemBox{
-	display: flex;
-	width: 100%;
-	height: 150px;
-	background-color: gray;
-	flex-direction: row;
-	border-radius: 5px;
-	margin-bottom: 2%;
 }
 
 .sellItemImg{
@@ -406,10 +397,41 @@ header ul li a {
 	background-color: #E6F6FB;
 }
 
-form{
-	display: flex;
-    width: 100%;
-    height: 100%;
+.sellDate-options{
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	z-index: 1;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.sellDate-options a{
+	float: none;
+	color: black;
+	text-decoration: none;
+  	display: block;
+  	text-align: left;
+}
+
+.sellDate-options a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#sellDateBtn{
+	font-size: 15px;
+    border: 1px solid rgb(41, 171, 226);
+    outline: none;
+    color: rgb(41, 171, 226);
+    padding: 6px 6px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 5px;
+}
+
+.sellDate:hover .sellDate-options {
+  display: block;
 }
 
 </style>
@@ -438,7 +460,10 @@ form{
 				type:'GET',
 				dataType:'json',
 				url:'memberInfoGet.do?memberName=${member.memberName}',
-				success: change_nickname
+				success: change_nickname,
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
 			});
 			
 		});
@@ -464,7 +489,10 @@ form{
 					type:'GET',
 					dataType:'json',
 					url:'checkNickname.do?nickname=' + $("#newNickname").val(),
-					success: get_new_nickname
+					success: get_new_nickname,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 			});
 		};
@@ -478,7 +506,10 @@ form{
 					type:'GET',
 					dataType:'json',
 					url:'changeNickname.do?memberName=${member.memberName}&nickname=' + $("#newNickname").val(),
-					success: change_to_new_nickname
+					success: change_to_new_nickname,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 			}
 		};
@@ -497,7 +528,10 @@ form{
 				type:'GET',
 				dataType:'json',
 				url:'memberInfoGet.do?memberName=${member.memberName}',
-				success: change_about_content
+				success: change_about_content,
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
 			});
 			
 		});
@@ -506,7 +540,7 @@ form{
 		function change_about_content(res){
 			
 			$(".memberAbout").html('<textarea id="aboutContent" rows="8" cols="65" maxlength="80" style="background-color:white;border:1px solid black;cursor:auto;">'+res.memberAbout+'</textarea>')
-			$(".aboutChangeBox").append('<button type="button" id="submitAbout" style="margin: 10px; cursor:pointer;">확인</button>');
+			$(".aboutChangeBox").append("<button type='button' id='submitAbout' style='margin: 10px; cursor:pointer;'>확인</button>");
 			
 			$("#changeAbout").hide();
 			
@@ -515,7 +549,10 @@ form{
 					type:'GET',
 					dataType:'json',
 					url:'changeMemberAbout.do?memberName=${member.memberName}&memberAbout='+$("#aboutContent").val(),
-					success: after_about_change
+					success: after_about_change,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				});
 			});
 			
@@ -607,7 +644,7 @@ form{
 					success:profile_img_change,
 					error:function(request,status,error){
 					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					   }
+					}
 				});
 			});	
 		}); // end change()
@@ -619,30 +656,28 @@ form{
 			$("#profileImgChange").show();
 		};
 		
+		// 받은 후기/작성한 후기 바꾸기
+		$("#sellingOrSold").on('change', function(){
+			var option = $("#sellingOrSold option:selected").val();
+			if(option == "allSell"){
+				console.log("all sell");
+				$(".sellItemBox").css("display", "flex");
+			} else if(option == "sellingOnly"){
+				$(".sellItemBox").css("display", "flex");
+				console.log("selling Only");
+				$("p:contains('판매날짜')").parent().parent().parent().css("display", "none");
+			} else if(option == "soldOnly"){
+				$(".sellItemBox").css("display", "flex");
+				console.log("sold Only");
+				$("p:contains('판매중')").parent().parent().parent().css("display", "none");
+			}
+		});
+		
 	}); // end ready()
 </script>
 </head>
 <body>
-	<header>
-		<div class="side-logo-container" style="display: flex;">
-			<span style="font-size: 40px; cursor: pointer; margin-right: 7px;"
-				class="side-open-btn">&#9776;</span> <a
-				href="http://localhost:8090/sapare/mainPage.do" class="logo"><img
-				src="image/sapare.jpg" width=50px; height=50px;></a>
-		</div>
-
-		<div class="text">
-			<input type="text" placeholder="검색어를 입력해 주세요"
-				style="width: 300px; height: 23px;">
-			<button>
-				<img src="image/search.gif" width=20px; height=20px;>
-			</button>
-		</div>
-		<ul>
-			<li><a href="log/sign" class="headerba">로그인/회원가입</a></li>
-			<li><a href="my?page=main" class="headerba">마이페이지</a></li>
-		</ul>
-	</header>
+	<jsp:include page="header.jsp" flush="false" />
 	<!-- header 끝 -->
 	
 	<div class="wrap">
@@ -712,16 +747,25 @@ form{
 					</div>
 					<div class="profileContent">
 						<div class="contentOptions">
-							<select>
-								<option value="everyItem">전체</option>
-								<option value="lastWeek">지난 7일</option>
-								<option value="lastMonth">지난 30일</option>
-								<option value="lastSixMonths">지난 6개월</option>
+							<div class="sellDate">
+								<button id="sellDateBtn">기간
+								</button>
+								<div class="sellDate-options">
+							      <a href="profileSell.do">전체</a>
+							      <a href="getWeekSellProcess.do">지난 7일</a>
+							      <a href="getMonthSellProcess.do">지난 30일</a>
+							      <a href="getSixMonthsProcess.do">지난 6개월</a>
+							    </div>
+							</div>
+							<select id="sellingOrSold">
+								<option value="allSell">전체</option>
+								<option value="sellingOnly">판매중</option>
+								<option value="soldOnly">판매완료</option>
 							</select>
 						</div>
 						<div class="contents">
 							<c:forEach items="${iList}" var="dto">
-								<div class="sellItemBox">
+								<div class="sellItemBox" style="display: flex;width: 100%;height: 150px;background-color: gray;flex-direction: row;border-radius: 5px;margin-bottom: 2%;">
 									<div class="sellItemImg">
 										<a href="#"><img class="itemImg" src="image/${dto.itemImagePath }"></a>
 									</div>
@@ -730,10 +774,10 @@ form{
 											<div class="itemName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis; white-space: nowrap;">${dto.itemName }</div>
 											<div class="itemAbout" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis; white-space: nowrap;">${dto.itemAbout }</div>
 											<c:if test="${fn:contains(dto.itemStatus, 'y')}">
-												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange;text-overflow: ellipsis;white-space: nowrap;">${dto.itemPrice }원 판매가격</div>
+												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange;text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;">${dto.itemPrice }원</div>
 											</c:if>
 											<c:if test="${fn:contains(dto.itemStatus, 'n')}">
-												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange;text-overflow: ellipsis;white-space: nowrap;">${dto.orderPrice }원 주문가격</div>
+												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange;text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;">${dto.orderPrice }원</div>
 											</c:if>
 											<c:if test="${dto.reviewNo != 0}">
 												<button id="reviewBox${dto.reviewNo }" class="reviewToggleBtn" style="width:20%; margin: 5px auto; cursor:pointer;">후기 보기</button>
@@ -741,12 +785,12 @@ form{
 										</div>
 										
 										<div class="itemStatusBox">
-											<p style="color:orange;text-align:center;">
+											<p class="itemP${dto.itemId }" style="color:orange;text-align:center;">
 												<c:if test="${fn:contains(dto.itemStatus, 'y')}">
-													판매중
+													판매중: <br/><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.itemUploadDate }" />
 												</c:if>
 												<c:if test="${fn:contains(dto.itemStatus, 'n')}">
-													판매날짜: ${dto.orderDate }
+													판매날짜: <br/><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.orderDate }" />
 												</c:if>
 											</p>
 										</div>
@@ -758,9 +802,9 @@ form{
 											<a href="#"><img class="buyerImg" src="image/${dto.profileImg }"></a>
 										</div>
 										<div class="buyerReviewBox">
-											<div class="buyerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.nickname }구매자 닉네임</div>
-											<div class="buyerReviewContent" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.reviewContent }후기 내용</div>
-											<div class="buyerReviewStar" style="margin-top:5px; margin-left: 5px; height: 18%; font-size: 14px;">${dto.reviewStar} 별점 5개</div>
+											<div class="buyerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.nickname }</div>
+											<div class="buyerReviewContent" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.reviewContent }</div>
+											<div class="buyerReviewStar" style="margin-top:5px; margin-left: 5px; height: 18%; font-size: 14px;">${dto.reviewStar}</div>
 										</div>
 									</div>
 								</c:if>

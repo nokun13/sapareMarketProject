@@ -2,11 +2,14 @@ package dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import dto.boardDTO;
 import dto.itemDTO;
 import dto.memberDTO;
 import dto.memberStatusDTO;
 import dto.orderDTO;
+import dto.questionDTO;
 
 public interface SapareDAO {
 	
@@ -35,6 +38,31 @@ public interface SapareDAO {
 		// 비밀번호 변경
 	public void changePasswordMethod(memberDTO dto);
 	
+		// 찜 목록 가져오기
+	public List<itemDTO> wantItemMethod(memberDTO dto);
+	
+		// 받은 후기 가져오기
+	public List<itemDTO> receivedReviewMethod(memberDTO dto);
+		// 작성한 후기 가져오기
+	public List<itemDTO> sentReviewMethod(memberDTO dto);
+	
+		// 판매중인 상품만 가져오기
+	public List<itemDTO> sellingOnlyMethod(memberDTO dto);
+		// 판매완료인 상품만 가져오기
+	public List<itemDTO> soldOnlyMethod(memberDTO dto);
+	
+		// 찜 많은 상품순
+	public List<itemDTO> wantNumMethod(memberDTO dto);
+		// 찜 저가순
+	public List<itemDTO> wantPriceMethod(memberDTO dto);
+	
+		// 판매 지난 주까지
+	public List<itemDTO> sellWeekMethod(memberDTO dto);
+		// 판매 지난 달까지
+	public List<itemDTO> sellMonthMethod(memberDTO dto);
+		// 판매 지난 6개월까지
+	public List<itemDTO> sellSixMonthsMethod(memberDTO dto);
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	
@@ -50,6 +78,14 @@ public interface SapareDAO {
 	public List<boardDTO> list();
 	public boardDTO category(boardDTO dto);
 	public List<boardDTO> faqlist();
+	public List<itemDTO> itemlist();
+	public List<questionDTO> questionlist();
+	public void postq(questionDTO dto);
+	public List<memberDTO> memberlist();
+	public void signup (memberDTO dto);
+	public boolean loginCheck(memberDTO dto);
+	public memberDTO viewMember(memberDTO dto);
+	public void logout(HttpSession session);
 	
 	// 김소정 end ///////////////////////////////////////////////
 	

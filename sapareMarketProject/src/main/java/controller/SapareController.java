@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dto.boardDTO;
+import dto.itemDTO;
 import dto.memberDTO;
 import dto.memberStatusDTO;
-import dto.reviewDTO;
+import dto.questionDTO;
 import service.SapareService;
 
 // http://localhost:8090/sapare/mainPage.do
@@ -44,7 +45,7 @@ public class SapareController {
 	
 	// 김녹훈 start //////////////////////////////////////////
 
-		// 이미지 파일 경로 !!!
+		// 이미지 파일 경로 !!! 변경
 	private String uploadPath = "C:\\Users\\user\\Desktop\\workspace-spring\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\sapareMarketProject\\image";
 	
 		// 프로필 페이지 판매 메뉴
@@ -56,8 +57,7 @@ public class SapareController {
 		
 		memberStatusDTO sdto = new memberStatusDTO();
 		sdto.setMemberName("test");
-
-		System.out.println(service.sellInfoProcess(dto).get(0).getOrderDate());
+		
 		mav.addObject("iList", service.sellInfoProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(sdto));
@@ -84,6 +84,63 @@ public class SapareController {
 		
 	}
 	
+		// 판매중인 상품만 가져오기 ajax
+	@RequestMapping("/sellingOnlyProcess.do")
+	public List<itemDTO> sellingOnlyProcess(memberDTO dto, HttpServletRequest request) {
+		return service.sellingOnlyProcess(dto);
+	}
+		// 판매완료인 상품만 가져오기 ajax
+	@RequestMapping("/soldOnlyProcess.do")
+	public List<itemDTO> soldOnlyProcess(memberDTO dto, HttpServletRequest request) {
+		return service.soldOnlyProcess(dto);
+	}
+	
+		// 지난주 판매 가져오기
+	@RequestMapping("/getWeekSellProcess.do")
+	public ModelAndView getWeekSellProcess(ModelAndView mav) {
+		memberDTO dto = new memberDTO();
+		dto.setMemberName("test");
+		
+		memberStatusDTO sdto = new memberStatusDTO();
+		sdto.setMemberName("test");
+		
+		mav.addObject("iList", service.sellWeekProcess(dto));
+		mav.addObject("member", service.memberInfoProcess(dto));
+		mav.addObject("status", service.memberStatInfoProcess(sdto));
+		mav.setViewName("profileSellPage");
+		return mav;
+	}
+		// 지난달 판매 가져오기
+	@RequestMapping("/getMonthSellProcess.do")
+	public ModelAndView getMonthSellProcess(ModelAndView mav) {
+		memberDTO dto = new memberDTO();
+		dto.setMemberName("test");
+		
+		memberStatusDTO sdto = new memberStatusDTO();
+		sdto.setMemberName("test");
+		
+		mav.addObject("iList", service.sellMonthProcess(dto));
+		mav.addObject("member", service.memberInfoProcess(dto));
+		mav.addObject("status", service.memberStatInfoProcess(sdto));
+		mav.setViewName("profileSellPage");
+		return mav;
+	}
+		// 지난 6개월 판매 가져오기
+	@RequestMapping("/getSixMonthsProcess.do")
+	public ModelAndView getSixMonthsProcess(ModelAndView mav) {
+		memberDTO dto = new memberDTO();
+		dto.setMemberName("test");
+		
+		memberStatusDTO sdto = new memberStatusDTO();
+		sdto.setMemberName("test");
+		
+		mav.addObject("iList", service.sellSixMonthsProcess(dto));
+		mav.addObject("member", service.memberInfoProcess(dto));
+		mav.addObject("status", service.memberStatInfoProcess(sdto));
+		mav.setViewName("profileSellPage");
+		return mav;
+	}
+	
 		// 프로필 페이지 찜 메뉴
 	@RequestMapping("/profileWant.do")
 	public ModelAndView profileWantPageProcess(ModelAndView mav) {
@@ -94,6 +151,7 @@ public class SapareController {
 		memberStatusDTO sdto = new memberStatusDTO();
 		sdto.setMemberName("test");
 		
+		mav.addObject("wantList", service.wantItemProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(sdto));
 		mav.setViewName("profileWantPage");
@@ -101,7 +159,23 @@ public class SapareController {
 		
 	}
 	
-		// 프로필 페이지 후기 메뉴
+		// 새 상품 찜 순서 ajax
+	@RequestMapping("/newWantProcess.do")
+	public List<itemDTO> newWantProcess(memberDTO dto, HttpServletRequest request) {
+		return service.wantItemProcess(dto);
+	}
+		// 찜 많은 순서 ajax
+	@RequestMapping("/wantNumProcess.do")
+	public List<itemDTO> wantNumProcess(memberDTO dto, HttpServletRequest request) {
+		return service.wantNumProcess(dto);
+	}
+		// 저가순 찜 순서 ajax
+	@RequestMapping("/wantPriceProcess.do")
+	public List<itemDTO> wantPriceProcess(memberDTO dto, HttpServletRequest request) {
+		return service.wantPriceProcess(dto);
+	}
+	
+		// 프로필 페이지 후기 메뉴 (처음에는 받은 후기 보여준다)
 	@RequestMapping("/profileReview.do")
 	public ModelAndView profileReviewPageProcess(ModelAndView mav) {
 		
@@ -111,11 +185,24 @@ public class SapareController {
 		memberStatusDTO sdto = new memberStatusDTO();
 		sdto.setMemberName("test");
 		
+		mav.addObject("reviewBoxList", service.receivedReviewProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(sdto));
 		mav.setViewName("profileReviewPage");
 		return mav;
 		
+	}
+	
+	// 받은 후기 가져오기 ajax
+	@RequestMapping("/gotReviewProcess.do")
+	public List<itemDTO> gotReviewProcess(memberDTO dto, HttpServletRequest request) {
+		return service.receivedReviewProcess(dto);
+	}
+	
+	// 작성한 후기 가져오기 ajax
+	@RequestMapping("/sentReviewProcess.do")
+	public List<itemDTO> sentReviewProcess(memberDTO dto, HttpServletRequest request) {
+		return service.sentReviewProcess(dto);
 	}
 	
 		// 프로필 페이지 프로필설정 메뉴
@@ -205,12 +292,67 @@ public class SapareController {
 	
 	// 김소정 start ////////////////////////////////
 	
+	@RequestMapping("/header.do")
+	public ModelAndView headerPage(ModelAndView mav) {
+	
+		mav.setViewName("header");
+		return mav;
+	}
+	
+	@RequestMapping(value="/loginCheck.do",method=RequestMethod.POST)
+	public ModelAndView loginCheckMethod( memberDTO dto, HttpSession session,ModelAndView mav) {
+		boolean result= service.loginCheck(dto, session);
+	    mav.addObject("memberList",service.loginCheck(dto, session));
+		if(result == true) {
+			mav.setViewName("header");
+			
+			mav.addObject("msg", "success");
+		}else {
+			mav.setViewName("signup");
+			mav.addObject("msg","failure");
+		}
+	    
+	
+		return mav;
+		
+	}//
+	
+	@RequestMapping("/logout.do")
+	public ModelAndView logout(ModelAndView mav, HttpSession session) {
+	    service.logout(session);
+		mav.setViewName("mainPage");
+		mav.addObject("msg","logout");
+		return mav;
+	}
+	
+	
+	
+		
+	@RequestMapping("/d.do")
+	public ModelAndView d(ModelAndView mav) {
+	
+		mav.setViewName("d");
+		return mav;
+	}
+	
+	// 회원가입 
+	@RequestMapping("/signup.do")
+	public ModelAndView signupProcess(ModelAndView mav, memberDTO dto) {
+	
+		UUID random = UUID.randomUUID();
+		dto.setMemberName(random.toString());
+		dto.setNickname(random.toString());
+		mav.setViewName("mainPage");
+		return mav;
+	}
+		
 	@RequestMapping("/signupPage.do")
 	public ModelAndView signupListPage(ModelAndView mav) {
 				
 		mav.setViewName("signupPage");
 		return mav;
 				
+
 	} // end signupListPage()
 	
 	@RequestMapping("/information1.do")
@@ -242,6 +384,7 @@ public class SapareController {
 		mav.setViewName("helpPage");
 		return mav;
 				
+
 	} // end helpListPage()
 	
 	@RequestMapping(value="/helpNoticeWrite.do",method=RequestMethod.GET)
@@ -252,6 +395,7 @@ public class SapareController {
 		mav.setViewName("helpNoticeWrite");
 		return mav;
 	}
+
 	@RequestMapping(value="/helpNoticeWrite.do",method=RequestMethod.POST)
 	public ModelAndView writeProMethod( boardDTO dto, HttpServletRequest request,ModelAndView mav) {
 	    
@@ -264,12 +408,14 @@ public class SapareController {
 		
 	}//
 	
+
 	@RequestMapping("/helpFAQ.do")
 	public ModelAndView helpListFAQ(ModelAndView mav) {
 		mav.addObject("boardList", service.faqlistProcess());
 		mav.setViewName("helpFAQ");
 		return mav;
 				
+
 	}
 	
 	@RequestMapping(value="/helpNoticeUpdate.do", method=RequestMethod.GET)
@@ -279,6 +425,7 @@ public class SapareController {
 		mav.setViewName("helpNoticeUpdate");
 		
 		return mav;
+
 	}
 	
 	@RequestMapping(value="/helpNoticeUpdate.do",method=RequestMethod.POST) //update.jsp post이기때문
@@ -291,6 +438,7 @@ public class SapareController {
 		return mav;
 	}//updateProMethod
 	
+
 	@RequestMapping(value="/delete.do",method=RequestMethod.GET)
 	public ModelAndView deleteMethod(int num, HttpServletRequest request, ModelAndView mav) {
 		
@@ -300,6 +448,16 @@ public class SapareController {
 		return mav;
 		
 	}
+	
+	@RequestMapping(value="/helpPage.do",method=RequestMethod.POST) //update.jsp post이기때문
+	public ModelAndView questionProMethod(questionDTO dto, HttpServletRequest request, ModelAndView mav) {
+		
+		service.questioninsertProcess(dto);
+		
+		
+		mav.setViewName("redirect:/helpPage.do");
+		return mav;
+	}//updateProMethod
 	
 	// 김소정 end ////////////////////////////////
 	
@@ -323,8 +481,20 @@ public class SapareController {
 	
 	// 오용준 start /////////////////////////////////
 	
-	
-	
+	@RequestMapping("/itemViewPage.do")
+	   public ModelAndView itemViewPage(ModelAndView mav) {
+	      
+	      mav.setViewName("itemViewPage");
+	      return mav;
+	      
+	}
+	@RequestMapping("/itemViewPage2.do")
+	public ModelAndView itemViewPage2(ModelAndView mav) {
+	      
+	   mav.setViewName("itemViewPage2");
+	   return mav;
+	      
+	}
 	
 	// 오용준 end ///////////////////////////////////
 	
@@ -341,7 +511,6 @@ public class SapareController {
 		return mav;
 
 	} // end boardListPage()
-
 	
 	// 오정우 end /////////////////////////////////
 	
