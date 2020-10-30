@@ -299,10 +299,65 @@ header ul li a {
     height: 100%;
 }
 
+.reviewStar label:before{
+	content:'\f005';
+	font-family: fontAwesome;
+	position: relative;
+	font-size: 50px;
+	color: rgb(255,225,100);
+	display: flex;
+	cursor: default;
+	width: 55px;
+	text-shadow: 0 2px 5px rgba(0,0,0,.5);
+}
+
+.reviewStar input{
+	display: none;
+}
+
+.reviewSelect{
+	display: none;
+	position: absolute;
+	background-color: #73BEFF;
+	min-width: 160px;
+	z-index: 1;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.reviewSelect a{
+	float: none;
+	color: black;
+	text-decoration: none;
+  	display: block;
+  	text-align: left;
+}
+
+.reviewSelect a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#reviewOptionsBtn{
+	font-size: 15px;
+    border: 1px solid rgb(41, 171, 226);
+    outline: none;
+    color: rgb(41, 171, 226);
+    padding: 6px 6px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 5px;
+}
+
+.reviewOptions:hover .reviewSelect {
+  display: block;
+}
+
 </style>
 <meta charset="UTF-8">
 <title>${sessionScope.account_Name }의 프로필 페이지</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -334,33 +389,6 @@ header ul li a {
 				});
 			}
 		});
-		
-		// 받은 후기/작성한 후기 선택 후 .contents 안에 선택된 후기를 뿌려준다
-		function review_result(res){
-			
-			// alert(res);
-			$(".contents .reviewBox").remove();
-			$.each(res, function(index, value){
-				/* $(".timeline").append("<li class='time_sub' id='" 
-						+ value.rno + "'><p>" 
-						+ value.replyer + "</p><p>" 
-						+ value.replytext + "</p><p>" 
-						+ new Date(value.regdate) + "</p><p><button id='" 
-						+ value.rno + "'>delete</button><button id='"
-						+ value.rno + "'>update</button></li>"); */
-						
-				var source = "<li class='time_sub' id='{{rno}}'>"
-							+ "<p>{{replyer}}</p>"
-							+ "<p>{{replytext}}</p>"
-							+ "<p>{{newDate regdate}}</p>"
-							+ "<p>{{newUpload rupload}}</p>"
-							+ "<p><button id='{{rno}}'>delete</button> "
-							+ "<button id='{{rno}}'>update</button></p></li>";
-							 
-				var template = Handlebars.compile(source);
-				$(".timeline").append(template(value));
-			});
-		};
 		
 		// 닉네임 변경 버튼 클릭 후 현재 닉네임 가져오기
 		$("#changeNick").click(function(){
@@ -591,24 +619,9 @@ header ul li a {
 			}
 		});
 		
-		// 받은 후기/작성한 후기 가져오고 페이지에 뿌려주기
-		function after_review_change(res){
-			$(".reviewBox").remove();
-			$.each(res, function(index, value){
-				var source = "<div class='reviewBox'>"
-							+ "<div class='reviewerImgBox'>"
-							+ "<a href='#'><img class='reviewerImg' src='image/"+value.profileImg+"'></a>"
-							+ "</div>"
-							+ "<div class='reviewInfoBox'>"
-							+ "<div class='reviewerName' style='margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis; white-space: nowrap;'>"+value.nickname+"</div>"
-							+ "<div class='reviewContent' style='margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis; white-space: nowrap;'>"+value.reviewContent+"</div>"
-							+ "<div class='reviewStar' style='margin-top:5px; margin-left: 5px; height: 18%; font-size: 14px;'>"+value.reviewStar+"</div>"
-							+ "</div>"
-							+ "</div>";
-							
-				$(".contents").append(source);
-			});
-		};
+		// 후기 별점 클릭 불가
+		$(".review_radio").attr("disabled", true);
+		
 	}); // end ready()
 </script>
 </head>
@@ -683,21 +696,67 @@ header ul li a {
 					</div>
 					<div class="profileContent">
 						<div class="contentOptions">
-							<select id="reviewOptions" name="reviewOptions">
-								<option value="reviewGet">받은 후기</option>
-								<option value="reviewSend">작성한 후기</option>
-							</select>
+							<div class="reviewOptions">
+								<button id="reviewOptionsBtn">선택</button>
+								<div class="reviewSelect">
+							      <a href="profileReview.do">받은 후기</a>
+							      <a href="sentReviewProcess.do">작성한 후기</a>
+							    </div> 
+						    </div>
 						</div>
 						<div class="contents">
 							<c:forEach items="${reviewBoxList}" var="dto">
 								<div class="reviewBox">
 									<div class="reviewerImgBox">
-										<a href="#"><img class="reviewerImg" src="image/${dto.profileImg }"></a>
+										<a href="#"><img class="reviewerImg" src="image/${dto.profileImg }" style="border-radius:5px;"></a>
 									</div>
 									<div class="reviewInfoBox">
 										<div class="reviewerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis; white-space: nowrap;">${dto.nickname }</div>
 										<div class="reviewContent" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis; white-space: nowrap;">${dto.reviewContent }</div>
-										<div class="reviewStar" style="margin-top:5px; margin-left: 5px; height: 18%; font-size: 14px;">${dto.reviewStar}</div>
+										<div class="reviewStar" style="margin-top: 5px;margin-left: 5px;margin-bottom: 5px;height: 30%;font-size: 14px;display: flex;">
+											<c:choose>
+												<c:when test="${dto.reviewStar == 5}">
+													<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+									            	<label for="star1${dto.orderId }"></label>
+									            	<input type="radio" name="reviewStar" id="star2${dto.orderId }">
+									            	<label for="star2${dto.orderId }"></label>
+									            	<input type="radio" name="reviewStar" id="star3${dto.orderId }">
+									            	<label for="star3${dto.orderId }"></label>
+									            	<input type="radio" name="reviewStar" id="star4${dto.orderId }">
+									            	<label for="star4${dto.orderId }"></label>
+									            	<input type="radio" name="reviewStar" id="star5${dto.orderId }">
+									            	<label for="star5${dto.orderId }"></label>
+									            </c:when>
+									            <c:when test="${dto.reviewStar == 4}">
+													<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+									            	<label for="star1${dto.orderId }"></label>
+									            	<input type="radio" name="reviewStar" id="star2${dto.orderId }">
+									            	<label for="star2${dto.orderId }"></label>
+									            	<input type="radio" name="reviewStar" id="star3${dto.orderId }">
+									            	<label for="star3${dto.orderId }"></label>
+									            	<input type="radio" name="reviewStar" id="star4${dto.orderId }">
+									            	<label for="star4${dto.orderId }"></label>
+									            </c:when>
+									            <c:when test="${dto.reviewStar == 3}">
+													<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+									            	<label for="star1${dto.orderId }"></label>
+									            	<input type="radio" name="reviewStar" id="star2${dto.orderId }">
+									            	<label for="star2${dto.orderId }"></label>
+									            	<input type="radio" name="reviewStar" id="star3${dto.orderId }">
+									            	<label for="star3${dto.orderId }"></label>
+									            </c:when>
+									            <c:when test="${dto.reviewStar == 2}">
+													<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+									            	<label for="star1${dto.orderId }"></label>
+									            	<input type="radio" name="reviewStar" id="star2${dto.orderId }">
+									            	<label for="star2${dto.orderId }"></label>
+									            </c:when>
+									            <c:when test="${dto.reviewStar == 1}">
+													<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+									            	<label for="star1${dto.orderId }"></label>
+									            </c:when>
+											</c:choose>
+										</div>
 									</div>
 								</div>
 							</c:forEach>

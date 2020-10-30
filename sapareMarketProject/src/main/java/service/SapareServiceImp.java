@@ -11,6 +11,7 @@ import dto.memberDTO;
 import dto.memberStatusDTO;
 import dto.orderDTO;
 import dto.questionDTO;
+import dto.reviewDTO;
 
 public class SapareServiceImp implements SapareService{
 
@@ -130,6 +131,39 @@ public class SapareServiceImp implements SapareService{
 	@Override
 	public List<itemDTO> sellSixMonthsProcess(memberDTO dto) {
 		return dao.sellSixMonthsMethod(dto);
+	}
+	
+		// 구매 지난 주까지
+	@Override
+	public List<itemDTO> buyWeekProcess(memberDTO dto){
+		return dao.buyWeekMethod(dto);
+	};
+		// 구매 지난 달까지
+	@Override
+	public List<itemDTO> buyMonthProcess(memberDTO dto){;
+		return dao.buyMonthMethod(dto);
+	}
+		// 구매 지난 6개월까지
+	@Override
+	public List<itemDTO> buySixMonthsProcess(memberDTO dto) {
+		return dao.buySixMonthsMethod(dto);
+	}
+	
+		// 후기 작성 후
+	@Override
+	public void submitReviewProcess(reviewDTO dto) {
+		dao.submitReviewMethod(dto);
+	}
+	
+		// 판매 상품 검색
+	@Override
+	public List<itemDTO> sellSearchProcess(memberDTO dto) {
+		return dao.sellSearchMethod(dto);
+	}
+		// 구매 상품 검색
+	@Override
+	public List<orderDTO> buySearchProcess(memberDTO dto) {
+		return dao.buySearchMethod(dto);
 	}
 	
 	// 김녹훈 end //////////////////////////////////////////

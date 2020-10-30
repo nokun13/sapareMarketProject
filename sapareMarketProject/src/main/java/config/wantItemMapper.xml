@@ -27,4 +27,6 @@
 		update tbl_reply set replytext=#{replytext}
 		where rno=#{rno}
 	</update> -->
+	
+	
 </mapper>

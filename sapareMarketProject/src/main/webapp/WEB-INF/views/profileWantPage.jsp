@@ -259,10 +259,10 @@ header ul li a {
 	align-items: center;
 	justify-content: flex-end;
 	padding-top: 5px;
+	margin-bottom: 10px;
 }
 
 .contentOptions select{
-	margin-left: 20px;
 	outline: none;
 }
 
@@ -352,10 +352,58 @@ header ul li a {
     font-size: 20px;
 }
 
+.searchBox{
+	height: 30px;
+	border-radius: 30px;
+	padding: 10px;
+	background: #72B2F2;
+	margin-right: 25px;
+}
+
+.searchBox:hover > .searchText{
+	width: 200px;
+	padding: 0 6px;	
+}
+
+.searchText:focus{
+	width: 200px;
+	padding: 0 6px;	
+}
+
+.searchBtn:before{
+	color: white;
+	float: right;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: #72B2F2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	content: '\f002';
+	font-family: fontAwesome;
+	cursor: pointer;
+}
+
+.searchText{
+	border: none;
+	background: none;
+	outline: none;
+	float: left;
+	padding: 0;
+	color: gray;
+	font-size: 16px;
+	transition: 0.4s;
+	line-height: 30px;
+	width: 0;
+}
+
 </style>
 <meta charset="UTF-8">
 <title>${sessionScope.account_Name }의 프로필 페이지</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript">
 	$(document).ready(function() {
 		
@@ -569,7 +617,7 @@ header ul li a {
 				$.ajax({
 					type:'GET',
 					dataType:'json',
-					url:'newWantProcess.do?memberName=${member.memberName}',
+					url:'newWantProcess.do?memberName=${member.memberName}&searchWord='+$(".searchText").val(),
 					success: after_review_change,
 					error:function(request,status,error){
 					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -579,7 +627,7 @@ header ul li a {
 				$.ajax({
 					type:'GET',
 					dataType:'json',
-					url:'wantNumProcess.do?memberName=${member.memberName}',
+					url:'wantNumProcess.do?memberName=${member.memberName}&searchWord='+$(".searchText").val(),
 					success: after_review_change,
 					error:function(request,status,error){
 					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -589,7 +637,7 @@ header ul li a {
 				$.ajax({
 					type:'GET',
 					dataType:'json',
-					url:'wantPriceProcess.do?memberName=${member.memberName}',
+					url:'wantPriceProcess.do?memberName=${member.memberName}&searchWord='+$(".searchText").val(),
 					success: after_review_change,
 					error:function(request,status,error){
 					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -616,6 +664,29 @@ header ul li a {
 				$(".wantItemWrapper ul").append(source);
 			});
 		};
+		
+		// 검색 엔터 기능
+		var searchEnter = document.getElementById("searchText");
+		
+		searchEnter.addEventListener("keyup", function(event){
+		  if (event.keyCode === 13) {
+		    event.preventDefault();
+		    $(".searchBtn").click();
+		  }
+		});
+		
+		// 찜 검색 기능
+		$(".searchBtn").on('click', function(){
+			$.ajax({
+				type:'GET',
+				dataType:'json',
+				url:'newWantProcess.do?memberName=${member.memberName}&searchWord='+$(".searchText").val(),
+				success: after_review_change,
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+		});
 		
 	}); // end ready()
 </script>
@@ -691,6 +762,10 @@ header ul li a {
 					</div>
 					<div class="profileContent">
 						<div class="contentOptions">
+							<div class="searchBox">
+								<input id="searchText" class="searchText" name="searchWord" type="text" placeholder="검색어를 입력하세요">
+								<a class="searchBtn"></a>
+							</div>
 							<select id="chooseOrder">
 								<option value="newWantOrder">새 상품순</option>
 								<option value="wantNumOrder">찜이 많은 상품순</option>

@@ -10,6 +10,7 @@ import dto.memberDTO;
 import dto.memberStatusDTO;
 import dto.orderDTO;
 import dto.questionDTO;
+import dto.reviewDTO;
 
 public interface SapareService {
 
@@ -62,6 +63,21 @@ public interface SapareService {
 	public List<itemDTO> sellMonthProcess(memberDTO dto);
 		// 판매 지난 6개월까지
 	public List<itemDTO> sellSixMonthsProcess(memberDTO dto);
+	
+		// 구매 지난 주까지
+	public List<itemDTO> buyWeekProcess(memberDTO dto);
+		// 구매 지난 달까지
+	public List<itemDTO> buyMonthProcess(memberDTO dto);
+		// 구매 지난 6개월까지
+	public List<itemDTO> buySixMonthsProcess(memberDTO dto);
+		
+		// 후기 작성 후
+	public void submitReviewProcess(reviewDTO dto);
+	
+		// 판매 상품 검색
+	public List<itemDTO> sellSearchProcess(memberDTO dto);
+		// 구매 상품 검색
+	public List<orderDTO> buySearchProcess(memberDTO dto);
 	
 	// 김녹훈 end //////////////////////////////////////////
 	

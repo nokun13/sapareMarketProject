@@ -236,6 +236,7 @@ header ul li a {
 	align-items: center;
 	justify-content: flex-end;
 	padding-top: 5px;
+	margin-bottom: 10px;
 }
 
 .contents{
@@ -337,7 +338,7 @@ header ul li a {
 .writeReviewWrapper{
 	display: none;
 	width: 100%;
-    height: 150px;
+    height: 215px;
     background-color: #F0F8FF;
     flex-direction: row;
     margin-bottom: 3%;
@@ -345,11 +346,12 @@ header ul li a {
 }
 
 .writeReview{
-	font-family: sans-serif;
+	font-family: Montserrat;
 	border: 1px solid #e8ebed;
-	font-size: 14px;
+	font-size: 13px;
 	resize: none;
 	outline: none;
+	padding: 10px;
 }
 
 .writeReview:focus{
@@ -366,11 +368,12 @@ header ul li a {
 }
 
 .reviewContent{
-	margin-bottom: 10px;
+	margin: 10px;
+	width: 80%;
 }
 
 .reviewInsertBox{
-	height: 100%;
+	height: 150%;
     width: 20%;
     display: flex;
     align-items: center;
@@ -400,9 +403,172 @@ header ul li a {
 	background-color: #E6F6FB;
 }
 
+.buyDate-options{
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	z-index: 1;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.buyDate-options a{
+	float: none;
+	color: black;
+	text-decoration: none;
+  	display: block;
+  	text-align: left;
+}
+
+.buyDate-options a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#buyDateBtn{
+	font-size: 15px;
+    outline: none;
+    color: #292c2e;
+    padding: 6px 6px;
+    font-family: inherit;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+	background: #D3D3D3;
+	box-shadow:  -5px 5px 8px #c4c4c4, 
+             5px -5px 8px #e2e2e2;
+    cursor: pointer;
+}
+
+#buyDateBtn:hover{
+	box-shadow: inset -5px 5px 8px #c4c4c4, 
+            inset 5px -5px 8px #e2e2e2;
+}
+
+.buyDate:hover .buyDate-options {
+  display: block;
+}
+
+.reviewform textarea{
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    font-family: Montserrat;
+    font-size: 16px;
+}
+
+.rating{
+	display: flex;
+	transform: rotateY(180deg);
+	justify-content: flex-end;
+}
+
+.rating input{
+	display: none;
+}
+
+.rating label{
+	display: flex;
+	cursor: pointer;
+	width: 55px;
+}
+
+.rating label:before{
+	content: '\f005';
+	font-family: fontAwesome;
+	position: relative;
+	display: block;
+	font-size: 50px;
+	color: #DCDCDC;
+}
+
+.rating label:after{
+	content: '\f005';
+	font-family: fontAwesome;
+	position: relative;
+	display: block;
+	font-size: 50px;
+	color: rgb(255,225,100);
+	left: -85%;
+	opacity: 0;
+	transition: .5s;
+	text-shadow: 0 2px 5px rgba(0,0,0,.5);
+}
+
+.rating label:hover:after,
+.rating label:hover ~ label:after,
+.rating input:checked ~ label:after{
+	opacity: 1;
+}
+
+.buyerReviewStar label:before{
+	content:'\f005';
+	font-family: fontAwesome;
+	position: relative;
+	font-size: 50px;
+	color: rgb(255,225,100);
+	display: flex;
+	cursor: default;
+	width: 55px;
+	text-shadow: 0 2px 5px rgba(0,0,0,.5);
+}
+
+.buyerReviewStar input{
+	display: none;
+}
+
+.searchBox{
+	height: 30px;
+	border-radius: 30px;
+	padding: 10px;
+	background: #72B2F2;
+	margin-right: 25px;
+}
+
+.searchBox:hover > .searchText{
+	width: 200px;
+	padding: 0 6px;	
+}
+
+.searchText:focus{
+	width: 200px;
+	padding: 0 6px;	
+}
+
+.searchBtn:before{
+	color: white;
+	float: right;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: #72B2F2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	content: '\f002';
+	font-family: fontAwesome;
+	cursor: pointer;
+}
+
+.searchText{
+	border: none;
+	background: none;
+	outline: none;
+	float: left;
+	padding: 0;
+	color: gray;
+	font-size: 16px;
+	transition: 0.4s;
+	line-height: 30px;
+	width: 0;
+}
+
 </style>
 <meta charset="UTF-8">
 <title>${sessionScope.account_Name }의 프로필 페이지</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -417,6 +583,7 @@ header ul li a {
 		$(".leaveReviewBtn").click(function(){
 			$('.' + this.id).slideToggle();
 			$('.' + this.id).css('display', 'flex');
+			$(".warning_msg").css("display", "flex");
 		});
 		
 		// 닉네임 변경 버튼 클릭 후 현재 닉네임 가져오기
@@ -622,7 +789,35 @@ header ul li a {
 			$("#profileImgChange").show();
 		};
 		
-	}); // end ready()
+		// 후기 작성 버튼 후 등록
+		$(".reviewInsertBtn").on('click', function(){
+			var reviewNo = $(this).attr('id');
+			console.log(reviewNo);
+			var radio = $(this).parent().parent().next().find(".rate_radio:checked").val();
+			if(radio == undefined){
+				alert("별점을 선택해 주세요!");
+				return false;
+			} else{
+				$("form."+reviewNo).submit();
+				alert("작성한 후기가 등록되었습니다.");
+			}
+		});
+		
+		// 후기 별점 클릭 불가
+		 $(".review_radio").attr("disabled", true);
+		
+		// 구매상품 검색
+		$('.searchText').keydown(function(e) {
+	        if (e.which == 13) {
+	        	$("#searchFrm").submit();
+	         }
+	    });
+		$(".searchBtn").on('click', function(){
+        	$("#searchFrm").submit();
+		});
+			
+}); // end ready()
+	
 </script>
 </head>
 <body>
@@ -696,12 +891,22 @@ header ul li a {
 					</div>
 					<div class="profileContent">
 						<div class="contentOptions">
-							<select>
-								<option value="everyItem">전체</option>
-								<option value="lastWeek">지난 7일</option>
-								<option value="lastMonth">지난 30일</option>
-								<option value="lastSixMonths">지난 6개월</option>
-							</select>
+							<form id="searchFrm" action="buySearch.do">
+								<div class="searchBox">
+									<input class="searchText" name="searchWord" type="text" placeholder="검색어를 입력하세요">
+									<a class="searchBtn"></a>
+								</div>
+							</form>
+							<div class="buyDate">
+								<button id="buyDateBtn">기간
+								</button>
+								<div class="buyDate-options">
+							      <a href="profileBuy.do">전체</a>
+							      <a href="getWeekBuyProcess.do">지난 7일</a>
+							      <a href="getMonthBuyProcess.do">지난 30일</a>
+							      <a href="getSixMonthsBuyProcess.do">지난 6개월</a>
+							    </div>
+							</div>
 						</div>
 						<div class="contents">
 							<c:forEach items="${bList}" var="dto">
@@ -713,7 +918,7 @@ header ul li a {
 										<div class="allItemInfo">
 											<div class="itemName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.itemName }</div>
 											<div class="itemAbout" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.itemAbout }</div>
-											<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange; text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;">${dto.orderPrice }원</div>
+											<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange; text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;">${dto.orderPrice }</div>
 											<c:if test="${dto.reviewNo != 0}">
 												<button id="reviewBox${dto.reviewNo }" class="reviewToggleBtn" style="width:27%; margin: 5px auto; cursor:pointer;">내가 작성한 후기</button>
 											</c:if>
@@ -739,30 +944,94 @@ header ul li a {
 								</div>
 								
 								<c:if test="${fn:contains(dto.itemStatus, 'n') && dto.reviewNo == 0}">
-									<div class="writeReviewWrapper${dto.itemId }" style="display:none;width: 100%;height: 150px;background-color: #F0F8FF;flex-direction: row;margin-bottom: 3%;border-radius: 5px;">
-										<div class="reviewWriteBox">
+									<div class="writeReviewWrapper${dto.itemId }" style="display:none;width: 100%;height: 195px;background-color: #F0F8FF;flex-direction: row;margin-bottom: 3%;border-radius: 5px;">
+									<form name="reviewform" class="reviewInsert${dto.orderId }" method="post" action="reviewSubmit.do" style="width: 100%;display: flex;flex-direction:column;">
+										<div id="reviewInsert${dto.orderId }" style="width:100%;display:flex;flex-direction:row;">
 											<div class="reviewContent">
-												<textarea class="writeReview" rows="5" cols="70" maxlength="75" placeholder="후기 내용을 입력해주세요"></textarea>
+												<textarea class="writeReview" name="reviewContent" rows="5" cols="70" maxlength="75" placeholder="후기 내용을 입력해주세요."></textarea>
 											</div>
-											<div class="reviewStarBox">
-												<div>임시 별점 장소</div>
+											<div class="reviewInsertBox">
+												<input type="hidden" name="memberName" value="${member.memberName }" />
+												<input type="hidden" name="itemId" value="${dto.itemId }" />
+												<input type="hidden" name="itemName" value="${dto.itemName }" />
+												<input type="hidden" name="orderId" value="${dto.orderId }" />
+												<button type="button" id="reviewInsert${dto.orderId }" class="reviewInsertBtn">후기 올리기</button>
 											</div>
 										</div>
-										<div class="reviewInsertBox">
-											<button type="button" class="reviewInsertBtn">후기 올리기</button>
-										</div>
+										<div class="reviewStarBox">
+										        <!-- <input type="hidden" name="reviewStar" id="rate${dto.orderId }" value="0"/> -->
+										        <div class="review_rating">
+										            <div class="rating" style="padding:5px;border-radius:5px;margin-left:5px;">
+										                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
+										                <input type="radio" name="reviewStar" id="rating1${dto.orderId }" class="rate_radio" value="5" title="5점">
+										                <label for="rating1${dto.orderId }"></label>
+										                <input type="radio" name="reviewStar" id="rating2${dto.orderId }" class="rate_radio" value="4" title="4점">
+										                <label for="rating2${dto.orderId }"></label>
+										                <input type="radio" name="reviewStar" id="rating3${dto.orderId }" class="rate_radio" value="3" title="3점" >
+										                <label for="rating3${dto.orderId }"></label>
+										                <input type="radio" name="reviewStar" id="rating4${dto.orderId }" class="rate_radio" value="2" title="2점">
+										                <label for="rating4${dto.orderId }"></label>
+										                <input type="radio" name="reviewStar" id="rating5${dto.orderId }" class="rate_radio" value="1" title="1점">
+										                <label for="rating5${dto.orderId }"></label>
+										            </div>
+										        </div>
+											</div>
+									    </form>
 									</div>
 								</c:if>
 								
 								<c:if test="${dto.reviewNo != 0}">
 									<div class="reviewBox${dto.reviewNo }" style="display:none;width: 100%;height: 150px;background-color: #F0F8FF;flex-direction: row;margin-bottom: 2%;border-radius: 5px;">
 										<div class="buyerImgBox">
-											<a href="#"><img class="buyerImg" src="image/${dto.profileImg }"></a>
+											<a href="#"><img class="buyerImg" src="image/${dto.profileImg }" style="border-radius:5px;"></a>
 										</div>
 										<div class="buyerReviewBox">
 											<div class="buyerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.nickname }</div>
 											<div class="buyerReviewContent" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.reviewContent }</div>
-											<div class="buyerReviewStar" style="margin-top:5px; margin-left: 5px; height: 18%; font-size: 14px;">${dto.reviewStar}</div>
+											<div class="buyerReviewStar" style="margin-top:5px; margin-left: 5px; margin-bottom: 5px;height: 30%; font-size: 14px;display:flex;">
+												<c:choose>
+													<c:when test="${dto.reviewStar == 5}">
+														<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+										            	<label for="star1${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star2${dto.orderId }">
+										            	<label for="star2${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star3${dto.orderId }">
+										            	<label for="star3${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star4${dto.orderId }">
+										            	<label for="star4${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star5${dto.orderId }">
+										            	<label for="star5${dto.orderId }"></label>
+										            </c:when>
+										            <c:when test="${dto.reviewStar == 4}">
+														<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+										            	<label for="star1${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star2${dto.orderId }">
+										            	<label for="star2${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star3${dto.orderId }">
+										            	<label for="star3${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star4${dto.orderId }">
+										            	<label for="star4${dto.orderId }"></label>
+										            </c:when>
+										            <c:when test="${dto.reviewStar == 3}">
+														<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+										            	<label for="star1${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star2${dto.orderId }">
+										            	<label for="star2${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star3${dto.orderId }">
+										            	<label for="star3${dto.orderId }"></label>
+										            </c:when>
+										            <c:when test="${dto.reviewStar == 2}">
+														<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+										            	<label for="star1${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star2${dto.orderId }">
+										            	<label for="star2${dto.orderId }"></label>
+										            </c:when>
+										            <c:when test="${dto.reviewStar == 1}">
+														<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+										            	<label for="star1${dto.orderId }"></label>
+										            </c:when>
+												</c:choose>
+								            </div>
 										</div>
 									</div>
 								</c:if>

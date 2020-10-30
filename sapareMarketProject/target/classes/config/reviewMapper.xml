@@ -27,6 +27,8 @@
 		update tbl_reply set replytext=#{replytext}
 		where rno=#{rno}
 	</update> -->
+	
+	
 	<select id="receivedReview" parameterType="dto.memberDTO" resultType="dto.itemDTO">
 		select c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
@@ -54,4 +56,9 @@
 		reviewNo is not null
 		order by a.itemId desc
 	</select>
+	
+	<insert id="submitReview" parameterType="dto.reviewDTO">
+		insert into saparereview
+        values(saparereview_reviewno_seq.nextval,#{orderId},#{itemId},sysdate,#{reviewContent},#{reviewStar})
+	</insert>
 </mapper>

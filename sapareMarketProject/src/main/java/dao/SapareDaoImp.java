@@ -12,6 +12,7 @@ import dto.memberDTO;
 import dto.memberStatusDTO;
 import dto.orderDTO;
 import dto.questionDTO;
+import dto.reviewDTO;
 
 public class SapareDaoImp implements SapareDAO{
 
@@ -131,6 +132,39 @@ public class SapareDaoImp implements SapareDAO{
 	@Override
 	public List<itemDTO> sellSixMonthsMethod(memberDTO dto) {
 		return sqlSession.selectList("item.getSixMonths", dto);
+	}
+	
+		// 구매 지난 주까지
+	@Override
+	public List<itemDTO> buyWeekMethod(memberDTO dto) {
+		return sqlSession.selectList("order.getWeek", dto);
+	}
+		// 구매 지난 달까지
+	@Override
+	public List<itemDTO> buyMonthMethod(memberDTO dto) {
+		return sqlSession.selectList("order.getMonth", dto);
+	}
+		// 구매 지난 6개월까지
+	@Override
+	public List<itemDTO> buySixMonthsMethod(memberDTO dto) {
+		return sqlSession.selectList("order.getSixMonths", dto);
+	}
+	
+		// 후기 작성 후
+	@Override
+	public void submitReviewMethod(reviewDTO dto) {
+		sqlSession.insert("review.submitReview", dto);
+	}
+	
+		// 판매상품 검색
+	@Override
+	public List<itemDTO> sellSearchMethod(memberDTO dto) {
+		return sqlSession.selectList("item.sellSearch", dto);
+	}
+		// 구매상품 검색
+	@Override
+	public List<orderDTO> buySearchMethod(memberDTO dto) {
+		return sqlSession.selectList("order.buySearch", dto);
 	}
 	
 	// 김녹훈 end //////////////////////////////////////////
@@ -276,6 +310,7 @@ public class SapareDaoImp implements SapareDAO{
 	public List<itemDTO> selectMethod() {
 		return sqlSession.selectList("item.selectProcess");
 	}
+
 
 	// 오정우 end //////////////////////////////////////////
 	

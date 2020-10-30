@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class itemDTO {
 
-	private String memberName, itemAbout, itemName, itemImagePath, itemType, profileImg, nickname, reviewContent;
+	private String orderId, memberName, itemAbout, itemName, itemImagePath, itemType, profileImg, nickname, reviewContent;
 	private int itemId, itemPrice, itemViewCnt, itemWantCnt, itemFlagCnt, reviewNo, reviewStar, orderPrice;
 	private char itemStatus;
 	private Date itemUploadDate, orderDate;
@@ -122,6 +122,12 @@ public class itemDTO {
 	}
 	public void setOrderPrice(int orderPrice) {
 		this.orderPrice = orderPrice;
+	}
+	public String getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 	
 } // end class

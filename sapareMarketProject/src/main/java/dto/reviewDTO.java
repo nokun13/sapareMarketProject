@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class reviewDTO {
 
-	private String orderId, memberName, reviewContent;
+	private String orderId, memberName, reviewContent, itemName;
 	private int reviewNo, itemId, reviewStar;
 	private Date reviewDate;
 	
@@ -49,6 +49,12 @@ public class reviewDTO {
 	}
 	public void setReviewDate(Date reviewDate) {
 		this.reviewDate = reviewDate;
+	}
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 	
 } // end clas

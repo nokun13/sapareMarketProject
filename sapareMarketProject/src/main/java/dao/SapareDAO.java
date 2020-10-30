@@ -10,6 +10,7 @@ import dto.memberDTO;
 import dto.memberStatusDTO;
 import dto.orderDTO;
 import dto.questionDTO;
+import dto.reviewDTO;
 
 public interface SapareDAO {
 	
@@ -62,6 +63,21 @@ public interface SapareDAO {
 	public List<itemDTO> sellMonthMethod(memberDTO dto);
 		// 판매 지난 6개월까지
 	public List<itemDTO> sellSixMonthsMethod(memberDTO dto);
+	
+		// 구매 지난 주까지
+	public List<itemDTO> buyWeekMethod(memberDTO dto);
+		// 구매 지난 달까지
+	public List<itemDTO> buyMonthMethod(memberDTO dto);
+		// 구매 지난 6개월까지
+	public List<itemDTO> buySixMonthsMethod(memberDTO dto);
+	
+		// 후기 작성 후
+	public void submitReviewMethod(reviewDTO dto);
+	
+		// 판매상품 검색
+	public List<itemDTO> sellSearchMethod(memberDTO dto);
+		// 구매상품 검색
+	public List<orderDTO> buySearchMethod(memberDTO dto);
 	
 	// 김녹훈 end //////////////////////////////////////////
 	

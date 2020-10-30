@@ -40,4 +40,66 @@
 		where b.memberName=#{memberName}
 		order by b.orderDate desc
 	</select>
+	
+	<select id="getWeek" parameterType="dto.memberDTO" resultType="dto.orderDTO">
+		select b.*, a.*, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where b.memberName=#{memberName} and
+        trunc(a.itemUploadDate) BETWEEN trunc(sysdate-7) and trunc(sysdate)
+		order by b.orderDate desc
+	</select>
+	
+	<select id="getMonth" parameterType="dto.memberDTO" resultType="dto.orderDTO">
+		select b.*, a.*, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where b.memberName=#{memberName} and
+        trunc(a.itemUploadDate) BETWEEN trunc(sysdate-30) and trunc(sysdate)
+		order by b.orderDate desc
+	</select>
+	
+	<select id="getSixMonths" parameterType="dto.memberDTO" resultType="dto.orderDTO">
+		select b.*, a.*, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where b.memberName=#{memberName} and
+        trunc(a.itemUploadDate) BETWEEN trunc(sysdate-180) and trunc(sysdate)
+		order by b.orderDate desc
+	</select>
+	
+	<select id="buySearch" parameterType="dto.memberDTO" resultType="dto.orderDTO">
+		select z.*
+            from (select b.*, a.itemprice,a.itemabout,a.itemviewcnt,a.itemname,a.itemimagepath,a.itemstatus,a.itemuploaddate,
+            a.itemtype,a.itemwantcnt,a.itemflagcnt, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where b.memberName=#{memberName}
+		order by b.orderDate desc) z
+        where lower(itemname) like lower('%'||#{searchWord}||'%')
+        or lower(itemabout) like lower('%'||#{searchWord}||'%')
+        or lower(sellername) like lower('%'||#{searchWord}||'%')
+        or lower(orderprice) like lower('%'||#{searchWord}||'%')
+        order by orderdate desc
+	</select>
 </mapper>

@@ -243,6 +243,7 @@ header ul li a {
 	align-items: center;
 	justify-content: flex-end;
 	padding-top: 5px;
+	margin-bottom: 10px;
 }
 
 .contents{
@@ -302,7 +303,7 @@ header ul li a {
 .reviewBox{
 	display: none;
     width: 100%;
-    height: 150px;
+    height: 160px;
     background-color: #F0F8FF;
     flex-direction: row;
     margin-bottom: 2%;
@@ -330,6 +331,7 @@ header ul li a {
     flex-direction: column;
     width: 80%;
     height: 100%;
+    font-family: Montserrat;
 }
 
 .writeReviewWrapper{
@@ -343,7 +345,7 @@ header ul li a {
 }
 
 .writeReview{
-	font-family: sans-serif;
+	font-family: Montserrat;
 	border: 1px solid #e8ebed;
 	font-size: 14px;
 	resize: none;
@@ -421,22 +423,95 @@ header ul li a {
 
 #sellDateBtn{
 	font-size: 15px;
-    border: 1px solid rgb(41, 171, 226);
     outline: none;
-    color: rgb(41, 171, 226);
+    color: #292c2e;
     padding: 6px 6px;
-    background-color: inherit;
     font-family: inherit;
+    border: none;
     margin: 5px;
+    border-radius: 8px;
+	background: #D3D3D3;
+	box-shadow:  -5px 5px 8px #c4c4c4, 
+             5px -5px 8px #e2e2e2;
+    cursor: pointer;
+}
+
+#sellDateBtn:hover{
+	box-shadow: inset -5px 5px 8px #c4c4c4, 
+             inset 5px -5px 8px #e2e2e2;
 }
 
 .sellDate:hover .sellDate-options {
   display: block;
 }
 
+.buyerReviewStar label:before{
+	content:'\f005';
+	font-family: fontAwesome;
+	position: relative;
+	font-size: 50px;
+	color: rgb(255,225,100);
+	display: flex;
+	cursor: default;
+	width: 55px;
+	text-shadow: 0 2px 5px rgba(0,0,0,.5);
+}
+
+.buyerReviewStar input{
+	display: none;
+}
+
+.searchBox{
+	height: 30px;
+	border-radius: 30px;
+	padding: 10px;
+	background: #72B2F2;
+	margin-right: 25px;
+}
+
+.searchBox:hover > .searchText{
+	width: 200px;
+	padding: 0 6px;	
+}
+
+.searchText:focus{
+	width: 200px;
+	padding: 0 6px;	
+}
+
+.searchBtn:before{
+	color: white;
+	float: right;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: #72B2F2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	content: '\f002';
+	font-family: fontAwesome;
+	cursor: pointer;
+}
+
+.searchText{
+	border: none;
+	background: none;
+	outline: none;
+	float: left;
+	padding: 0;
+	color: gray;
+	font-size: 16px;
+	transition: 0.4s;
+	line-height: 30px;
+	width: 0;
+}
+
 </style>
 <meta charset="UTF-8">
 <title>${sessionScope.account_Name }의 프로필 페이지</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -660,17 +735,27 @@ header ul li a {
 		$("#sellingOrSold").on('change', function(){
 			var option = $("#sellingOrSold option:selected").val();
 			if(option == "allSell"){
-				console.log("all sell");
 				$(".sellItemBox").css("display", "flex");
 			} else if(option == "sellingOnly"){
 				$(".sellItemBox").css("display", "flex");
-				console.log("selling Only");
 				$("p:contains('판매날짜')").parent().parent().parent().css("display", "none");
 			} else if(option == "soldOnly"){
 				$(".sellItemBox").css("display", "flex");
-				console.log("sold Only");
 				$("p:contains('판매중')").parent().parent().parent().css("display", "none");
 			}
+		});
+		
+		// 후기 별점 클릭 불가
+		$(".review_radio").attr("disabled", true);
+		
+		// 판매상품 검색
+		$('.searchText').keydown(function(e) {
+	        if (e.which == 13) {
+	        	$("#searchFrm").submit();
+	         }
+	    });
+		$(".searchBtn").on('click', function(){
+        	$("#searchFrm").submit();
 		});
 		
 	}); // end ready()
@@ -747,6 +832,12 @@ header ul li a {
 					</div>
 					<div class="profileContent">
 						<div class="contentOptions">
+							<form id="searchFrm" action="sellSearch.do">
+								<div class="searchBox">
+									<input class="searchText" name="searchWord" type="text" placeholder="검색어를 입력하세요">
+									<a class="searchBtn"></a>
+								</div>
+							</form>
 							<div class="sellDate">
 								<button id="sellDateBtn">기간
 								</button>
@@ -774,10 +865,10 @@ header ul li a {
 											<div class="itemName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis; white-space: nowrap;">${dto.itemName }</div>
 											<div class="itemAbout" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis; white-space: nowrap;">${dto.itemAbout }</div>
 											<c:if test="${fn:contains(dto.itemStatus, 'y')}">
-												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange;text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;">${dto.itemPrice }원</div>
+												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange;text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;">${dto.itemPrice }</div>
 											</c:if>
 											<c:if test="${fn:contains(dto.itemStatus, 'n')}">
-												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange;text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;">${dto.orderPrice }원</div>
+												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange;text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;">${dto.orderPrice }</div>
 											</c:if>
 											<c:if test="${dto.reviewNo != 0}">
 												<button id="reviewBox${dto.reviewNo }" class="reviewToggleBtn" style="width:20%; margin: 5px auto; cursor:pointer;">후기 보기</button>
@@ -799,12 +890,55 @@ header ul li a {
 								<c:if test="${dto.reviewNo != 0}">
 									<div class="reviewBox${dto.reviewNo }" style="display:none;width: 100%;height: 150px;background-color: #F0F8FF;flex-direction: row;margin-bottom: 2%;border-radius: 5px;">
 										<div class="buyerImgBox">
-											<a href="#"><img class="buyerImg" src="image/${dto.profileImg }"></a>
+											<a href="#"><img class="buyerImg" src="image/${dto.profileImg }" style="border-radius:5px;"></a>
 										</div>
 										<div class="buyerReviewBox">
 											<div class="buyerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.nickname }</div>
 											<div class="buyerReviewContent" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis;white-space: nowrap;">${dto.reviewContent }</div>
-											<div class="buyerReviewStar" style="margin-top:5px; margin-left: 5px; height: 18%; font-size: 14px;">${dto.reviewStar}</div>
+											<div class="buyerReviewStar" style="margin-top: 5px;margin-left: 5px;margin-bottom: 5px;height: 30%;font-size: 14px;display: flex;">
+												<c:choose>
+													<c:when test="${dto.reviewStar == 5}">
+														<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+										            	<label for="star1${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star2${dto.orderId }">
+										            	<label for="star2${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star3${dto.orderId }">
+										            	<label for="star3${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star4${dto.orderId }">
+										            	<label for="star4${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star5${dto.orderId }">
+										            	<label for="star5${dto.orderId }"></label>
+										            </c:when>
+										            <c:when test="${dto.reviewStar == 4}">
+														<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+										            	<label for="star1${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star2${dto.orderId }">
+										            	<label for="star2${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star3${dto.orderId }">
+										            	<label for="star3${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star4${dto.orderId }">
+										            	<label for="star4${dto.orderId }"></label>
+										            </c:when>
+										            <c:when test="${dto.reviewStar == 3}">
+														<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+										            	<label for="star1${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star2${dto.orderId }">
+										            	<label for="star2${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star3${dto.orderId }">
+										            	<label for="star3${dto.orderId }"></label>
+										            </c:when>
+										            <c:when test="${dto.reviewStar == 2}">
+														<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+										            	<label for="star1${dto.orderId }"></label>
+										            	<input type="radio" name="reviewStar" id="star2${dto.orderId }">
+										            	<label for="star2${dto.orderId }"></label>
+										            </c:when>
+										            <c:when test="${dto.reviewStar == 1}">
+														<input type="radio" name="reviewStar" id="star1${dto.orderId }">
+										            	<label for="star1${dto.orderId }"></label>
+										            </c:when>
+												</c:choose>
+											</div>
 										</div>
 									</div>
 								</c:if>

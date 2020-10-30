@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class memberDTO {
 	
-	private String memberName, memberId, memberPw, birthday, profileImg, memberAbout, nickname;
+	private String memberName, memberId, memberPw, birthday, profileImg, memberAbout, nickname, searchWord;
 	private int phoneNum;
 	private MultipartFile profileFile;
 	
@@ -81,6 +81,14 @@ public class memberDTO {
 
 	public void setProfileFile(MultipartFile profileFile) {
 		this.profileFile = profileFile;
+	}
+
+	public String getSearchWord() {
+		return searchWord;
+	}
+
+	public void setSearchWord(String searchWord) {
+		this.searchWord = searchWord;
 	}
 	
 } // end class

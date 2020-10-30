@@ -14,7 +14,7 @@
 	</select>
 	
 	<select id="get" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select a.*, b.orderDate, b.orderPrice, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -27,7 +27,7 @@
 	</select>
 	
 	<select id="getWeek" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select a.*, b.orderDate, b.orderPrice, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -41,7 +41,7 @@
 	</select>
 	
 	<select id="getMonth" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select a.*, b.orderDate, b.orderPrice, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -55,7 +55,7 @@
 	</select>
 	
 	<select id="getSixMonths" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select a.*, b.orderDate, b.orderPrice, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -69,31 +69,52 @@
 	</select>
 	
 	<select id="wantItem" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select b.*
+		select z.*
+        from(
+        select b.*
 		from saparewantitem a
 		inner join sapareitem b on b.itemId=a.itemId
 		where a.memberName=#{memberName}
-		order by b.itemId desc
+		order by b.itemId desc)z
+        where lower(membername) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
+        or lower(itemprice) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
+        or lower(itemabout) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
+        or lower(itemname) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
+        order by itemId desc
 	</select>
 	
 	<select id="wantNumItem" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select b.*
+		select z.*
+        from(
+        select b.*
 		from saparewantitem a
 		inner join sapareitem b on b.itemId=a.itemId
 		where a.memberName=#{memberName}
-        order by b.itemwantcnt desc
+		order by b.itemId desc)z
+        where lower(membername) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
+        or lower(itemprice) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
+        or lower(itemabout) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
+        or lower(itemname) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
+        order by itemwantcnt desc
 	</select>
 	
 	<select id="wantPriceItem" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select b.*
+		select z.*
+        from(
+        select b.*
 		from saparewantitem a
 		inner join sapareitem b on b.itemId=a.itemId
 		where a.memberName=#{memberName}
-        order by b.itemPrice asc
+		order by b.itemprice asc)z
+        where lower(membername) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
+        or lower(itemprice) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
+        or lower(itemabout) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
+        or lower(itemname) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
+        order by itemprice asc
 	</select>
 	
 	<select id="sellingOnly" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select a.*, b.orderDate, b.orderPrice, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -103,11 +124,11 @@
 		    sapareMember d on b.memberName = d.memberName
 		where a.memberName=#{memberName} and
         a.itemStatus = 'y'
-		order by a.itemId desc
+		order by a.itemUploadDate desc
 	</select>
 	
 	<select id="soldOnly" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select a.*, b.orderDate, b.orderPrice, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -117,7 +138,26 @@
 		    sapareMember d on b.memberName = d.memberName
 		where a.memberName=#{memberName} and
         a.itemStatus = 'n'
-		order by a.itemId desc
+		order by a.itemUploadDate desc
+	</select>
+	
+	<select id="sellSearch" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select z.*
+            from (select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar,d.profileImg, d.nickname
+		from sapareItem a
+		left outer join
+		    sapareOrder b on a.itemId = b.itemId
+		left outer join
+		    sapareReview c on b.orderId = c.orderId
+		left outer join
+		    sapareMember d on b.memberName = d.memberName
+		where a.memberName=#{memberName}
+		order by a.itemId desc) z
+        where lower(itemname) like lower('%'||#{searchWord}||'%')
+        or lower(itemabout) like lower('%'||#{searchWord}||'%')
+        or lower(membername) like lower('%'||#{searchWord}||'%')
+        or lower(itemprice) like lower('%'||#{searchWord}||'%')
+        order by itemuploaddate desc
 	</select>
 	
 </mapper>
