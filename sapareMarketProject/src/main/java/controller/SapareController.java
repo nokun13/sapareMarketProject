@@ -277,6 +277,12 @@ public class SapareController {
 	public List<itemDTO> wantPriceProcess(memberDTO dto, HttpServletRequest request) {
 		return service.wantPriceProcess(dto);
 	}
+		// 찜 목록에서 제거 ajax
+	@RequestMapping("/removeWantProcess.do")
+	public List<itemDTO> removeWantProcess(memberDTO dto, HttpServletRequest request) {
+		service.removeWantProcess(dto);
+		return service.wantItemProcess(dto);
+	}
 	
 		// 프로필 페이지 후기 메뉴 (처음에는 받은 후기 보여준다)
 	@RequestMapping("/profileReview.do")

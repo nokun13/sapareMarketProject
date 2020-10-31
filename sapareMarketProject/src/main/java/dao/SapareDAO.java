@@ -79,6 +79,9 @@ public interface SapareDAO {
 		// 구매상품 검색
 	public List<orderDTO> buySearchMethod(memberDTO dto);
 	
+		// 찜 목록에서 제거
+	public void removeWantMethod(memberDTO dto);
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

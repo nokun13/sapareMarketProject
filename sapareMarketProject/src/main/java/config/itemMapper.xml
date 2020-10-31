@@ -80,7 +80,7 @@
         or lower(itemprice) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
         or lower(itemabout) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
         or lower(itemname) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
-        order by itemId desc
+        order by itemuploaddate desc
 	</select>
 	
 	<select id="wantNumItem" parameterType="dto.memberDTO" resultType="dto.itemDTO">

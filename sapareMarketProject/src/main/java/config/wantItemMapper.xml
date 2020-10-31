@@ -28,5 +28,7 @@
 		where rno=#{rno}
 	</update> -->
 	
-	
+	<delete id="removeWant" parameterType="dto.memberDTO">
+		delete from saparewantitem where memberName=#{memberName} and itemId=#{itemId}
+	</delete>
 </mapper>

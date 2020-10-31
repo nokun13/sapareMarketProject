@@ -393,6 +393,7 @@ header ul li a {
 </style>
 <meta charset="UTF-8">
 <title>${sessionScope.account_Name }의 프로필 페이지</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -744,18 +745,20 @@ header ul li a {
 			<div class="flagArea">
 				<button class="memberFlag" style="cursor:pointer; margin-right:15px;">신고하기</button>
 			<!-- 아래 if 코드 신고하기 버튼 감싸기 !!! -->
-			<!-- <c:if test="${requestScope.memberName != sessionScope.memberName}"> -->
+			<!-- <c:if test="${member.memberName != sessionScope.memberName}"> -->
 			<!-- </c:if> -->
 			</div>
 			
 			<div class="profileContainer">
 				<div id="profileImageBox">
-					<img id="memberImg" style="height: 70%; width: 70%; border-radius: 15px;margin-bottom: 5px;cursor:pointer;" src="image/${member.profileImg }">
+					<img id="memberImg" style="height: 70%; width: 70%; border-radius: 15px;margin-bottom: 5px;cursor:pointer;object-fit:cover;" src="image/${member.profileImg }">
 					<div class="nickname">
 						${member.nickname }
 					</div>
 					<div class="imgChangeBox">
-						<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>
+							<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>
+						<!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						</c:if> -->
 					</div>
 					<input type="file" name="filepath" id="filepath" style="display:none;"/>
 					<div class="memberStars" style="margin-top: 10px;">
@@ -768,6 +771,8 @@ header ul li a {
 							${member.nickname }
 						</div>
 							<button type="button" id="changeNick" style="cursor:pointer;margin-right:10px;">닉네임수정</button>
+							<!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						 	</c:if> -->
 						<div class="memberRank">${status.memberRank }</div>
 						<div class="premiumIcon">
 							<c:if test="${fn:contains(status.memberPremium, 'n')}">
@@ -779,11 +784,15 @@ header ul li a {
 						<textarea readonly id="aboutContent" rows="8" cols="65" maxlength="80">${member.memberAbout }</textarea>
 					</div>
 					<div class="aboutChangeBox">
-						<button type="button" id="changeAbout" style="margin: 10px; cursor:pointer;">소개수정</button>
+							<button type="button" id="changeAbout" style="margin: 10px; cursor:pointer;">소개수정</button>
+						 <!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						 </c:if> -->
 					</div>
 					<div class="memberPointArea">
-						<div class="memberPoint" style="margin: 10px; white-space: nowrap; overflow: hidden;">${status.memberPoint }</div>
-						<button class="pointCharge" style="cursor:pointer;">포인트 충전</button>
+							<div class="memberPoint" style="margin: 10px; white-space: nowrap; overflow: hidden;">${status.memberPoint }</div>
+							<button class="pointCharge" style="cursor:pointer;">포인트 충전</button>
+						<!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						</c:if> -->
 					</div>
 				</div>
 			</div>
@@ -792,16 +801,20 @@ header ul li a {
 					<div class="profileMenu">
 						<ul class="menuButtons">
 						  <li><a href="profileSell.do">판매상품</a>
-						  <c:if test="${requestScope.memberName == sessionScope.memberName}">
+						  
 						  	<li><a href="profileBuy.do">구매상품</a></li>
-						  </c:if>
-						  <c:if test="${requestScope.memberName == sessionScope.memberName}">
+						  <!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						  </c:if> -->
+						  
 						  	<li><a href="profileWant.do">찜</a></li>
-						  </c:if>
+						  <!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						  </c:if> -->
+						  
 						  <li><a href="profileReview.do">후기</a></li>
-						  <c:if test="${requestScope.memberName == sessionScope.memberName}">
+						  
 						  	<li><a href="profileSetting.do">회원정보수정</a></li>
-						  </c:if>
+						  <!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						  </c:if> -->
 						</ul>
 					</div>
 					<div class="profileContent">
@@ -874,7 +887,7 @@ header ul li a {
 										<input type="text" placeholder="휴대폰 번호를 입력해주세요" class="phoneNumInput" maxlength="11" />
 									</div>
 									<div>
-										<button type="button" class="phoneNumCheck">인증요청</button>
+										<button type="button" class="phoneNumCheck">확인</button>
 									</div>
 								</li>
 								

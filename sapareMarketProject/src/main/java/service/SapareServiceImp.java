@@ -166,6 +166,12 @@ public class SapareServiceImp implements SapareService{
 		return dao.buySearchMethod(dto);
 	}
 	
+		// 찜 목록에서 제거
+	@Override
+	public void removeWantProcess(memberDTO dto) {
+		dao.removeWantMethod(dto);
+	}
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

@@ -79,6 +79,9 @@ public interface SapareService {
 		// 구매 상품 검색
 	public List<orderDTO> buySearchProcess(memberDTO dto);
 	
+		// 찜 목록에서 제거
+	public void removeWantProcess(memberDTO dto);
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

@@ -167,6 +167,12 @@ public class SapareDaoImp implements SapareDAO{
 		return sqlSession.selectList("order.buySearch", dto);
 	}
 	
+		// 찜 목록에서 제거
+	@Override
+	public void removeWantMethod(memberDTO dto) {
+		sqlSession.delete("wantItem.removeWant", dto);
+	}
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

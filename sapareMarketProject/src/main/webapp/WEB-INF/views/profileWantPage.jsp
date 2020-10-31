@@ -653,14 +653,15 @@ header ul li a {
 				var source = "<li class='wantItemBox'><a class='wantItemCard' href='searchItem.do?itemId="+value.itemId+"'>"
 							+ "<div class='wantItemInside'><div class='itemImageBox'><img src='image/"+value.itemImagePath+"'/></div>"
 							+ "<div class='itemDescribeBox'><div><div class='itemName'>"+value.itemName+"</div>"
-							+ "<div class='itemPrice'>"+value.itemPrice+"</div></div>"
-							+ "<div><button type='button' class='wantItemBtn' style='border:none; background-color:lightgray;'>"
+							+ "<div class='itemPrice'>"+value.itemPrice+"</div></div></div></div></a>"
+							+ "<input class='wantItemNo' hidden='hidden' value='"+value.itemId+"'/>"
+							+ "<div class='heartContainer' id='heartContainer"+value.itemId+"' style='position:absolute;transform: translate(180px,-80px);'>"
+							+ "<button type='button' class='wantItemBtn' style='border:none; background-color:lightgray;outline:none;'>"
 							+ "<svg version='1.0' xmlns='http://www.w3.org/2000/svg' width='35px' height='35px' viewBox='0 0 25 25'"
 							+ "fill='#f44336' fill-opacity='1' stroke='#ffffff' stroke-width='2' focusable='false' aria-label='찜하기'"
 							+ "role='img' stroke-linecap='round' stroke-linejoin='round' preserveAspectRatio='xMidYMid meet'>"
-							+ "<metadata>Created by potrace 1.15, written by Peter Selinger 2001-2017</metadata>"
 							+ "<g><path d='m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6'/>"
-							+ "</g></svg></button></div></div></div></a></li>";
+							+ "</g></svg></button></div></li>";
 				$(".wantItemWrapper ul").append(source);
 			});
 		};
@@ -688,6 +689,48 @@ header ul li a {
 			});
 		});
 		
+		// 찜 하트 클릭 시 빼주기 기능
+		$(".wantItemWrapper").on("click",".heartContainer", function(){
+			var num = $(this).prev().val();
+			// $("#heartContainer"+num+" svg").css("fill", "#484848");
+			
+			if (confirm("찜 목록에서 제거하시겠습니까?")) {
+				$.ajax({
+					type:'GET',
+					dataType:'json',
+					url:'removeWantProcess.do?memberName=${member.memberName}&searchWord=&itemId='+num,
+					success: after_remove_want,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			} else {
+				$("#heartContainer"+num+" svg").css("fill", "#f44336");
+			}
+		});
+		
+		// 찜 목록에서 상품 제거 후
+		function after_remove_want(res){
+			console.log('찜 목록에서 제거 되었습니다.');
+			$(".wantItemBox").remove();
+			$.each(res, function(index, value){
+				var source = "<li class='wantItemBox'><a class='wantItemCard' href='searchItem.do?itemId="+value.itemId+"'>"
+							+ "<div class='wantItemInside'><div class='itemImageBox'><img src='image/"+value.itemImagePath+"'/></div>"
+							+ "<div class='itemDescribeBox'><div><div class='itemName'>"+value.itemName+"</div>"
+							+ "<div class='itemPrice'>"+value.itemPrice+"</div></div></div></div></a>"
+							+ "<input class='wantItemNo' hidden='hidden' value='"+value.itemId+"'/>"
+							+ "<div class='heartContainer' id='heartContainer"+value.itemId+"' style='position:absolute;transform: translate(180px,-80px);'>"
+							+ "<button type='button' class='wantItemBtn' style='border:none; background-color:lightgray;outline:none;'>"
+							+ "<svg version='1.0' xmlns='http://www.w3.org/2000/svg' width='35px' height='35px' viewBox='0 0 25 25'"
+							+ "fill='#f44336' fill-opacity='1' stroke='#ffffff' stroke-width='2' focusable='false' aria-label='찜하기'"
+							+ "role='img' stroke-linecap='round' stroke-linejoin='round' preserveAspectRatio='xMidYMid meet'>"
+							+ "<g><path d='m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6'/>"
+							+ "</g></svg></button></div></li>";
+							
+				$(".wantItemWrapper ul").append(source);
+			});
+		};
+		
 	}); // end ready()
 </script>
 </head>
@@ -700,18 +743,20 @@ header ul li a {
 			<div class="flagArea">
 				<button class="memberFlag" style="cursor:pointer; margin-right:15px;">신고하기</button>
 			<!-- 아래 if 코드 신고하기 버튼 감싸기 !!! -->
-			<!-- <c:if test="${requestScope.memberName != sessionScope.memberName}"> -->
+			<!-- <c:if test="${member.memberName != sessionScope.memberName}"> -->
 			<!-- </c:if> -->
 			</div>
 			
 			<div class="profileContainer">
 				<div id="profileImageBox">
-					<img id="memberImg" style="height: 70%; width: 70%; border-radius: 15px;margin-bottom: 5px;cursor:pointer;" src="image/${member.profileImg }">
+					<img id="memberImg" style="height: 70%; width: 70%; border-radius: 15px;margin-bottom: 5px;cursor:pointer;object-fit:cover;" src="image/${member.profileImg }">
 					<div class="nickname">
 						${member.nickname }
 					</div>
 					<div class="imgChangeBox">
-						<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>
+							<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>
+						<!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						</c:if> -->
 					</div>
 					<input type="file" name="filepath" id="filepath" style="display:none;"/>
 					<div class="memberStars" style="margin-top: 10px;">
@@ -724,6 +769,8 @@ header ul li a {
 							${member.nickname }
 						</div>
 							<button type="button" id="changeNick" style="cursor:pointer;margin-right:10px;">닉네임수정</button>
+							<!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						 	</c:if> -->
 						<div class="memberRank">${status.memberRank }</div>
 						<div class="premiumIcon">
 							<c:if test="${fn:contains(status.memberPremium, 'n')}">
@@ -735,11 +782,15 @@ header ul li a {
 						<textarea readonly id="aboutContent" rows="8" cols="65" maxlength="80">${member.memberAbout }</textarea>
 					</div>
 					<div class="aboutChangeBox">
-						<button type="button" id="changeAbout" style="margin: 10px; cursor:pointer;">소개수정</button>
+							<button type="button" id="changeAbout" style="margin: 10px; cursor:pointer;">소개수정</button>
+						 <!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						 </c:if> -->
 					</div>
 					<div class="memberPointArea">
-						<div class="memberPoint" style="margin: 10px; white-space: nowrap; overflow: hidden;">${status.memberPoint }</div>
-						<button class="pointCharge" style="cursor:pointer;">포인트 충전</button>
+							<div class="memberPoint" style="margin: 10px; white-space: nowrap; overflow: hidden;">${status.memberPoint }</div>
+							<button class="pointCharge" style="cursor:pointer;">포인트 충전</button>
+						<!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						</c:if> -->
 					</div>
 				</div>
 			</div>
@@ -748,16 +799,20 @@ header ul li a {
 					<div class="profileMenu">
 						<ul class="menuButtons">
 						  <li><a href="profileSell.do">판매상품</a>
-						  <c:if test="${requestScope.memberName == sessionScope.memberName}">
+						  
 						  	<li><a href="profileBuy.do">구매상품</a></li>
-						  </c:if>
-						  <c:if test="${requestScope.memberName == sessionScope.memberName}">
+						  <!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						  </c:if> -->
+						  
 						  	<li><a href="profileWant.do">찜</a></li>
-						  </c:if>
+						  <!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						  </c:if> -->
+						  
 						  <li><a href="profileReview.do">후기</a></li>
-						  <c:if test="${requestScope.memberName == sessionScope.memberName}">
+						  
 						  	<li><a href="profileSetting.do">회원정보수정</a></li>
-						  </c:if>
+						  <!-- <c:if test="${member.memberName == sessionScope.memberName}">
+						  </c:if> -->
 						</ul>
 					</div>
 					<div class="profileContent">
@@ -778,78 +833,37 @@ header ul li a {
 								<ul>
 									<c:forEach items="${wantList }" var="dto">
 									<li class="wantItemBox">
-															<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
+										<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
 										<a class="wantItemCard" href="searchItem.do?itemId=${dto.itemId }">
 											<div class="wantItemInside">
 												<div class="itemImageBox">
 													<img src="image/${dto.itemImagePath }" />
 												</div>
-												
 												<div class="itemDescribeBox">
 													<div>
 														<div class="itemName">${dto.itemName }</div>
 														<div class="itemPrice">${dto.itemPrice }</div>
 													</div>
-													
-													<div>
-														<button type="button" class="wantItemBtn" style="border:none; background-color:lightgray;">
-															<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-															 width="35px" height="35px" viewBox="0 0 25 25"
-															 fill="#f44336" fill-opacity="1" stroke="#ffffff"
-															 stroke-width="2" focusable="false" aria-label="찜하기" 
-															 role="img" stroke-linecap="round" stroke-linejoin="round"
-															 preserveAspectRatio="xMidYMid meet">
-															<metadata>
-															Created by potrace 1.15, written by Peter Selinger 2001-2017
-															</metadata>
-															<g>
-															<path d="m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6"/>
-															</g>
-															</svg>
-														</button>
-													</div>
 												</div>
 											</div>
 										</a>
+										<input class="wantItemNo" hidden="hidden" value="${dto.itemId }"/>
+										<div class="heartContainer" id="heartContainer${dto.itemId }" style="position:absolute;transform: translate(180px,-80px);">
+											<button type="button" class="wantItemBtn" style="border:none; background-color:lightgray;outline:none;">
+												<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+												 width="35px" height="35px" viewBox="0 0 25 25"
+												 fill="#f44336" fill-opacity="1" stroke="#ffffff"
+												 stroke-width="2" focusable="false" aria-label="찜하기" 
+												 role="img" stroke-linecap="round" stroke-linejoin="round"
+												 preserveAspectRatio="xMidYMid meet">
+												<g>
+												<path d="m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6"/>
+												</g>
+												</svg>
+											</button>
+										</div>
 									</li>
 									</c:forEach>
-									
-									<li>
-															<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
-										<a class="wantItemCard" href="searchItem.do?itemId=${dto.itemId }">
-											<div class="wantItemInside">
-												<div class="itemImageBox">
-													<!-- 경로 마지막 부분을 ${dto.itemImagePath }로 바꿔준다 -->
-													<img src="image/quokka.jpg" />
-												</div>
-												
-												<div class="itemDescribeBox">
-													<div>
-														<div class="itemName">찜한 상품이름 ${dto.itemName }</div>
-														<div class="itemPrice">15000 ${dto.itemPrice }</div>
-													</div>
-													
-													<div>
-														<button type="button" class="wantItemBtn" style="border:none; background-color:lightgray;">
-														<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-															 width="35px" height="35px" viewBox="0 0 25 25"
-															 fill="#484848" fill-opacity="1" stroke="#ffffff"
-															 stroke-width="2" focusable="false" aria-label="찜하기" 
-															 role="img" stroke-linecap="round" stroke-linejoin="round"
-															 preserveAspectRatio="xMidYMid meet">
-															<metadata>
-															Created by potrace 1.15, written by Peter Selinger 2001-2017
-															</metadata>
-															<g>
-															<path d="m 17.5 2.9 c -2.1 0 -4.1 1.3 -5.4 2.8 c -1.6 -1.6 -3.8 -3.2 -6.2 -2.7 c -1.5 0.2 -2.9 1.2 -3.6 2.6 c -2.3 4.1 1 8.3 3.9 11.1 c 1.4 1.3 2.8 2.5 4.3 3.6 c 0.4 0.3 1.1 0.9 1.6 0.9 s 1.2 -0.6 1.6 -0.9 c 3.2 -2.3 6.6 -5.1 8.2 -8.8 c 1.5 -3.4 0 -8.6 -4.4 -8.6"/>
-															</g>
-															</svg>
-														</button>
-													</div>
-												</div>
-											</div>
-										</a>
-									</li>
 								</ul>
 							</div>
 						</div>
