@@ -338,14 +338,12 @@ public class SapareController {
 		// 닉네임 중복 체크 ajax
 	@RequestMapping("/checkNickname.do")
 	public int checkNicknameProcess(memberDTO dto, HttpServletRequest request) {
-		
 		return service.checkNicknameProcess(dto);
 	}
 	
 		// 닉네임 변경 ajax
 	@RequestMapping("/changeNickname.do")
 	public memberDTO changeNicknameProcess(memberDTO dto, HttpServletRequest request) {
-		
 		service.changeNicknameProcess(dto);
 		return service.memberInfoProcess(dto);
 	}
@@ -353,7 +351,6 @@ public class SapareController {
 		// member 정보 리턴 ajax
 	@RequestMapping("/memberInfoGet.do")
 	public memberDTO memberInfoProcess(memberDTO dto, HttpServletRequest request) {
-		
 		return service.memberInfoProcess(dto);
 	}
 	
@@ -395,6 +392,18 @@ public class SapareController {
 	@RequestMapping("/memberPwChange.do")
 	public void changePasswordProcess(memberDTO dto, HttpServletRequest request) {
 		service.changePasswordProcess(dto);
+	}
+	
+		// 전화번호 중복 체크 ajax
+	@RequestMapping("/checkPhoneNum.do")
+	public int checkPhoneNumProcess(memberDTO dto, HttpServletRequest request) {
+		return service.checkPhoneNumProcess(dto);
+	}
+		// 전화번호 변경 ajax
+	@RequestMapping("/changePhoneNum.do")
+	public memberDTO changePhoneNumProcess(memberDTO dto, HttpServletRequest request) {
+		service.changePhoneNumProcess(dto);
+		return service.memberInfoProcess(dto);
 	}
 	
 	// 김녹훈 end //////////////////////////////////////////

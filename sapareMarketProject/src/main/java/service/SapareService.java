@@ -82,6 +82,11 @@ public interface SapareService {
 		// 찜 목록에서 제거
 	public void removeWantProcess(memberDTO dto);
 	
+		// 전화번호 중복 체크
+	public int checkPhoneNumProcess(memberDTO dto);
+		// 전화번호 변경
+	public void changePhoneNumProcess(memberDTO dto);
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

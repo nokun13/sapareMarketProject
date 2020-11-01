@@ -82,6 +82,11 @@ public interface SapareDAO {
 		// 찜 목록에서 제거
 	public void removeWantMethod(memberDTO dto);
 	
+		// 전화번호 중복 체크
+	public int checkPhoneNumMethod(memberDTO dto);
+		// 전화번호 변경
+	public void changePhoneNumMethod(memberDTO dto);
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

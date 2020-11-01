@@ -61,18 +61,27 @@
 		where memberId=#{memberId} and memberPw=#{memberPw}
 	</select>
 
-<select id="loginCheck" resultType="dto.memberDTO">
+	<select id="loginCheck" resultType="dto.memberDTO">
 		select memberId, memberPw from sapareMember
 		where memberId=#{memberId} and memberPw=#{memberPw}
 	</select>
 
-<select id="viewMember" resultType="dto.memberDTO">
-select memberId, memberPw  from sapareMember
-where memberId=#{memberId} and memberPw=#{memberPw}
-</select>
+	<select id="viewMember" resultType="dto.memberDTO">
+		select memberId, memberPw  from sapareMember
+		where memberId=#{memberId} and memberPw=#{memberPw}
+	</select>
 
-<insert id="signup" parameterType="dto.memberDTO">
-	insert into sapareMember
-	values(#{memberName,jdbcType=VARCHAR},#{memberId},#{memberPw},#{birthday,jdbcType=VARCHAR},#{phoneNum,jdbcType=VARCHAR},#{profileImg,jdbcType=VARCHAR},#{memberAbout,jdbcType=VARCHAR},#{nickname,jdbcType=VARCHAR})
+	<insert id="signup" parameterType="dto.memberDTO">
+		insert into sapareMember
+		values(#{memberName,jdbcType=VARCHAR},#{memberId},#{memberPw},#{birthday,jdbcType=VARCHAR},#{phoneNum,jdbcType=VARCHAR},#{profileImg,jdbcType=VARCHAR},#{memberAbout,jdbcType=VARCHAR},#{nickname,jdbcType=VARCHAR})
 	</insert>
+	
+	<select id="checkPhoneNum" parameterType="dto.memberDTO" resultType="int">
+		select count(*) from saparemember where phoneNum=#{phoneNum}
+	</select>
+	
+	<update id="changePhoneNum" parameterType="dto.memberDTO">
+		update saparemember set phoneNum=#{phoneNum}
+		where memberName=#{memberName}
+	</update>
 </mapper>

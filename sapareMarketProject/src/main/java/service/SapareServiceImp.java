@@ -172,6 +172,17 @@ public class SapareServiceImp implements SapareService{
 		dao.removeWantMethod(dto);
 	}
 	
+		// 전화번호 중복 체크
+	@Override
+	public int checkPhoneNumProcess(memberDTO dto) {
+		return dao.checkPhoneNumMethod(dto);
+	}
+		// 전화번호 변경
+	@Override
+	public void changePhoneNumProcess(memberDTO dto) {
+		dao.changePhoneNumMethod(dto);
+	}
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

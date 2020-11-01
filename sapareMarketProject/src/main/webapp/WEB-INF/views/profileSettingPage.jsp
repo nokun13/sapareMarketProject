@@ -395,12 +395,13 @@ header ul li a {
 <title>${sessionScope.account_Name }의 프로필 페이지</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		
 		// 전화번호 숫자만 입력 가능
 		$(".phoneNumInput").keyup(function() {
-		    this.value = this.value.replace(/[^1-9\.]/g,'');
+		    this.value = this.value.replace(/[^0-9\.]/g,'');
 		});
 		
 		// 변경 버튼 누를 시 입력창 나오며 '변경'이 '취소'로 바뀌고 입력창이 뜬다.
@@ -448,7 +449,7 @@ header ul li a {
 			}
 		});
 		
-		// 비밀번호, 새 비밀번호 값 비교하기
+		// 비밀번호, 새 비밀번호 값 비교하기 (이걸 왜 한거였더라...?)
 		/* $("#alert-success").hide(); 
 		$("#alert-danger").hide(); 
 		$(".memberPwNew, .memberPwNow").keyup(function(){ 
@@ -733,6 +734,55 @@ header ul li a {
 			$("#profileImgChange").show();
 		};
 		
+		// 전화번호 엔터 기능
+		$(".phoneNumInput")[0].addEventListener("keyup", function(event){
+			  if (event.keyCode === 13) {
+			    event.preventDefault();
+				$(".phoneNumCheck").click();
+			  }
+		});
+		// 전화번호 중복 체크
+		$(".phoneNumCheck").click(function(){
+			var phone = $("#phoneNum").val();
+			if($(".phoneNumInput").val().length != 11){
+				alert("전화번호는 11자리수로 입력해주세요!");
+				$(".phoneNumInput").val("");
+				return false;
+			}else{
+				$.ajax({
+					type:'GET',
+					dataType:'json',
+					url:'checkPhoneNum.do?phoneNum='+$(".phoneNumInput").val().slice(1,11),
+					success: after_check_phone,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			}
+		});
+		function after_check_phone(res){
+			if(res == 1){
+				alert("이미 사용되는 전화번호입니다.");
+				$(".phoneNumInput").val("");
+				return false;
+			} else{
+				$.ajax({
+					type:'GET',
+					dataType:'json',
+					url:'changePhoneNum.do?memberName=${member.memberName}&phoneNum=' + $(".phoneNumInput").val().slice(1,11),
+					success: change_to_new_phone,
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			}
+		};	
+		function change_to_new_phone(res){
+			$('.phoneNumDiv').html("0"+res.phoneNum);
+			alert("전화번호를 변경하였습니다.");
+			$(".changePhoneNumBtn").click();
+		}
+		
 	}); // end ready()
 </script>
 </head>
@@ -874,9 +924,10 @@ header ul li a {
 								<li class="box6">
 									<div>휴대폰</div>
 									<div>
-										<div>0${member.phoneNum }</div>
+										<div class="phoneNumDiv">0${member.phoneNum }</div>
 									</div>
 									<div>
+										<input id="phoneNum" hidden="hidden" value="${member.phoneNum }" />
 										<button type="button" class="changePhoneNumBtn">변경</button>
 									</div>
 								</li>
@@ -893,7 +944,28 @@ header ul li a {
 								
 							</ul>
 							<div class="deleteBtnBox">
-								<button type="button" class="deleteMemberBtn">탈퇴하기</button>
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelMemberModal" >탈퇴하기</button>
+								<!-- 탈퇴 모달 창 -->
+								<div class="modal fade" id="cancelMemberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+								  <div class="modal-dialog modal-dialog-centered" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h5 class="modal-title" id="exampleModalLongTitle">회원 탈퇴</h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">&times;</span>
+								        </button>
+								      </div>
+								      <div class="modal-body">
+								        정말 탈퇴하시겠습니까?
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+								        <button type="button" class="btn btn-primary" style="background-color:white;color:red;">탈퇴하기</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+								<!-- 탈퇴 모달 창 -->
 							</div>
 						</div>
 					</div>
@@ -901,7 +973,7 @@ header ul li a {
 				
 			</div>
 		</div>
-
+		
 	<footer> footer area </footer>
 </body>
 </html>

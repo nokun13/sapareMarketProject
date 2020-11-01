@@ -173,6 +173,17 @@ public class SapareDaoImp implements SapareDAO{
 		sqlSession.delete("wantItem.removeWant", dto);
 	}
 	
+		// 전화번호 중복체크
+	@Override
+	public int checkPhoneNumMethod(memberDTO dto) {
+		return sqlSession.selectOne("member.checkPhoneNum", dto);
+	}
+		// 전화번호 변경
+	@Override
+	public void changePhoneNumMethod(memberDTO dto) {
+		sqlSession.update("member.changePhoneNum", dto);
+	}
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	
