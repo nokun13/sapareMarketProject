@@ -783,6 +783,33 @@ header ul li a {
 			$(".changePhoneNumBtn").click();
 		}
 		
+		// 탈퇴버튼 기능
+		$("#cancelMemberBtn").on('click', function(){
+			var pw = $("#cancelMemberPw").val();
+			if(pw == ""){
+				alert("비밀번호를 입력해야만 탈퇴할 수 있습니다.");
+			} else{
+				$.ajax({
+					type:'GET',
+					dataType:'text',
+					url:'cancelMember.do?memberName=${member.memberName}&memberPw=' + pw,
+					success: function(msg){
+						if(msg == "fail"){
+							alert("비밀번호가 틀렸습니다.");
+							$("#cancelMemberPw").val("");
+						} else if(msg == "success"){
+							window.location.href = "http://localhost:8090/sapare/mainPage.do";
+						} else{
+							alert("에러: 회원탈퇴에 실패하였습니다.");
+						}
+					},
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			}
+		});
+		
 	}); // end ready()
 </script>
 </head>
@@ -948,19 +975,20 @@ header ul li a {
 								<!-- 탈퇴 모달 창 -->
 								<div class="modal fade" id="cancelMemberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 								  <div class="modal-dialog modal-dialog-centered" role="document">
-								    <div class="modal-content">
-								      <div class="modal-header">
-								        <h5 class="modal-title" id="exampleModalLongTitle">회원 탈퇴</h5>
-								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								    <div class="modal-content" style="position: fixed;height:20%;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+								      <div class="modal-header" style="display: flex;flex-direction: row;">
+								        <h5 class="modal-title" id="exampleModalLongTitle" style="width: 90%;align-self: center;font-family: 'Montserrat';font-size: 22px;text-align: center;">회원 탈퇴</h5>
+								        <button type="button" style="width: 10%;color:black;" class="close" data-dismiss="modal" aria-label="Close">
 								          <span aria-hidden="true">&times;</span>
 								        </button>
 								      </div>
-								      <div class="modal-body">
-								        정말 탈퇴하시겠습니까?
+								      <div class="modal-body" style="align-items: center;display: flex;flex-wrap: wrap;justify-content: center;font-family:'Montserrat';font-size: 14px;height:60%;">
+								       	<p> 회원 탈퇴를 하시려면 비밀번호를 입력하고 탈퇴하기 버튼을 눌러주세요.</p>
+								       	<input type="password" name="memberPw" id="cancelMemberPw" style="padding:5px;font-size:14px;" maxlength="20" placeholder="비밀번호를 입력해주세요." /> 
 								      </div>
-								      <div class="modal-footer">
+								      <div class="modal-footer" style="text-align: end;">
 								        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-								        <button type="button" class="btn btn-primary" style="background-color:white;color:red;">탈퇴하기</button>
+								        <button type="button" id="cancelMemberBtn" class="btn btn-primary" style="background-color:white;color:red;">탈퇴하기</button>
 								      </div>
 								    </div>
 								  </div>

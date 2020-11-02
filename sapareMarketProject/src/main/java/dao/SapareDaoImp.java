@@ -184,6 +184,17 @@ public class SapareDaoImp implements SapareDAO{
 		sqlSession.update("member.changePhoneNum", dto);
 	}
 	
+		// 비밀번호 체크
+	@Override
+	public memberDTO checkPasswordMethod(memberDTO dto) {
+		return sqlSession.selectOne("member.checkPassword", dto);
+	}
+		// 회원 탈퇴
+	@Override
+	public void cancelMemberMethod(memberDTO dto) {
+		sqlSession.update("memberStatus.cancelMember", dto);
+	}
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

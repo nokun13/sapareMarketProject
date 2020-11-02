@@ -87,6 +87,11 @@ public interface SapareService {
 		// 전화번호 변경
 	public void changePhoneNumProcess(memberDTO dto);
 	
+		// 비밀번호 체크
+	public memberDTO checkPasswordProcess(memberDTO dto);
+		// 회원 탈퇴
+	public void cancelMemberProcess(memberDTO dto);
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

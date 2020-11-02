@@ -183,6 +183,17 @@ public class SapareServiceImp implements SapareService{
 		dao.changePhoneNumMethod(dto);
 	}
 	
+		// 비밀번호 체크
+	@Override
+	public memberDTO checkPasswordProcess(memberDTO dto) {
+		return dao.checkPasswordMethod(dto);
+	}
+		// 회원 탈퇴
+	@Override
+	public void cancelMemberProcess(memberDTO dto) {
+		dao.cancelMemberMethod(dto);
+	}
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

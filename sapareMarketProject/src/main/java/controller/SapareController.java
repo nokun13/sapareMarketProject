@@ -406,6 +406,20 @@ public class SapareController {
 		return service.memberInfoProcess(dto);
 	}
 	
+		// 회원탈퇴
+	@RequestMapping("/cancelMember.do")
+	public String cancelMemberProcess(memberDTO dto, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		if(dto.getMemberPw().equals(service.checkPasswordProcess(dto).getMemberPw())) {
+			service.cancelMemberProcess(dto);
+			session.invalidate();
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

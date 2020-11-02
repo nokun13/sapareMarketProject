@@ -30,4 +30,8 @@
 	<select id="sInfo" parameterType="dto.memberStatusDTO" resultType="dto.memberStatusDTO">
 		select * from sapareMemberStatus where memberName=#{memberName}
 	</select>
+	
+	<update id="cancelMember" parameterType="dto.memberDTO">
+		update saparememberstatus set delFlag='y', delDate=sysdate where memberName=#{memberName}
+	</update>
 </mapper>

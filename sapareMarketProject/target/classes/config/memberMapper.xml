@@ -84,4 +84,9 @@
 		update saparemember set phoneNum=#{phoneNum}
 		where memberName=#{memberName}
 	</update>
+	
+	<select id="checkPassword" parameterType="dto.memberDTO" resultType="dto.memberDTO">
+		select memberPw from saparemember where memberName=#{memberName}
+	</select>
+	
 </mapper>

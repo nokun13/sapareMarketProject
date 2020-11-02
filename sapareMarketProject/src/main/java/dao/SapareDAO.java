@@ -87,6 +87,11 @@ public interface SapareDAO {
 		// 전화번호 변경
 	public void changePhoneNumMethod(memberDTO dto);
 	
+		// 비밀번호 체크
+	public memberDTO checkPasswordMethod(memberDTO dto);
+		// 회원 탈퇴
+	public void cancelMemberMethod(memberDTO dto);
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	
