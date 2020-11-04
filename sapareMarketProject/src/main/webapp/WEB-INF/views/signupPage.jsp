@@ -113,12 +113,12 @@ $(document).ready(function(){
 	 $('.error_msg').hide();
 	 $('.numsign').hide();
 	 
-	 $('#reAuthcode').on('click',function(){
+/* 	 $('#reAuthcode').on('click',function(){
 		 if(chkhp($('.phone_number').val())){
 		 $('.numsign').show();
 		 }
 	 });
-	
+	 */
 	 $('.login_btn').on('click',function(){
 		 
 	
@@ -203,7 +203,7 @@ function chkpw(str) { //비밀번호 제약조건
 }
 
 function chkhp(str) { //핸드폰번호 제약조건
-	var Reg_hp = /^01(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+	var Reg_hp =  /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
 	if (!Reg_hp.test(str))
 		return false;
 	return true;
@@ -238,9 +238,9 @@ function chkhp(str) { //핸드폰번호 제약조건
 					<div class="phone_area">
 						<input type="tel" name="phoneNum" class="phone_number"
 							placeholder="숫자만 입력" value="">
-						<input type="button" id="reAuthcode" value="인증요청 "/>
+						<!-- <input type="button" id="reAuthcode" value="인증요청 "/>
 						<p></p>
-						<input type="tel" name="num" class="numsign" placeholder="인증번호 4자리" value="" style="width: 300px">
+						<input type="tel" name="num" class="numsign" placeholder="인증번호 4자리" value="" style="width: 300px"> -->
 					</div>
 					<div><div class="error_msg" id="numerror">전화번호를 입력해주세요.</div></div>
 					<div class="terms_text">
@@ -253,7 +253,7 @@ function chkhp(str) { //핸드폰번호 제약조건
 					</div>
 					<p></p>
 					<div class="bottom login_btn">
-						<input  class="login_btn" type="button" value="회원가입"></input>
+						<input  class="login_btn" type="submit" value="회원가입"></input>
 					</div>
 				</form>
 			</div>

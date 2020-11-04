@@ -13,54 +13,6 @@
   	padding: 0;
 }
 
-header {
-	position: sticky;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100px;
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	transition: 0.6s;
-	z-index: 100;
-	background-color: cornflowerblue;
-}
-
-footer {
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 150px;
-	display: flex;
-	/* justify-content: space-between;*/
-	align-items: center;
-	z-index: 100;
-	background-color: cornflowerblue;
-}
-
-header ul {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-ul {
-	list-style: none;
-	line-height: 10px;
-}
-
-header ul li a {
-	position: relative;
-	margin: 0 5px;
-	color: white;
-	letter-spacing: 2px;
-	font-weight: 500;
-	transition: 0.6s;
-	font-size: 16px;
-}
-
 .side-logo-container {
 	display: flex;
 }
@@ -70,10 +22,13 @@ header ul li a {
 }
 
 .profileArea{
-	background-color: lightgray;
 	margin: auto;
 	width: 950px;
 	margin-top: 25px;
+    border-radius: 10px;
+    border: 1px solid #f0f5fa;
+	background: #f5faff;
+    box-shadow: 6px -6px 13px #f0f5fa, -6px 6px 13px #faffff;
 }
 
 .flagArea{
@@ -81,7 +36,6 @@ header ul li a {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	border-top: #8AB8F4 solid 1px;
 }
 
 #memberFlag{
@@ -94,19 +48,20 @@ header ul li a {
 	margin-top: 20px;
 	height: 250px; 
 	width: 320px;
-	border: #8AB8F4 groove 5px;
-	border-radius: 25px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	border-radius: 8px;
+	background: #ebf5ff;
+	box-shadow:  -6px 6px 9px #e6f0fa, 
+             6px -6px 9px #f0faff;
 }
 
 .profileContainer{
 	display: flex;
 	width: 100%;
-	border-top: #8AB8F4 solid 1px;
-	border-bottom: #8AB8F4 solid 1px;
+	border-bottom: 1px solid #48A4FF;
 }
 
 .profileContainer button{
@@ -115,6 +70,19 @@ header ul li a {
     -webkit-box-align: center;
     align-items: center;
     color: black;
+    border-radius: 7px;
+	background: #d1eeff;
+	box-shadow: 3px 3px 6px #b0c8d6, -5px -5px 12px #f2ffff;
+    outline: none;
+    padding: 4px 4px;
+    border: none;
+}
+
+.profileContainer button:hover{
+	border-radius: 7px;
+	background: #d1eeff;
+	box-shadow: inset 6px 6px 8px #cde9fa, 
+            inset -6px -6px 8px #d5f3ff;
 }
 
 .memberInfoContainer{
@@ -128,7 +96,6 @@ header ul li a {
 	display: inline-flex;
 	height: 50px;
 	align-items: center;
-	border: #8AB8F4 solid 1px;
 	width: 95%;
 	cursor: default
 }
@@ -147,17 +114,18 @@ header ul li a {
     align-items: flex-start;
     width: 80%;
     height: 165px;
-    border: #8AB8F4 solid 1px;
 }
 
 .memberAbout textarea{
 	resize: none;
     font-size: 15px;
-    border: none;
     outline: none;
-    background-color: lightgray;
     cursor: default;
     font-family: Montserrat;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    background: #f0f8ff;
+    box-shadow: -6px 6px 14px #ebf3fa, 6px -6px 14px #f5fdff;
 }
 
 .memberPointArea{
@@ -166,7 +134,6 @@ header ul li a {
 	justify-content: space-between;
 	align-items: center;
 	width: 20%;
-	border: #8AB8F4 solid 1px;
 }
 
 .menuAndContentArea{
@@ -180,6 +147,7 @@ header ul li a {
 	display: flex;
 	justify-content: center;
 	width: 25%;
+	border-right: 1px solid #48A4FF;
 }
 
 .profileContent{
@@ -200,6 +168,7 @@ header ul li a {
     display: flow-root;
     margin-top: 20px;
     width: 100%;
+    margin-right: 10px;
 }
 
 .menuButtons li {
@@ -209,7 +178,7 @@ header ul li a {
 	border-bottom: #8AB8F4 solid 1px;
 	border-right: #8AB8F4 solid 1px;
 	text-align: center;
-	border-radius: 0px 20px 20px 0px;
+	border-radius: 0px 5px 5px 0px;
 }
 
 /* 현재 페이지에 해당하는 메뉴 버튼 더 길게 만들기 */
@@ -222,11 +191,11 @@ header ul li a {
 	text-decoration: none;
 	padding: 20px 0px;
 	color: #00008B;
-	border-radius: 0px 20px 20px 0px;
+	border-radius: 0px 5px 5px 0px;
 }
 
 .menuButtons li a:hover:not(.active) {
-    background-color: #694228;
+    background-color: #77A6FF;
     color: white;
 }
 
@@ -402,13 +371,14 @@ header ul li a {
 .sellDate-options{
 	display: none;
 	position: absolute;
-	background-color: #f9f9f9;
+	background-color: #DAEDFF;
 	min-width: 160px;
 	z-index: 1;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .sellDate-options a{
+	padding: 5px;
 	float: none;
 	color: black;
 	text-decoration: none;
@@ -417,7 +387,7 @@ header ul li a {
 }
 
 .sellDate-options a:hover {
-  background-color: #ddd;
+  background-color: #CEE7FF;
   color: black;
 }
 
@@ -430,15 +400,15 @@ header ul li a {
     border: none;
     margin: 5px;
     border-radius: 8px;
-	background: #D3D3D3;
-	box-shadow:  -5px 5px 8px #c4c4c4, 
-             5px -5px 8px #e2e2e2;
+	background: #d1eeff;
+	box-shadow: 3px 3px 6px #b0c8d6, -5px -5px 12px #f2ffff;
     cursor: pointer;
 }
 
 #sellDateBtn:hover{
-	box-shadow: inset -5px 5px 8px #c4c4c4, 
-             inset 5px -5px 8px #e2e2e2;
+	background: #d1eeff;
+	box-shadow: inset 6px 6px 8px #cde9fa, 
+            inset -6px -6px 8px #d5f3ff;
 }
 
 .sellDate:hover .sellDate-options {
@@ -765,13 +735,13 @@ header ul li a {
 	<jsp:include page="header.jsp" flush="false" />
 	<!-- header 끝 -->
 	
-	<div class="wrap">
+	<div class="wrap-profile">
 		<div class="profileArea">
 			<div class="flagArea">
-				<button class="memberFlag" style="cursor:pointer; margin-right:15px;">신고하기</button>
 			<!-- 아래 if 코드 신고하기 버튼 감싸기 !!! -->
-			<!-- <c:if test="${member.memberName != sessionScope.memberName}"> -->
-			<!-- </c:if> -->
+			<c:if test="${member.memberName != sessionScope.memberName}">
+				<button class="memberFlag" style="cursor:pointer; margin-right:15px;">신고하기</button>
+			</c:if>
 			</div>
 			
 			<div class="profileContainer">
@@ -781,9 +751,9 @@ header ul li a {
 						${member.nickname }
 					</div>
 					<div class="imgChangeBox">
+						<c:if test="${member.memberName == sessionScope.memberName}">
 							<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>
-						<!-- <c:if test="${member.memberName == sessionScope.memberName}">
-						</c:if> -->
+						</c:if>
 					</div>
 					<input type="file" name="filepath" id="filepath" style="display:none;"/>
 					<div class="memberStars" style="margin-top: 10px;">
@@ -795,27 +765,27 @@ header ul li a {
 						<div class="nickname">
 							${member.nickname }
 						</div>
-							<button type="button" id="changeNick" style="cursor:pointer;margin-right:10px;">닉네임수정</button>
-							<!-- <c:if test="${member.memberName == sessionScope.memberName}">
-						 	</c:if> -->
+							<c:if test="${member.memberName == sessionScope.memberName}">
+								<button type="button" id="changeNick" style="cursor:pointer;margin-right:10px;">닉네임수정</button>
+						 	</c:if>
 						<div class="memberRank">${status.memberRank }</div>
-						<div class="premiumIcon">
+						<%-- <div class="premiumIcon">
 							<c:if test="${fn:contains(status.memberPremium, 'n')}">
 								프리미엄 아님/나중에 변경
 							</c:if>
-						</div>
+						</div> --%>
 					</div>
 					<div class="memberAbout">
 						<textarea readonly id="aboutContent" rows="8" cols="65" maxlength="80">${member.memberAbout }</textarea>
 					</div>
 					<div class="aboutChangeBox">
+						 <c:if test="${member.memberName == sessionScope.memberName}">
 							<button type="button" id="changeAbout" style="margin: 10px; cursor:pointer;">소개수정</button>
-						 <!-- <c:if test="${member.memberName == sessionScope.memberName}">
-						 </c:if> -->
+						 </c:if>
 					</div>
 					<div class="memberPointArea">
-							<div class="memberPoint" style="margin: 10px; white-space: nowrap; overflow: hidden;">${status.memberPoint }</div>
-							<button class="pointCharge" style="cursor:pointer;">포인트 충전</button>
+						<!-- 	<div class="memberPoint" style="margin: 10px; white-space: nowrap; overflow: hidden;">${status.memberPoint }</div>
+							<button class="pointCharge" style="cursor:pointer;">포인트 충전</button> -->
 						<!-- <c:if test="${member.memberName == sessionScope.memberName}">
 						</c:if> -->
 					</div>
@@ -827,19 +797,19 @@ header ul li a {
 						<ul class="menuButtons">
 						  <li><a href="profileSell.do">판매상품</a>
 						  
+						  <c:if test="${member.memberName == sessionScope.memberName}">
 						  	<li><a href="profileBuy.do">구매상품</a></li>
-						  <!-- <c:if test="${member.memberName == sessionScope.memberName}">
-						  </c:if> -->
+						  </c:if>
 						  
+						  <c:if test="${member.memberName == sessionScope.memberName}">
 						  	<li><a href="profileWant.do">찜</a></li>
-						  <!-- <c:if test="${member.memberName == sessionScope.memberName}">
-						  </c:if> -->
+						  </c:if>
 						  
 						  <li><a href="profileReview.do">후기</a></li>
 						  
+						  <c:if test="${member.memberName == sessionScope.memberName}">
 						  	<li><a href="profileSetting.do">회원정보수정</a></li>
-						  <!-- <c:if test="${member.memberName == sessionScope.memberName}">
-						  </c:if> -->
+						  </c:if>
 						</ul>
 					</div>
 					<div class="profileContent">
@@ -868,7 +838,7 @@ header ul li a {
 						</div>
 						<div class="contents">
 							<c:forEach items="${iList}" var="dto">
-								<div class="sellItemBox" style="display: flex;width: 100%;height: 150px;background-color: gray;flex-direction: row;border-radius: 5px;margin-bottom: 2%;">
+								<div class="sellItemBox" style="border-radius: 5px;background: #f0f8ff;box-shadow:  6px 6px 4px #eaf2f6,-6px -6px 4px #f4fcff;display: flex;width: 100%;height: 150px;flex-direction: row;margin-bottom: 2%;">
 									<div class="sellItemImg">
 										<a href="#"><img class="itemImg" style="object-fit:cover;" src="image/${dto.itemImagePath }"></a>
 									</div>
@@ -877,10 +847,10 @@ header ul li a {
 											<div class="itemName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis; white-space: nowrap;">${dto.itemName }</div>
 											<div class="itemAbout" style="margin-top:7px; overflow: hidden; height: 50%; margin-left: 5px; font-size: 14px; text-overflow: ellipsis; white-space: nowrap;">${dto.itemAbout }</div>
 											<c:if test="${fn:contains(dto.itemStatus, 'y')}">
-												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange;text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;">${dto.itemPrice }</div>
+												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: black;text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;"><fmt:formatNumber value="${dto.itemPrice }" pattern="#,###,###,###" />원</div>
 											</c:if>
 											<c:if test="${fn:contains(dto.itemStatus, 'n')}">
-												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: orange;text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;">${dto.orderPrice }</div>
+												<div class="itemPrice" style="margin-top:5px; overflow: hidden; margin-left: 5px; height: 18%; font-size: 18px; color: black;text-overflow: ellipsis;white-space: nowrap;padding-bottom:5px;"><fmt:formatNumber value="${dto.itemPrice }" pattern="#,###,###,###" />원</div>
 											</c:if>
 											<c:if test="${dto.reviewNo != 0}">
 												<button id="reviewBox${dto.reviewNo }" class="reviewToggleBtn" style="width:20%; margin: 5px auto; cursor:pointer;">후기 보기</button>
@@ -888,19 +858,19 @@ header ul li a {
 										</div>
 										
 										<div class="itemStatusBox">
-											<p class="itemP${dto.itemId }" style="color:orange;text-align:center;">
+											<p class="itemP${dto.itemId }" style="color:black;text-align:center;">
 												<c:if test="${fn:contains(dto.itemStatus, 'y')}">
-													판매중: <br/><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.itemUploadDate }" />
+													판매중: <br/>${dto.itemUploadDate }
 												</c:if>
 												<c:if test="${fn:contains(dto.itemStatus, 'n')}">
-													판매날짜: <br/><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.orderDate }" />
+													판매날짜: <br/>${dto.orderDate }
 												</c:if>
 											</p>
 										</div>
 									</div>
 								</div>
 								<c:if test="${dto.reviewNo != 0}">
-									<div class="reviewBox${dto.reviewNo }" style="display:none;width: 100%;height: 150px;background-color: #F0F8FF;flex-direction: row;margin-bottom: 2%;border-radius: 5px;">
+									<div class="reviewBox${dto.reviewNo }" style="border-radius: 5px;background: #e7eff3;box-shadow: 6px 6px 4px #e2eaee, -6px -6px 4px #ecf4f8;display:none;width: 100%;height: 150px;flex-direction: row;margin-bottom: 2%;border-radius: 5px;">
 										<div class="buyerImgBox">
 											<a href="#"><img class="buyerImg" src="image/${dto.profileImg }" style="border-radius:5px;object-fit:cover;"></a>
 										</div>
@@ -962,6 +932,6 @@ header ul li a {
 			</div>
 		</div>
 
-	<footer> footer area </footer>
 </body>
+<jsp:include page="footer.jsp" />
 </html>

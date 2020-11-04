@@ -2,12 +2,16 @@ package dto;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class itemDTO {
 
-	private String orderId, memberName, itemAbout, itemName, itemImagePath, itemType, profileImg, nickname, reviewContent;
+	private String itemUploadDate, orderId, memberName, itemAbout, itemName, itemImagePath, itemType, profileImg, nickname, reviewContent, searchWord;
+	private String itemBigCat, itemMidCat, itemSmallCat, itemCity, itemGu, itemDong, memberRank;
 	private int itemId, itemPrice, itemViewCnt, itemWantCnt, itemFlagCnt, reviewNo, reviewStar, orderPrice;
 	private char itemStatus;
-	private Date itemUploadDate, orderDate;
+	private Date orderDate;
+	private MultipartFile filepath;
 	
 	public String getMemberName() {
 		return memberName;
@@ -75,12 +79,6 @@ public class itemDTO {
 	public void setItemStatus(char itemStatus) {
 		this.itemStatus = itemStatus;
 	}
-	public Date getItemUploadDate() {
-		return itemUploadDate;
-	}
-	public void setItemUploadDate(Date itemUploadDate) {
-		this.itemUploadDate = itemUploadDate;
-	}
 	public int getReviewNo() {
 		return reviewNo;
 	}
@@ -128,6 +126,66 @@ public class itemDTO {
 	}
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
+	}
+	public String getItemBigCat() {
+		return itemBigCat;
+	}
+	public void setItemBigCat(String itemBigCat) {
+		this.itemBigCat = itemBigCat;
+	}
+	public String getItemMidCat() {
+		return itemMidCat;
+	}
+	public void setItemMidCat(String itemMidCat) {
+		this.itemMidCat = itemMidCat;
+	}
+	public String getItemSmallCat() {
+		return itemSmallCat;
+	}
+	public void setItemSmallCat(String itemSmallCat) {
+		this.itemSmallCat = itemSmallCat;
+	}
+	public String getItemCity() {
+		return itemCity;
+	}
+	public void setItemCity(String itemCity) {
+		this.itemCity = itemCity;
+	}
+	public String getItemGu() {
+		return itemGu;
+	}
+	public void setItemGu(String itemGu) {
+		this.itemGu = itemGu;
+	}
+	public String getItemDong() {
+		return itemDong;
+	}
+	public void setItemDong(String itemDong) {
+		this.itemDong = itemDong;
+	}
+	public String getMemberRank() {
+		return memberRank;
+	}
+	public void setMemberRank(String memberRank) {
+		this.memberRank = memberRank;
+	}
+	public MultipartFile getFilepath() {
+		return filepath;
+	}
+	public void setFilepath(MultipartFile filepath) {
+		this.filepath = filepath;
+	}
+	public String getSearchWord() {
+		return searchWord;
+	}
+	public void setSearchWord(String searchWord) {
+		this.searchWord = searchWord;
+	}
+	public String getItemUploadDate() {
+		return itemUploadDate;
+	}
+	public void setItemUploadDate(String itemUploadDate) {
+		this.itemUploadDate = itemUploadDate;
 	}
 	
 } // end class

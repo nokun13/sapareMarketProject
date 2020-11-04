@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class memberDTO {
 	
-	private String memberName, memberId, memberPw, birthday, profileImg, memberAbout, nickname, searchWord;
+	private String memberName, memberId, memberPw, birthday, profileImg, memberAbout, nickname, searchWord, sellerName;
 	private int phoneNum, itemId;
 	private MultipartFile profileFile;
 	
@@ -97,6 +97,14 @@ public class memberDTO {
 
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
+	}
+
+	public String getSellerName() {
+		return sellerName;
+	}
+
+	public void setSellerName(String sellerName) {
+		this.sellerName = sellerName;
 	}
 	
 } // end class

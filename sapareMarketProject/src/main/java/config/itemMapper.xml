@@ -160,4 +160,78 @@
         order by itemuploaddate desc
 	</select>
 	
+	<select id="searchItem" parameterType="dto.itemDTO" resultType="dto.itemDTO">
+		select * from sapareItem
+		where lower(itemName) like lower
+		('%'||#{searchWord}||'%')
+	</select>
+	
+	<select id="category" parameterType="dto.itemDTO" resultType="dto.itemDTO">
+		select * from sapareItemcategory
+		where ITEMBIGCAT like
+		'%'||#{searchWord}||'%'
+	</select>
+	
+	<select id="itemView" parameterType="int" resultType="dto.itemDTO">
+		select *
+		from sapareItem
+		where itemId =#{itemId}
+	</select>
+
+	<select id="itemCat" parameterType="int" resultType="dto.itemCategoryDTO">
+		select *
+		from sapareitemcategory
+		where itemId=#{itemId}
+	</select>
+
+	<!-- 삭제 -->
+	<delete id="deleteItem">
+		delete from sapareItem
+		where itemId=#{itemId}
+	</delete>
+
+	<select id="currItem" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select itemid from sapareitem where membername=#{memberName} order by
+		itemuploaddate desc
+	</select>
+
+	<update id="addWantCnt" parameterType="dto.memberDTO">
+		update sapareitem set itemwantcnt = itemwantcnt + 1 where itemid=#{itemId}
+	</update>
+	
+	<update id="subtWantCnt" parameterType="dto.memberDTO">
+		update sapareitem set itemwantcnt = itemwantcnt - 1 where itemid=#{itemId}
+	</update>
+	
+	<update id="updateViewCnt" parameterType="int">
+		update sapareItem
+		set itemViewCnt = itemViewCnt +1
+		where itemId=#{itemId}
+	</update>
+	
+	<insert id="itemUpload" parameterType="dto.itemDTO">
+		INSERT ALL
+		INTO SAPAREITEM
+		VALUES(SAPAREITEM_ITEMID_seq.nextval,'cust',#{itemPrice},#{itemAbout,jdbcType=VARCHAR},0,#{itemName},#{itemImagePath,jdbcType=VARCHAR},'y',to_char(SYSDATE,'yyyy.mm.dd
+		hh24:mi:ss'),'중고',0,0)
+		INTO SAPAREITEMCATEGORY
+		VALUES(SAPAREITEM_ITEMID_SEQ.currval,'cust',#{itemBigCat},#{itemMidCat},#{itemSmallCat},#{itemCity},'o','o')
+		SELECT * FROM dual
+	</insert>
+
+	<select id="itemFirst" resultType="dto.itemDTO">
+		SELECT a.*,b.*, c.membername,
+		c.profileimg, c.nickname, d.memberrank
+		FROM SAPAREITEM a
+		LEFT OUTER JOIN SAPAREITEMCATEGORY b ON a.ITEMID = b.ITEMID
+		LEFT OUTER JOIN SAPAREMEMBER c ON c.MEMBERNAME = a.MEMBERNAME
+		LEFT OUTER JOIN SAPAREMEMBERSTATUS d ON d.MEMBERNAME = c.MEMBERNAME
+		WHERE A.ITEMID=(SELECT MAX(ITEMID) FROM SAPAREITEM)
+	</select>
+
+	<select id="countCategory" resultType="dto.itemCategoryDTO">
+		SELECT ITEMBIGCAT, COUNT(*) ITEMID FROM SAPAREITEMCATEGORY
+		GROUP BY ITEMBIGCAT;
+	</select>
+	
 </mapper>

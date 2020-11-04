@@ -5,9 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>관리자</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 * {
 	text-decoration: none;
@@ -228,7 +225,7 @@ header ul li a {
 }
 
 /* 현재 페이지에 해당하는 메뉴 버튼 더 길게 만들기 */
-.menuButtons li:nth-child(1) {
+.menuButtons li:nth-child(5) {
 	width: 100%
 }
 
@@ -246,7 +243,7 @@ header ul li a {
 }
 
 /* 현재 페이지에 해당하는 메뉴 버튼 색깔 바꿔주기 */
-.menuButtons li:nth-child(1) a {
+.menuButtons li:nth-child(5) a {
 	background-color: #8AB8F4;
     color: white;
 }
@@ -395,40 +392,11 @@ header ul li a {
 
 </style>
 <meta charset="UTF-8">
-<title>${sessionScope.account_Name }의 프로필 페이지</title>
+<title>관리자 메세지 창</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src ="https://www.gstatic.com/charts/loader.js" ></script>
 <script type="text/javascript">
-	google.charts.load('current', {'packages':['bar']});
-	google.charts.setOnLoadCallback(drawVisualization);
-	
-	function drawVisualization(){
-		var data =google.visualization.arrayToDataTable([
-			['카테고리','제품수'],
-			<c:forEach var="counts" items="${count}" varStatus="status">
-				['${counts.itemBigCat}','${counts.itemId}'],
-			</c:forEach>
-		]);
-		
-		var options ={
-			title:"기간별 회원가입수",
-			subtitle:"통계 : 2020년",
-			hAxis:{ title:"카테고리"},
-			vAxis:{ title:"제품수"},
-			isStacked:true,
-			colors:['#000000'],
-			bar:{groupWidth:"70%"}
-		};
-	var chart =new google.charts.Bar(document.getElementById('countChart'));
-	
-	var currentDiv = document.getElementById("div1"); 
-	document.body.insertBefore(newDiv, currentDiv);
-	
-	chart.draw(data, google.charts.Bar.convertOptions(options));
-	}
-	
 	$(document).ready(function() {
-
+		
 		// 전화번호 숫자만 입력 가능
 		$(".phoneNumInput").keyup(function() {
 		    this.value = this.value.replace(/[^1-9\.]/g,'');
@@ -823,24 +791,106 @@ header ul li a {
 				<div class="menuAndContentArea">
 					<div class="profileMenu">
 						<ul class="menuButtons">
-						<li><a href="adminPage.do">현황</a>
-						<li><a href="adminMember.do">회원관리</a></li>
-						<li><a href="adminMemberFlag.do">회원신고접수</a></li>
-						<li><a href="adminItemFlag.do">게시글 신고접수</a></li>
-						<li><a href="adminMessage.do">문의메세지</a></li>
-					</ul>
+						  <li><a href="adminPage.do">현황</a>
+						  <c:if test="${requestScope.memberName == sessionScope.memberName}">
+						  	<li><a href="adminMember.do">회원관리</a></li>
+						  </c:if>
+						  <c:if test="${requestScope.memberName == sessionScope.memberName}">
+						  	 <li><a href="adminMemberFlag.do">회원신고접수</a></li>
+						  </c:if>
+						  <c:if test="${requestScope.memberName == sessionScope.memberName}">
+						  	<li><a href="adminItemFlag.do">게시글 신고접수</a></li>
+						  </c:if>
+						  <c:if test="${requestScope.memberName == sessionScope.memberName}">
+						  	<li><a href="adminMessage.do">문의메세지</a></li>
+						  </c:if>
+						</ul>
 					</div>
 					<div class="profileContent">
-						<div class="countChart">
-							
-							
+						<div class="contents">
+							<!-- memberDTO에 회원 정보 담고 이 jsp로 List 타입으로 dto 명으로 보내줘야 된다 -->
+							<ul>
+								<li class="box1">
+									<div>아이디/이메일</div>
+									<div>
+										<div class="memberId">${member.memberId }</div>
+									</div>
+									<!-- <div>
+										<button type="button" class="changeIdBtn">변경</button>
+									</div> -->
+								</li>
+								
+								<li class="box2" style="display:none;">
+									<div>&nbsp;</div>
+									<div>
+										<input type="email" placeholder="이메일 주소 입력" class="memberIdInput" maxlength="30" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
+									</div>
+									<div>
+										<button type="button" class="memberIdCheck">인증요청</button>
+									</div>
+								</li>
+								
+								<li class="box3">
+									<div>비밀번호</div>
+									<div>
+										<div class="memberPw">****************</div>
+									</div>
+									<div>
+										<button type="button" class="changePwBtn">변경</button>
+									</div>
+								</li>
+								
+								<li class="box4" style="display:none;">
+									<div>현재 비밀번호</div>
+									<div>
+										<input type="password" placeholder="현재 비밀번호를 입력해주세요" class="memberPwNow" maxlength="30" pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,15}" title="비밀번호는 최소 6자에서 15자이며 숫자, 문자를 1개씩 포함해야 합니다."/>
+									</div>
+								</li>
+								
+								<li class="box5" style="display:none;">
+									<div>신규 비밀번호</div>
+									<div>
+										<input type="password" placeholder="신규 비밀번호를 입력해주세요" class="memberPwNew" maxlength="30" pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,15}" title="비밀번호는 최소 6자에서 15자이며 숫자, 문자를 1개씩 포함해야 합니다."/>
+										<!-- <div class="alert alert-success" id="alert-success" style="color: red; font-size: 13px;">비밀번호가 일치합니다.</div>  -->
+										<!-- <div class="alert alert-danger" id="alert-danger" style="color: red; font-size: 13px;">비밀번호가 일치하지 않습니다.</div>  -->
+										<div style="font-size: 13px; width: max-content">최소 6~15자 이하 숫자와 문자 포함</div>
+									</div>
+									<div>
+										<button type="button" id="changePwBtn">확인</button>
+									</div>
+								</li>
+								
+								<li class="box6">
+									<div>휴대폰</div>
+									<div>
+										<div>0${member.phoneNum }</div>
+									</div>
+									<div>
+										<button type="button" class="changePhoneNumBtn">변경</button>
+									</div>
+								</li>
+								
+								<li class="box7" style="display:none;">
+									<div>&nbsp;</div>
+									<div>
+										<input type="text" placeholder="휴대폰 번호를 입력해주세요" class="phoneNumInput" maxlength="11" />
+									</div>
+									<div>
+										<button type="button" class="phoneNumCheck">인증요청</button>
+									</div>
+								</li>
+								
+							</ul>
+							<div class="deleteBtnBox">
+								<button type="button" class="deleteMemberBtn">탈퇴하기</button>
+							</div>
 						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 
 	<footer> footer area </footer>
-
-    
 </body>
-<script src = "https://www.gstatic.com/charts/loader.js" > </ script>
 </html>

@@ -5,8 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import dto.boardDTO;
+import dto.itemCategoryDTO;
 import dto.itemDTO;
+import dto.itemFlagDTO;
 import dto.memberDTO;
+import dto.memberFlagDTO;
 import dto.memberStatusDTO;
 import dto.orderDTO;
 import dto.questionDTO;
@@ -81,6 +84,10 @@ public interface SapareService {
 	
 		// 찜 목록에서 제거
 	public void removeWantProcess(memberDTO dto);
+		// 찜 갯수 더하기
+	public void addWantCntProcess(memberDTO dto);
+		// 찜 갯수 빼기
+	public void subtWantCntProcess(memberDTO dto);
 	
 		// 전화번호 중복 체크
 	public int checkPhoneNumProcess(memberDTO dto);
@@ -99,54 +106,101 @@ public interface SapareService {
 	
 	// 김소정 start ////////////////////////////////////////
 	public List<boardDTO> listProcess();
+
 	public void insertProcess(boardDTO dto);
+
 	public boardDTO contentProcess(int num);
+
 	public boardDTO updateSelectProcess(int num);
+
 	public void updateProcess(boardDTO dto);
+
 	public void deleteProcess(int num);
+
 	public boardDTO categoryProcess(boardDTO dto);
+
 	public List<boardDTO> faqlistProcess();
+
 	public List<itemDTO> itemlistProcess();
+
 	public List<questionDTO> questionlistProcess();
+
 	public void questioninsertProcess(questionDTO dto);
+
 	public List<memberDTO> memberlistProcess();
+
 	public void signupProcess(memberDTO dto);
+
 	public boolean loginCheck(memberDTO dto, HttpSession session);
+
 	public memberDTO viewMember(memberDTO dto);
+
 	public void logout(HttpSession session);
-	
+
 	// 김소정 end ////////////////////////////////////////
-	
-	
+
 	
 	
 	// 오용준 start //////////////////////////////////////////
-	
+	public itemDTO itemviewProcess(int itemId);
+
+	public itemCategoryDTO itemCatProcess(int itemId);
+
+	public memberDTO itemMemberProcess(int itemId);
+
+	public memberStatusDTO itemMemberStatProcess(int itemId);
 
 	
-	// 오용준 end //////////////////////////////////////////
+	public void deleteItemProcess(int itemId);
+
+	public List<itemDTO> itemCurrvalProcess(memberDTO dto);
+
+	public void itemflaginsertProcess(itemFlagDTO dto);
 	
+	// 찜하기 체크
+	public int checkWantItemProcess(memberDTO dto);
+	// 찜하기 클릭
+	public void clickWantProcess(memberDTO dto);
+	// 찜하기 언클릭
+	public void unclickWantProcess(memberDTO dto);
+	
+	public void itemViewCntProcess(int itemId);
+	// 오용준 end //////////////////////////////////////////
+
 	
 	
 	
 	// 마정협 start //////////////////////////////////////////
-	
-	
+	public void itemUploadProcess(itemDTO dto);
+	public itemDTO uploadViewProcess();
+	public List<memberDTO> memberLookupProcess();
+	public List<memberDTO> memberIdOrderProcess();
+	public List<memberFlagDTO> memberFlagProcess();
+	public List<itemFlagDTO> itemFlagProcess();
+	public void memberFlagUpdateProcess(int memberFlagNo);
+	public void MemberDeleteProcess(String memberId);
+	public void countCategoeyProcess(itemCategoryDTO dto);
 	// 마정협 end //////////////////////////////////////////
+
 	
 	
 	
 	// 오정우 start //////////////////////////////////////////
-	
+
 	public void crawlingProcess(itemDTO dto);
+
 	public List<itemDTO> selectProcess();
-	
+
+	public List<itemDTO> searchProcess(itemDTO dto);
+
+	public List<itemDTO> itemCategoryProcess(itemDTO dto);
+
 	// 오정우 end //////////////////////////////////////////
+
 	
 	
 	// 표다몬 start //////////////////////////////////////////
-	
-	
+
 	// 표다몬 end //////////////////////////////////////////
 	
 } // end interface

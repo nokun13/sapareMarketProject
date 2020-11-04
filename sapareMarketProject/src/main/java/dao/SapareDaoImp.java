@@ -7,8 +7,11 @@ import javax.servlet.http.HttpSession;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import dto.boardDTO;
+import dto.itemCategoryDTO;
 import dto.itemDTO;
+import dto.itemFlagDTO;
 import dto.memberDTO;
+import dto.memberFlagDTO;
 import dto.memberStatusDTO;
 import dto.orderDTO;
 import dto.questionDTO;
@@ -172,6 +175,16 @@ public class SapareDaoImp implements SapareDAO{
 	public void removeWantMethod(memberDTO dto) {
 		sqlSession.delete("wantItem.removeWant", dto);
 	}
+		// 찜 갯수 더하기
+	@Override
+	public void addWantCntMethod(memberDTO dto) {
+		sqlSession.update("item.addWantCnt", dto);
+	}
+		// 찜 갯수 빼기
+	@Override
+	public void subtWantCntMethod(memberDTO dto) {
+		sqlSession.update("item.subtWantCnt", dto);
+	}
 	
 		// 전화번호 중복체크
 	@Override
@@ -198,9 +211,9 @@ public class SapareDaoImp implements SapareDAO{
 	// 김녹훈 end //////////////////////////////////////////
 	
 	
+	
 	// 김소정 start /////////////////////////////////////////
-	
-	
+
 	@Override
 	public void readCount(int num) {
 		sqlSession.update("board.readCount",num);
@@ -311,16 +324,107 @@ public class SapareDaoImp implements SapareDAO{
 	
 	
 	// 오용준 start //////////////////////////////////////////
+	//상품아이템(상품가격 소개 조회수 상품명 상품이미지 상품등록날짜 상품타입)
+	@Override
+	public itemDTO itemcontent(int itemId) {
+		return sqlSession.selectOne("item.itemView", itemId);
+	}
 	
+	//상품 아이템의 카테고리 (상품분류 및 상품위치분류)
+	@Override
+	public itemCategoryDTO itemCatContent(int itemId) {
+		return sqlSession.selectOne("item.itemCat", itemId);
+	}
+	
+	//회원 닉네임 회원프로필사진
+	@Override
+	public memberDTO itemMemberContent(int itemId) {
+		return sqlSession.selectOne("member.itemMember", itemId);
+	}
+	
+	//회원 등급
+	@Override
+	public memberStatusDTO itemMemberStatContent(int itemId) {
+		return sqlSession.selectOne("member.itemMemberStat", itemId);
+	}
+	
+	
+	//상품삭제
+	@Override
+	public void deleteItem(int itemId) {
+		sqlSession.delete("item.deleteItem", itemId);
+	}
+	@Override
+	public List<itemDTO> itemCurrvalMethod(memberDTO dto) {
+		return sqlSession.selectList("item.currItem", dto);
+	}
+		
+	@Override
+	public void itemflaginsert(itemFlagDTO dto) {
+		 sqlSession.insert("itemFlag.itemflaginsert",dto);
+	}
 
-	
+	// 찜하기 체크
+	@Override
+	public int checkWantItemMethod(memberDTO dto) {
+		return sqlSession.selectOne("wantItem.checkWantItem", dto);
+	}
+	// 찜하기 클릭
+	@Override
+	public void clickWantMethod(memberDTO dto) {
+		sqlSession.insert("wantItem.clickWantItem", dto);
+	}
+	// 찜하기 언클릭
+	@Override
+	public void unclickWantMethod(memberDTO dto) {
+		sqlSession.delete("wantItem.unclickWantItem", dto);
+	}
+	@Override
+	public void updateViewCnt(int itemId) {
+		sqlSession.update("item.updateViewCnt", itemId);
+	}
 	// 오용준 end //////////////////////////////////////////
 	
 	
 	
 	
 	// 마정협 start //////////////////////////////////////////
+	public void itemUploadMethod(itemDTO dto) {
+		System.out.println(dto.getItemName());
+		sqlSession.insert("item.itemUpload",dto);
+	}
+	public itemDTO uploadViewMethod() {
+		return sqlSession.selectOne("item.itemFirst");
+	}
 	
+	public List<memberDTO> memberLookupMethod() {
+		return sqlSession.selectList("member.memberJo");
+	}
+	
+	public List<memberDTO> memberIdOrderMethod() {
+		return sqlSession.selectList("member.memberIdOrder");
+	}
+	
+	public List<memberFlagDTO> memberFlagMethod(){
+		return sqlSession.selectList("memberFlag.memberFlags");
+	}
+	
+	public void adminMemberFlagMethod(int memberFlagNo) {
+			sqlSession.update("memberFlag.memberFlagUpdate",memberFlagNo);
+		
+	}
+	
+	public void adminMemberDeleteMethod(String memberId) {
+		sqlSession.delete("member.memberdelete",memberId);
+	}
+	
+	public List<itemFlagDTO> itemFlagMethod(){
+		return sqlSession.selectList("itemFlag.itemFlags");
+	}
+	
+	public void countCategoryMethod(itemCategoryDTO dto) {
+		sqlSession.selectOne("item.countCategory", dto);
+	}
 	
 	// 마정협 end //////////////////////////////////////////
 	
@@ -337,6 +441,18 @@ public class SapareDaoImp implements SapareDAO{
 	@Override
 	public List<itemDTO> selectMethod() {
 		return sqlSession.selectList("item.selectProcess");
+	}
+
+	@Override
+	public List<itemDTO> searchMethod(itemDTO dto) {
+		System.out.println(dto.getSearchWord());
+		return sqlSession.selectList("item.searchItem", dto);
+	}
+
+	@Override
+	public List<itemDTO> itemCategoryMethod(itemDTO dto) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("item.category", dto);
 	}
 
 

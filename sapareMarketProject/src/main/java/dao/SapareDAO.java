@@ -5,8 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import dto.boardDTO;
+import dto.itemCategoryDTO;
 import dto.itemDTO;
+import dto.itemFlagDTO;
 import dto.memberDTO;
+import dto.memberFlagDTO;
 import dto.memberStatusDTO;
 import dto.orderDTO;
 import dto.questionDTO;
@@ -81,6 +84,10 @@ public interface SapareDAO {
 	
 		// 찜 목록에서 제거
 	public void removeWantMethod(memberDTO dto);
+		// 찜 갯수 뺴기
+	public void subtWantCntMethod(memberDTO dto);
+		// 찜 갯수 더하기
+	public void addWantCntMethod(memberDTO dto);
 	
 		// 전화번호 중복 체크
 	public int checkPhoneNumMethod(memberDTO dto);
@@ -123,17 +130,46 @@ public interface SapareDAO {
 	
 	// 오용준 start //////////////////////////////////////////
 	
-
+	//상품아이템(상품가격 소개 조회수 상품명 상품이미지 상품등록날짜 상품타입)
+	public itemDTO itemcontent(int itemId);
+	//상품 아이템의 카테고리 (상품분류 및 상품위치분류)
+	public itemCategoryDTO itemCatContent(int itemId);
+	//회원 닉네임 회원프로필사진
+	public memberDTO itemMemberContent(int itemId);
+	//회원 등급
+	public memberStatusDTO itemMemberStatContent(int itemId);
 	
+	//상품삭제
+	public void deleteItem(int itemId);
+	public List<itemDTO> itemCurrvalMethod(memberDTO dto);
+	public void itemflaginsert(itemFlagDTO dto);
+	
+	// 찜하기 체크
+	public int checkWantItemMethod(memberDTO dto);
+	// 찜하기 클릭
+	public void clickWantMethod(memberDTO dto);
+	// 찜하기 언클릭
+	public void unclickWantMethod(memberDTO dto);
+	
+	public void updateViewCnt(int itemId);
 	// 오용준 end //////////////////////////////////////////
 	
 	
 	
 	
 	// 마정협 start //////////////////////////////////////////
-	
+	public void itemUploadMethod(itemDTO dto);
+	public itemDTO uploadViewMethod();
+	public List<memberDTO> memberLookupMethod();
+	public List<memberDTO> memberIdOrderMethod();
+	public List<memberFlagDTO> memberFlagMethod();
+	public List<itemFlagDTO> itemFlagMethod();
+	public void adminMemberFlagMethod(int memberFlagNo);
+	public void adminMemberDeleteMethod(String memberId);
+	public void countCategoryMethod(itemCategoryDTO dto);
 	
 	// 마정협 end //////////////////////////////////////////
+	
 	
 	
 	
@@ -141,8 +177,13 @@ public interface SapareDAO {
 	
 	public void crawlingMethod(itemDTO dto);
 	public List<itemDTO> selectMethod();
+	public List<itemDTO> searchMethod(itemDTO dto);
+	public List<itemDTO> itemCategoryMethod(itemDTO dto);
 	
 	// 오정우 end //////////////////////////////////////////
+	
+	
+	
 	
 	
 	// 표다몬 start //////////////////////////////////////////

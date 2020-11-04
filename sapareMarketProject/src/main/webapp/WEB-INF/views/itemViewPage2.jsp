@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<jsp:include page="../views/header.jsp" flush="false"></jsp:include>
+	<jsp:include page="header.jsp" />
 	<!-- 전체 사이즈 -->
 	<div class="main-tle">
 		<!--전체 가로 사이즈 -->
@@ -387,4 +387,5 @@
 	</div>
 	
 </body>
+<jsp:include page="footer.jsp" />
 </html>

@@ -1,6 +1,29 @@
+<%@page import="dto.memberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"%>
+<%
+	String contentPage = request.getParameter("");
+	if (contentPage == null)
+		contentPage = "mainPage.jsp";
+
+	String fid = (String) session.getAttribute("logOk");
+	String id = (String) session.getAttribute("id");
+	System.out.println(id);
+	boolean logok = false;
+	boolean admin = false;
+	if (fid != null)
+		if (fid.equals("ok")) {
+			logok = true;
+			if (id.equals("admin@gg.com")) {
+				admin = true;
+				System.out.println("admin");
+			}
+		}
+%>
+
+
+
 <!DOCTYPE html >
 <html>
 <head>
@@ -8,6 +31,7 @@
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style type="text/css">
+
 /* -------------카테고리--------------*/
 .menubtn {
 	color: white;
@@ -69,6 +93,12 @@ a {
 	margin: auto;
 }
 
+.wrap {
+	/* width: 1191.34px; */
+	width: 1245px;
+	margin-left: 47px;
+}
+
 .categorymenu {
 	float: left;
 	display: inline-block;
@@ -79,7 +109,7 @@ a {
 .categorymenu img {
 	width: 55px;
 	height: 50px;
-	margin-top: 27px;
+	margin-top: 22px;
 	padding-bottom: 40px;
 }
 
@@ -92,7 +122,7 @@ a {
 }
 
 #logo img {
-	margin-left: -14%;
+	margin-left: -10%;
 	width: 186px;
 	height: 68px;
 }
@@ -102,7 +132,7 @@ a {
 	font-family: "Sans-serif";
 	font-size: 12px;
 	color: #ffffff;
-	margin-top: 40px;
+	margin-top: 42px;
 	border: solid 2px #F2F2F2;
 }
 
@@ -112,9 +142,9 @@ a {
 	height: 30px;
 	background-color: #ffffff;
 	border: solid 1px #ffffff;
-	margin-left: 10px;
+	margin-left: 5px;
 	outline: none;
-	margin-top: 5px;
+	margin-top: 3px;
 	font-size: large;
 	font-family: inherit;
 }
@@ -138,7 +168,7 @@ a {
 	/* border:solid 1px #000000; */
 }
 
-#top_menu .signup, #mylogin {
+#top_menu .signup, #mylogin, .logout, .mypage {
 	font-size: 17px;
 	font-weight: bolder;
 	color: #999999;
@@ -235,7 +265,7 @@ div .title_text {
 	font-size: 14px;
 }
 
-.modal {
+.modallogin {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
 	z-index: 1; /* Sit on top */
@@ -250,7 +280,7 @@ div .title_text {
 }
 
 /* Modal Content */
-.modal-content {
+.modal-contentlogin {
 	background-color: #fefefe;
 	margin: auto;
 	padding: 20px;
@@ -304,7 +334,7 @@ input[type=email] {
 	height: 50px;
 }
 
-.modalbtn {
+.modalbtnlogin {
 	background-color: #29ABE2;
 	color: white;
 	font-size: 18px;
@@ -325,20 +355,66 @@ input[type=email] {
 	outline: none;
 	cursor: pointer;
 }
+
+#gg {
+	display: block;
+}
+
+#searchbtn {
+	background-color: white;
+	border: none;
+	outline: none;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
+	//윈도우 창을 닫을 때 로그아웃 처리
+	function closePage(event) {
+		if (event.clientY < 0) {
+			// 로그아웃 처리
+		}
 
-		$('.modalbtn').on('click', modalRun);
+	}
+
+	document.onkeydown = function() {
+		// 새로고침 방지 ( Ctrl+R, Ctrl+N, F5 )
+		if (event.ctrlKey == true
+				&& (event.keyCode == 78 || event.keyCode == 82)
+				|| event.keyCode == 116) {
+			event.keyCode = 0;
+			event.cancelBubble = true;
+			event.returnValue = false;
+		}
+
+		// 창 닫기( Alt+F4 ) 방지 
+		if (event.keyCode == 115) { // F4 눌렀을 시
+			// 로그아웃 처리
+
+		}
+
+		// 윈도우 창이 닫힐 경우
+		if (event.keyCode == 505) {
+			alert(document.body.onBeforeUnload);
+		}
+	}
+
+	var login =
+<%=logok%>
+	;
+	var admin =
+<%=admin%>
+	;
+	$(document).ready(function() {
+		$('.mypage').hide();
+		$('.modalbtnlogin').on('click', modalRun);
 
 		$('#mylogin').on('click', function() {
-			$(".modal").css("display", "block");
+			$(".modallogin").css("display", "block");
 		});
 
 		$('.close').on('click', function() {
-			$(".modal").css("display", "none");
+			$(".modallogin").css("display", "none");
 		});
 
 		$('.error_msg').hide();
@@ -392,6 +468,39 @@ input[type=email] {
 				}
 			});
 		});
+		///////////////////////////////////
+
+		var id = $('#top_menu a:nth-child(3)').text();
+
+		console.log(admin);
+		console.log(login);
+
+		$('#top_menu a:nth-child(2)').hide();
+		/* if(admin==false)
+			$('#admin').remove(); */
+
+		if (login == true) {
+
+			$('.login').each(function() {
+				$('.logout').show();
+				$('.login').hide();
+				$('.signup').hide();
+				$('.mypage').show();
+			});
+		} else if (login == false) {
+
+			$('.logout').click(function() {
+				$('.logout').hide();
+				$('.login').show();
+				$('.signup').show();
+				console.log(login);
+			});
+
+		}
+
+		$(".ss").click(function() {
+			$("#searchform").attr("action", "search.do");
+		});
 
 	}); //Readyfunction
 
@@ -420,108 +529,113 @@ input[type=email] {
 	}
 </script>
 </head>
-<body>
+<body onbeforeunload="closePage(event)" oncontextmenu="return false">
 
 	<section id="top">
 		<div class="wrap">
-			<div class="categorymenu">
-				<img class="menubtn" src="image/menucategory.png">
-				<div class="dropdown-content">
-					<ul class="bigCategory">
-						<li><a href="#">스포츠/레저</a></li>
-						<li><a href="#">디지털/가전</a></li>
-						<li><a href="#">의류</a></li>
-						<li><a href="#">취미/티켓</a></li>
-
-						<li><a href="#">뷰티미용</a></li>
-
-						<li><a href="#">티켓</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">기타</a></li>
-					</ul>
-				</div>
-			</div>
-
-			<a id="logo" href="*"><img src="image/saparelogo3.png"></a>
-			<div id="search">
-				<!-- <div id="search_title">SEARCH</div> -->
-				<form method="post" action="search.do">
-					<input type="text" id="search_form" name="searchWord"
-						placeholder="어떤 상품을 찾고 있나요?"> <img class="ss"
-						src='image/search1.PNG'>
-				</form>
-			</div>
-
-			<nav id="top_menu">
-
-
-
-				<a class="sale" href="">판매하기</a>
-
-
-				<button type="button" id="mylogin">로그인</button>
-				<!-- 로그인 모달창 시작  -->
-				<div id="myModal" class="modal">
-					<div id="signup">
-						<!-- Modal content -->
-						<div class="modal-content">
-							<span class="close">&times;</span>
-
-							<form action="loginCheck.do" class="loginform" method="post">
-								<div class="email_title">아이디(이메일)</div>
-								<div class="email_area">
-									<input type="email" value="" class="email_sign" id="email_sign"
-										placeholder="이메일 주소 입력" name="memberId">
-								</div>
-								<div>
-									<div class="error_msg" id="emailerror">이메일을 입력해주세요.</div>
-								</div>
-								<div class="password_title">비밀번호</div>
-								<div class="password_box">
-									<input type="password" class="password_input"
-										id="password_input" value="" placeholder="비밀번호"
-										name="memberPw">
-
-								</div>
-								<p></p>
-								<div class="bottom">
-									<input class="login_btn" id="login_btn" type="submit"
-										value="로그인"></input>
-								</div>
-
-							</form>
-
-						</div>
+			<div id="all">
+				<div class="categorymenu">
+					<img class="menubtn" src="image/menucategory.png">
+					<div class="dropdown-content">
+						<ul class="bigCategory">
+							<li><a href="search.do?searchWord=스포츠">스포츠/레저</a></li>
+							<li><a href="search.do?searchWord=디지털">디지털/가전</a></li>
+							<li><a href="search.do?searchWord=의류">의류</a></li>
+							<li><a href="search.do?searchWord=취미">취미</a></li>
+							<li><a href="search.do?searchWord=뷰티미용">뷰티미용</a></li>
+							<li><a href="search.do?searchWord=티켓">티켓</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="search.do?searchWord=기타">기타</a></li>
+						</ul>
 					</div>
 				</div>
 
-				<!-- 로그인모달창 끝 -->
+				<a id="logo" href="http://localhost:8090/sapare/mainPage.do"><img
+					src="image/saparelogo3.png"></a>
+
+				<div id="gg">
+					<div id="search">
+						<!-- <div id="search_title">SEARCH</div> -->
+						<form id="searchform" method="post" action="search.do">
+							<input type="text" id="search_form" name="searchWord"
+								placeholder="어떤 상품을 찾고 있나요?">
+							<button id="searchbtn">
+								<img class="ss" src='image/search1.PNG'>
+							</button>
+						</form>
+					</div>
+				</div>
+				<div id="top_menu">
+					<a class="sale" href="">판매하기</a> <a class="logout"
+						href="http://localhost:8090/sapare/logout.do">로그아웃</a>
+					<button type="button" id="mylogin">
+						<a class="login">로그인</a>
+					</button>
+					<!-- 로그인 모달창 시작  -->
+					<div id="myModallogin" class="modallogin">
+						<div id="signup">
+							<!-- Modal content -->
+							<div class="modal-contentlogin">
+								<span class="close">&times;</span>
+
+								<form action="loginCheck.do" class="loginform" method="post">
+									<div class="email_title">아이디(이메일)</div>
+									<div class="email_area">
+										<input type="email" value="" class="email_sign"
+											id="email_sign" placeholder="이메일 주소 입력" name="memberId">
+									</div>
+									<div>
+										<div class="error_msg" id="emailerror">이메일을 입력해주세요.</div>
+									</div>
+									<div class="password_title">비밀번호</div>
+									<div class="password_box">
+										<input type="password" class="password_input"
+											id="password_input" value="" placeholder="비밀번호"
+											name="memberPw">
+
+									</div>
+									<p></p>
+									<div class="bottom">
+										<input class="login_btn" id="login_btn" type="submit"
+											value="로그인"></input>
+									</div>
+
+								</form>
+
+							</div>
+						</div>
+					</div>
+
+					<!-- 로그인모달창 끝 -->
 
 
-				<a class="signup" href="">회원가입</a>
+					<a class="signup" href="http://localhost:8090/sapare/signupPage.do">회원가입</a>
+					<a class="mypage" href="http://localhost:8090/sapare/mypage.do">마이페이지</a>
 
 
-			</nav>
+				</div>
+			</div>
 		</div>
 		<!-- top_menu -->
 		<div class="clear"></div>
 	</section>
+
 	<!-- section top -->
 
 	<nav id="main_menu"></nav>

@@ -12,54 +12,6 @@
   	padding: 0;
 }
 
-header {
-	position: sticky;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100px;
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	transition: 0.6s;
-	z-index: 100;
-	background-color: cornflowerblue;
-}
-
-footer {
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 150px;
-	display: flex;
-	/* justify-content: space-between;*/
-	align-items: center;
-	z-index: 100;
-	background-color: cornflowerblue;
-}
-
-header ul {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-ul {
-	list-style: none;
-	line-height: 10px;
-}
-
-header ul li a {
-	position: relative;
-	margin: 0 5px;
-	color: white;
-	letter-spacing: 2px;
-	font-weight: 500;
-	transition: 0.6s;
-	font-size: 16px;
-}
-
 .side-logo-container {
 	display: flex;
 }
@@ -69,10 +21,13 @@ header ul li a {
 }
 
 .profileArea{
-	background-color: lightgray;
 	margin: auto;
 	width: 950px;
 	margin-top: 25px;
+    border-radius: 10px;
+    border: 1px solid #f0f5fa;
+	background: #f5faff;
+    box-shadow: 6px -6px 13px #f0f5fa, -6px 6px 13px #faffff;
 }
 
 .flagArea{
@@ -80,7 +35,6 @@ header ul li a {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	border-top: #8AB8F4 solid 1px;
 }
 
 #memberFlag{
@@ -93,36 +47,41 @@ header ul li a {
 	margin-top: 20px;
 	height: 250px; 
 	width: 320px;
-	border: #8AB8F4 groove 5px;
-	border-radius: 25px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	border-radius: 8px;
+	background: #ebf5ff;
+	box-shadow:  -6px 6px 9px #e6f0fa, 
+             6px -6px 9px #f0faff;
 }
 
 .profileContainer{
 	display: flex;
 	width: 100%;
-	border-top: #8AB8F4 solid 1px;
-	border-bottom: #8AB8F4 solid 1px;
+	border-bottom: 1px solid #48A4FF;
 }
 
 .profileContainer button{
-    font-size: 15px;
+	font-size: 15px;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
     color: black;
+    border-radius: 7px;
+	background: #d1eeff;
+	box-shadow: 3px 3px 6px #b0c8d6, -5px -5px 12px #f2ffff;
+    outline: none;
+    padding: 4px 4px;
+    border: none;
 }
 
-.nicknameBox div {
-    margin-right: 10px;
-    width: auto;
-    white-space: nowrap;
-    overflow: hidden;
-    flex-direction: row;
-    display: flex;
+.profileContainer button:hover{
+	border-radius: 7px;
+	background: #d1eeff;
+	box-shadow: inset 6px 6px 8px #cde9fa, 
+            inset -6px -6px 8px #d5f3ff;
 }
 
 .memberInfoContainer{
@@ -137,7 +96,6 @@ header ul li a {
 	height: 50px;
 	align-items: center;
 	width: 95%;
-	border: #8AB8F4 solid 1px;
 	cursor: default
 }
 
@@ -146,6 +104,8 @@ header ul li a {
 	width: auto;
 	white-space: nowrap; 
 	overflow: hidden;
+	flex-direction: row;
+    display: flex;
 }
 
 .memberAbout{
@@ -153,17 +113,18 @@ header ul li a {
     align-items: flex-start;
     width: 80%;
     height: 165px;
-    border: #8AB8F4 solid 1px;
 }
 
 .memberAbout textarea{
 	resize: none;
     font-size: 15px;
-    border: none;
     outline: none;
-    background-color: lightgray;
     cursor: default;
     font-family: Montserrat;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    background: #f0f8ff;
+    box-shadow: -6px 6px 14px #ebf3fa, 6px -6px 14px #f5fdff;
 }
 
 .memberPointArea{
@@ -172,7 +133,6 @@ header ul li a {
 	justify-content: space-between;
 	align-items: center;
 	width: 20%;
-	border: #8AB8F4 solid 1px;
 }
 
 .menuAndContentArea{
@@ -186,6 +146,7 @@ header ul li a {
 	display: flex;
 	justify-content: center;
 	width: 25%;
+	border-right: 1px solid #48A4FF;
 }
 
 .profileContent{
@@ -206,6 +167,7 @@ header ul li a {
     display: flow-root;
     margin-top: 20px;
     width: 100%;
+    margin-right: 10px;
 }
 
 .menuButtons li {
@@ -215,7 +177,7 @@ header ul li a {
 	border-bottom: #8AB8F4 solid 1px;
 	border-right: #8AB8F4 solid 1px;
 	text-align: center;
-	border-radius: 0px 20px 20px 0px;
+	border-radius: 0px 5px 5px 0px;
 }
 
 /* 현재 페이지에 해당하는 메뉴 버튼 더 길게 만들기 */
@@ -228,11 +190,11 @@ header ul li a {
 	text-decoration: none;
 	padding: 20px 0px;
 	color: #00008B;
-	border-radius: 0px 20px 20px 0px;
+	border-radius: 0px 5px 5px 0px;
 }
 
 .menuButtons li a:hover:not(.active) {
-    background-color: #694228;
+    background-color: #77A6FF;
     color: white;
 }
 
@@ -274,6 +236,8 @@ header ul li a {
     flex-direction: row;
     margin-bottom: 2%;
     border-radius: 5px;
+    background: #f0f8ff;
+    box-shadow: 6px 6px 4px #eaf2f6, -6px -6px 4px #f4fcff;
 }
 
 .reviewerImgBox{
@@ -629,13 +593,13 @@ header ul li a {
 	<jsp:include page="header.jsp" flush="false" />
 	<!-- header 끝 -->
 	
-	<div class="wrap">
+	<div class="wrap-profile">
 		<div class="profileArea">
 			<div class="flagArea">
-				<button class="memberFlag" style="cursor:pointer; margin-right:15px;">신고하기</button>
 			<!-- 아래 if 코드 신고하기 버튼 감싸기 !!! -->
-			<!-- <c:if test="${member.memberName != sessionScope.memberName}"> -->
-			<!-- </c:if> -->
+			<c:if test="${member.memberName != sessionScope.memberName}">
+				<button class="memberFlag" style="cursor:pointer; margin-right:15px;">신고하기</button>
+			</c:if>
 			</div>
 			
 			<div class="profileContainer">
@@ -645,9 +609,9 @@ header ul li a {
 						${member.nickname }
 					</div>
 					<div class="imgChangeBox">
+						<c:if test="${member.memberName == sessionScope.memberName}">
 							<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>
-						<!-- <c:if test="${member.memberName == sessionScope.memberName}">
-						</c:if> -->
+						</c:if>
 					</div>
 					<input type="file" name="filepath" id="filepath" style="display:none;"/>
 					<div class="memberStars" style="margin-top: 10px;">
@@ -659,27 +623,27 @@ header ul li a {
 						<div class="nickname">
 							${member.nickname }
 						</div>
-							<button type="button" id="changeNick" style="cursor:pointer;margin-right:10px;">닉네임수정</button>
-							<!-- <c:if test="${member.memberName == sessionScope.memberName}">
-						 	</c:if> -->
+							<c:if test="${member.memberName == sessionScope.memberName}">
+								<button type="button" id="changeNick" style="cursor:pointer;margin-right:10px;">닉네임수정</button>
+						 	</c:if>
 						<div class="memberRank">${status.memberRank }</div>
-						<div class="premiumIcon">
+						<%-- <div class="premiumIcon">
 							<c:if test="${fn:contains(status.memberPremium, 'n')}">
 								프리미엄 아님/나중에 변경
 							</c:if>
-						</div>
+						</div> --%>
 					</div>
 					<div class="memberAbout">
 						<textarea readonly id="aboutContent" rows="8" cols="65" maxlength="80">${member.memberAbout }</textarea>
 					</div>
 					<div class="aboutChangeBox">
+						 <c:if test="${member.memberName == sessionScope.memberName}">
 							<button type="button" id="changeAbout" style="margin: 10px; cursor:pointer;">소개수정</button>
-						 <!-- <c:if test="${member.memberName == sessionScope.memberName}">
-						 </c:if> -->
+						 </c:if>
 					</div>
 					<div class="memberPointArea">
-							<div class="memberPoint" style="margin: 10px; white-space: nowrap; overflow: hidden;">${status.memberPoint }</div>
-							<button class="pointCharge" style="cursor:pointer;">포인트 충전</button>
+						<!-- 	<div class="memberPoint" style="margin: 10px; white-space: nowrap; overflow: hidden;">${status.memberPoint }</div>
+							<button class="pointCharge" style="cursor:pointer;">포인트 충전</button> -->
 						<!-- <c:if test="${member.memberName == sessionScope.memberName}">
 						</c:if> -->
 					</div>
@@ -691,19 +655,19 @@ header ul li a {
 						<ul class="menuButtons">
 						  <li><a href="profileSell.do">판매상품</a>
 						  
+						  <c:if test="${member.memberName == sessionScope.memberName}">
 						  	<li><a href="profileBuy.do">구매상품</a></li>
-						  <!-- <c:if test="${member.memberName == sessionScope.memberName}">
-						  </c:if> -->
+						  </c:if>
 						  
+						  <c:if test="${member.memberName == sessionScope.memberName}">
 						  	<li><a href="profileWant.do">찜</a></li>
-						  <!-- <c:if test="${member.memberName == sessionScope.memberName}">
-						  </c:if> -->
+						  </c:if>
 						  
 						  <li><a href="profileReview.do">후기</a></li>
 						  
+						  <c:if test="${member.memberName == sessionScope.memberName}">
 						  	<li><a href="profileSetting.do">회원정보수정</a></li>
-						  <!-- <c:if test="${member.memberName == sessionScope.memberName}">
-						  </c:if> -->
+						  </c:if>
 						</ul>
 					</div>
 					<div class="profileContent">
@@ -778,7 +742,6 @@ header ul li a {
 				
 			</div>
 		</div>
-
-	<footer> footer area </footer>
 </body>
+<jsp:include page="footer.jsp" />
 </html>

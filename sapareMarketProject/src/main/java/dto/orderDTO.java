@@ -5,7 +5,7 @@ import java.util.Date;
 public class orderDTO {
 
 	private String orderId, memberName, orderStatus, sellerName, profileImg, nickname, reviewContent, itemImagePath, itemName, itemAbout, searchWord;
-	private int itemId, orderPrice, reviewNo, reviewStar;
+	private int itemId, orderPrice, reviewNo, reviewStar, itemPrice;
 	private char itemStatus;
 	private Date orderDate;
 	
@@ -110,6 +110,12 @@ public class orderDTO {
 	}
 	public void setSearchWord(String searchWord) {
 		this.searchWord = searchWord;
+	}
+	public int getItemPrice() {
+		return itemPrice;
+	}
+	public void setItemPrice(int itemPrice) {
+		this.itemPrice = itemPrice;
 	}
 	
 } // end class

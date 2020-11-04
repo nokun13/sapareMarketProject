@@ -1,22 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	String contentPage = request.getParameter("helpPage");
-if (contentPage == null)
-	contentPage = "helpPage.jsp";
-	String fid = (String)session.getAttribute("logOk");
-	String id = (String)session.getAttribute("id");
-	boolean logok=false;
-	boolean admin =false;
-	 if(fid!=null)
-		if(fid.equals("ok"))
-		{logok=true;
-			if(id.equals("admin@gg.com"))
-				{admin=true;
-				System.out.println("admin");}
-		} 
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -296,12 +281,14 @@ outline: none;
 	margin-top:30px;
 }
 
+.space{
+padding:20px 65px 20px 0}
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-var login = <%=logok%>;
-var admin =<%=admin%>;
+
 
 	$(document).ready(function() {
 		//관리자일때만 글쓰기,수정,삭제 버튼 보이기 admin@gg.com
@@ -387,7 +374,7 @@ var admin =<%=admin%>;
 
 
 			<tr class="no_1">
-				<th class="no__1"><p style="white-space: pre-line;">${dto.boardContent}</p></th>
+				<th class="no__1"><p class="space" style="white-space: pre-line;">${dto.boardContent}</p></th>
 				<form id="frm" name="frm" method="get">
 					<th><a class="tnwjd" href="${path}"> 수정</a></th>
 					<th><a class="tkrwp" href="${path2}"> 삭제</a></th>
@@ -433,5 +420,5 @@ var admin =<%=admin%>;
 
 
 </body>
-<!-- <jsp:include page="footer.html" /> -->
+<jsp:include page="footer.jsp" />
 </html>
