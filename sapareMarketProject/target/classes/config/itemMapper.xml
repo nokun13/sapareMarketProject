@@ -10,11 +10,11 @@
 	</insert>
 	
 	<select id="selectProcess" resultType="dto.itemDTO">
-		select * from sapareItem
+		select * from sapareItem order by itemuploadDate desc
 	</select>
 	
 	<select id="get" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		select a.*, b.orderDate, b.orderPrice, b.orderId, b.memberName as sellerName, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -27,7 +27,7 @@
 	</select>
 	
 	<select id="getWeek" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		select a.*, b.orderDate, b.orderPrice, b.orderId, b.memberName as sellerName, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -41,7 +41,7 @@
 	</select>
 	
 	<select id="getMonth" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		select a.*, b.orderDate, b.orderPrice, b.orderId, b.memberName as sellerName, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -55,7 +55,7 @@
 	</select>
 	
 	<select id="getSixMonths" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		select a.*, b.orderDate, b.orderPrice, b.orderId, b.memberName as sellerName, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -128,7 +128,7 @@
 	</select>
 	
 	<select id="soldOnly" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+		select a.*, b.orderDate, b.orderPrice, b.orderId, b.memberName as sellerName, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -143,7 +143,7 @@
 	
 	<select id="sellSearch" parameterType="dto.memberDTO" resultType="dto.itemDTO">
 		select z.*
-            from (select a.*, b.orderDate, b.orderPrice, b.orderId, c.reviewNo, c.reviewContent, c.reviewStar,d.profileImg, d.nickname
+            from (select a.*, b.orderDate, b.orderPrice, b.orderId, b.memberName as sellerName, c.reviewNo, c.reviewContent, c.reviewStar,d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -185,10 +185,23 @@
 	</select>
 
 	<!-- 삭제 -->
-	<delete id="deleteItem">
+	<delete id="deleteItem" parameterType="int">
 		delete from sapareItem
 		where itemId=#{itemId}
 	</delete>
+	
+	<!-- 수정 -->
+	<update id="uptItem" parameterType="dto.itemDTO">
+		update sapareitem
+		set itemPrice=#{itemPrice}, itemAbout=#{itemAbout}, itemName=#{itemName}, itemImagePath=#{itemImagePath,jdbcType=VARCHAR}
+		where itemId=#{itemId}
+	</update>
+	
+	<update id="uptItemCat" parameterType="dto.itemDTO">
+		update sapareitemcategory
+		set itemBigCat=#{itemBigCat}, itemMidCat=#{itemMidCat}, itemSmallCat=#{itemSmallCat}, itemCity=#{itemCity}
+		where itemId=#{itemId}
+	</update>
 
 	<select id="currItem" parameterType="dto.memberDTO" resultType="dto.itemDTO">
 		select itemid from sapareitem where membername=#{memberName} order by
@@ -212,10 +225,9 @@
 	<insert id="itemUpload" parameterType="dto.itemDTO">
 		INSERT ALL
 		INTO SAPAREITEM
-		VALUES(SAPAREITEM_ITEMID_seq.nextval,'cust',#{itemPrice},#{itemAbout,jdbcType=VARCHAR},0,#{itemName},#{itemImagePath,jdbcType=VARCHAR},'y',to_char(SYSDATE,'yyyy.mm.dd
-		hh24:mi:ss'),'중고',0,0)
+		VALUES(SAPAREITEM_ITEMID_seq.nextval,#{memberName},#{itemPrice},#{itemAbout,jdbcType=VARCHAR},0,#{itemName},#{itemImagePath,jdbcType=VARCHAR},'y',sysdate,'중고',0,0)
 		INTO SAPAREITEMCATEGORY
-		VALUES(SAPAREITEM_ITEMID_SEQ.currval,'cust',#{itemBigCat},#{itemMidCat},#{itemSmallCat},#{itemCity},'o','o')
+		VALUES(SAPAREITEM_ITEMID_SEQ.currval,#{memberName},#{itemBigCat},#{itemMidCat},#{itemSmallCat},#{itemCity},'o','o')
 		SELECT * FROM dual
 	</insert>
 

@@ -44,8 +44,8 @@
 
 #profileImageBox{
 	position: relative;
-	margin-left: 30px;
-	margin-top: 20px;
+	/* margin-left: 30px;
+	margin-top: 20px; */
 	height: 250px; 
 	width: 320px;
 	border-radius: 25px;
@@ -57,6 +57,8 @@
 	background: #ebf5ff;
 	box-shadow:  -6px 6px 9px #e6f0fa, 
              6px -6px 9px #f0faff;
+    margin-left: 15px;
+    margin-bottom: 20px;
 }
 
 .profileContainer{
@@ -135,6 +137,7 @@
     border-radius: 5px;
     background: #f0f8ff;
     box-shadow: -6px 6px 14px #ebf3fa, 6px -6px 14px #f5fdff;
+    padding: 10px;
 }
 
 .memberPointArea{
@@ -872,20 +875,20 @@
 				<div class="menuAndContentArea">
 					<div class="profileMenu">
 						<ul class="menuButtons">
-						  <li><a href="profileSell.do">판매상품</a>
+						  <li><a href="profileSell.do?memberName=${member.memberName }">판매상품</a>
 						  
 						  <c:if test="${member.memberName == sessionScope.memberName}">
-						  	<li><a href="profileBuy.do">구매상품</a></li>
+						  	<li><a href="profileBuy.do?memberName=${member.memberName }">구매상품</a></li>
 						  </c:if>
 						  
 						  <c:if test="${member.memberName == sessionScope.memberName}">
-						  	<li><a href="profileWant.do">찜</a></li>
+						  	<li><a href="profileWant.do?memberName=${member.memberName }">찜</a></li>
 						  </c:if>
 						  
-						  <li><a href="profileReview.do">후기</a></li>
+						  <li><a href="profileReview.do?memberName=${member.memberName }">후기</a></li>
 						  
 						  <c:if test="${member.memberName == sessionScope.memberName}">
-						  	<li><a href="profileSetting.do">회원정보수정</a></li>
+						  	<li><a href="profileSetting.do?memberName=${member.memberName }">회원정보수정</a></li>
 						  </c:if>
 						</ul>
 					</div>
@@ -894,6 +897,7 @@
 							<form id="searchFrm" action="buySearch.do">
 								<div class="searchBox">
 									<input class="searchText" name="searchWord" type="text" placeholder="검색어를 입력하세요">
+									<input hidden="hidden" name="memberName" value="${member.memberName }" />
 									<a class="searchBtn"></a>
 								</div>
 							</form>
@@ -901,10 +905,10 @@
 								<button id="buyDateBtn">기간
 								</button>
 								<div class="buyDate-options">
-							      <a href="profileBuy.do">전체</a>
-							      <a href="getWeekBuyProcess.do">지난 7일</a>
-							      <a href="getMonthBuyProcess.do">지난 30일</a>
-							      <a href="getSixMonthsBuyProcess.do">지난 6개월</a>
+							      <a href="profileBuy.do?memberName=${member.memberName }">전체</a>
+							      <a href="getWeekBuyProcess.do?memberName=${member.memberName }">지난 7일</a>
+							      <a href="getMonthBuyProcess.do?memberName=${member.memberName }">지난 30일</a>
+							      <a href="getSixMonthsBuyProcess.do?memberName=${member.memberName }">지난 6개월</a>
 							    </div>
 							</div>
 						</div>
@@ -912,7 +916,7 @@
 							<c:forEach items="${bList}" var="dto">
 								<div class="buyItemBox">
 									<div class="buyItemImg">
-										<a href="#"><img class="itemImg" style="object-fit:cover;" src="image/${dto.itemImagePath }"></a>
+										<a href="itemViewPage.do?itemId=${dto.itemId }"><img class="itemImg" style="object-fit:cover;" src="image/${dto.itemImagePath }"></a>
 									</div>
 									<div class="buyItemInfo">
 										<div class="allItemInfo">
@@ -927,7 +931,7 @@
 										<div class="itemStatusBox">
 											<p style="color:black;text-align:center;">
 												<c:if test="${fn:contains(dto.itemStatus, 'n')}">
-													구매날짜: <br/><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.orderDate }" />
+													구매날짜: <br/><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${dto.orderDate }" />
 												</c:if>
 												<br>
 											</p>
@@ -983,7 +987,7 @@
 								<c:if test="${dto.reviewNo != 0}">
 									<div class="reviewBox${dto.reviewNo }" style="display:none;width: 100%;height: 150px;background: rgb(231, 239, 243);box-shadow: rgb(226, 234, 238) 6px 6px 4px, rgb(236, 244, 248) -6px -6px 4px;flex-direction: row;margin-bottom: 2%;border-radius: 5px;">
 										<div class="buyerImgBox">
-											<a href="#"><img class="buyerImg" src="image/${dto.profileImg }" style="border-radius:5px;object-fit:cover;"></a>
+											<a href="profileSell.do?memberName=${dto.memberName }"><img class="buyerImg" src="image/${dto.profileImg }" style="border-radius:5px;object-fit:cover;"></a>
 										</div>
 										<div class="buyerReviewBox">
 											<div class="buyerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.nickname }</div>

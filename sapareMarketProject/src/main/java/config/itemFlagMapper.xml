@@ -20,4 +20,9 @@
 		select *from sapareitemflag
 		order by itemflagno desc
 	</select>
+	
+	<update id="plusItemFlag" parameterType="dto.itemFlagDTO">
+		update sapareitem set itemflagcnt = itemflagcnt + 1 where itemid=#{itemId}
+	</update>
+	
 </mapper>

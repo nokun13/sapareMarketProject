@@ -2,29 +2,76 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
+
 <mapper namespace="chatRoom">
-<!-- 참고용으로 아래 쿼리문은 남겨놓았습니다! -->
-<!-- 	<insert id="r_insert" parameterType="dto.ReplyDTO">
-		insert into tbl_reply
-		values(reply_rno_seq.nextval,#{bno},#{replytext},#{replyer},sysdate,#{rupload , jdbcType=VARCHAR})
+	<!-- 참고용으로 아래 쿼리문은 남겨놓았습니다! -->
+	<!-- <insert id="r_insert" parameterType="dto.ReplyDTO"> insert into tbl_reply 
+		values(reply_rno_seq.nextval,#{bno},#{replytext},#{replyer},sysdate,#{rupload 
+		, jdbcType=VARCHAR}) </insert> <select id="r_list" parameterType="int" resultType="dto.ReplyDTO"> 
+		select * from tbl_reply where bno=#{bno} order by rno desc </select> <select 
+		id="r_upload" parameterType="int" resultType="String"> select rupload from 
+		tbl_reply where rno=#{rno} </select> <delete id="r_delete" parameterType="int"> 
+		delete from tbl_reply where rno=#{rno} </delete> <update id="r_update" parameterType="dto.ReplyDTO"> 
+		update tbl_reply set replytext=#{replytext} where rno=#{rno} </update> -->
+
+	<select id="RoomList" parameterType="String" resultType="dto.chatviewDTO">
+		<!-- select distinct r.* from saparechatroom r, saparechatmsg m where m.chatroomid 
+			= r.chatroomid and m.membername = #{id} -->
+		<!-- select * from chatview where chatRoomid in (select distinct chatroomid 
+			from sapareChatlog where membername=#{id}) and membername != #{id} -->
+		select e.entertime as myenter, e.exittime as myexit, r.* from
+		(select *
+		from chatview where chatRoomid
+		in (select distinct chatroomid from
+		sapareChatlog where
+		membername=#{id}) and membername = #{id}) e,
+		(select * from chatview where chatRoomid in
+		(select distinct chatroomid
+		from
+		sapareChatlog where membername=#{id}) and
+		membername != #{id}) r
+		where e.chatroomid = r.chatroomid
+		order by r.chatroomid
+
+	</select>
+	<update id="enterupdate" parameterType="dto.chatviewDTO">
+		UPDATE saparechatlog set
+		ENTERTIME =sysdate where chatroomid=#{chatRoomId}
+		and
+		membername=#{memberName}
+	</update>
+	<update id="exitupdate" parameterType="dto.chatviewDTO">
+		UPDATE saparechatlog set
+		EXITTIME =sysdate where chatroomid=#{chatRoomId}
+		and
+		membername=#{memberName}
+	</update>
+	<select id="RoomLog" parameterType="String" resultType="dto.chatviewDTO">
+		select
+		b.chatroomid,count(CASE WHEN a.messagedate > b.time THEN 1 ELSE NULL
+		END)as isreadcount from saparechatmsg a,
+		(select GREATEST(entertime, exittime) as time, chatroomid from chatview where
+		chatRoomid
+		in (select distinct chatroomid from sapareChatlog where
+		membername=#{id}) and membername = #{id}) b
+		where a.chatroomid = b. chatroomid
+		group by b.chatroomid
+		order by chatroomid
+		
+	</select>
+	<select id="FRoomlog" parameterType="dto.chatviewDTO" resultType="dto.chatviewDTO">
+	select * from chatview where chatroomid = #{chatRoomId} and membername = #{memberName}
+	
+	</select>
+	<insert id="addRoom" parameterType="dto.chatRoomDTO">
+	insert all
+into SAPARECHATROOM VALUES (SAPARECHATROOM_CHATROOMID_SEQ.NEXTVAL,#{itemId},#{memberName},sysdate)
+into saparechatlog values (SAPARECHATROOM_CHATROOMID_SEQ.CURRVAL,#{memberName},null,null)
+into saparechatlog values (SAPARECHATROOM_CHATROOMID_SEQ.CURRVAL,#{itemMemberName},null,null)
+select *from dual
 	</insert>
-	
-	<select id="r_list" parameterType="int" resultType="dto.ReplyDTO">
-		select * from tbl_reply where bno=#{bno} order by rno desc
+	<select id="itemMember" parameterType="int" resultType="String">
+		select membername from sapareitem where ITEMID=#{itemId}
 	</select>
-	
-	<select id="r_upload" parameterType="int" resultType="String">
-		select rupload from tbl_reply
-		where rno=#{rno}
-	</select>
-	
-	<delete id="r_delete" parameterType="int">
-		delete from tbl_reply where rno=#{rno}
-	</delete>
-	
-	<update id="r_update" parameterType="dto.ReplyDTO">
-		update tbl_reply set replytext=#{replytext}
-		where rno=#{rno}
-	</update> -->
+
 </mapper>

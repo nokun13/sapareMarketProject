@@ -1,23 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-   String contentPage = request.getParameter("contentPage");
-   if (contentPage == null)
-      contentPage = "page.jsp";
-   String fid = (String) session.getAttribute("logOk");
-   String id = (String) session.getAttribute("id");
-   boolean logok = false;
-   boolean admin = false;
-   if (fid != null)
-      if (fid.equals("ok")) {
-         logok = true;
-         if (id.equals("admin")) {
-            admin = true;
-            System.out.println("admin");
-         }
-      }
-%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,6 +83,7 @@ body, div, ul, li, p {
 	vertical-align: top;
 	padding: 5px;
 	border-radius: 15px;
+	object-fit: cover;
 }
 
 .touch_bullet li {
@@ -328,6 +314,7 @@ h2 {
 
 #visual {
 	position: relative;
+	margin-top: 45px;
 }
 
 .c {
@@ -385,6 +372,7 @@ h2 {
 	width: 100%;
 	height: 270px;
 	margin: auto;
+	margin-top: 40px;
 }
 
 .icon_section_body {
@@ -489,7 +477,7 @@ h2 {
 							</div>
 						</div>
 						<div class="recently">
-							<div class="recentlyproduct">최근본상품</div>
+							<div class="recentlyproduct">최근본상품"${msg}"</div>
 
 							<div class="rpi">
 								<img src="image/my.png" width="70" height="70" alt="">
@@ -613,7 +601,6 @@ h2 {
 
 	<div id="poptext">
 		<hr width="1000px" style="width: 1000px; margin: auto;" >
-		<p>최근 상품</p>
 	</div>
 	<c:set var="i" value="0" />
 	<c:set var="j" value="4" />
@@ -628,13 +615,18 @@ h2 {
 				<c:url var="path" value="itemViewPage.do">
 	               <c:param name="itemId" value="${dto.itemId}" />
 	            </c:url>
-				<a href="${path}" style="text-decoration: none;"> 
-			    <img src="image/${dto.itemName}.jpg" width="235" height="235">
+				<a href="${path}" style="text-decoration: none;">
+				<c:if test="${fn:contains(dto.itemStatus, 'n')}">
+			    	<img src="image/soldout.png" style="object-fit:contain;" width="235" height="235">
+				</c:if> 
+				<c:if test="${fn:contains(dto.itemStatus, 'y')}">
+				    <img src="image/${dto.itemImagePath}" width="235" height="235">
+				</c:if> 
 					<p style="text-align: center; width: 235px; height: 20px; overflow: hidden; ">
 						${dto.itemName} <br />
 					</p>
 					<p style="text-align: center; width: 235px; height: 20px; overflow: hidden; margin-bottom: 10px;">
-						${dto.itemPrice}원</p>
+						<fmt:formatNumber value="${dto.itemPrice }" pattern="#,###,###,###" />원</p>
 			</a>
 			</td>
 
@@ -648,8 +640,6 @@ h2 {
 		<button class="moreButton">더보기</button>
 	</div>
 	<script>
-      var login =<%=logok%>;
-      var admin =<%=admin%>;
       /* 더보기버튼 기능 */
       const tbody = document.querySelector("tbody");
       const rows = tbody.querySelectorAll("tr");
@@ -700,7 +690,36 @@ h2 {
       var sliderWidth = $('#slider-wrap').width();
 
       $(document).ready(function() {
-
+    	
+    	// function으로 파라미터값을 받아옴  
+   	  	function getParam(sname) {
+   		    var params = location.search.substr(location.search.indexOf("?") + 1);
+   		    var sval = "";
+   		    params = params.split("&");
+   		    for (var i = 0; i < params.length; i++) {
+   		        temp = params[i].split("=");
+   		        if ([temp[0]] == sname) { sval = temp[1]; }
+   		    }
+   		    return sval;
+   		}; 
+   		// 탈퇴/신고된 회원이면 파라미터값으로 넘겨준다
+    	var cancel = getParam("cancelMember");
+    	var flag = getParam("flagMember");
+    	// 탈퇴/신고처리 확인
+  		if (cancel == 1) {
+  			alert("탈퇴한 회원입니다.");
+  		};
+  		if (flag == 1) {
+  			alert("신고처리된 회원입니다.");
+  		};  
+    	 
+		// 로그인 실패 시 알람 
+		var msg = getParam("msg");
+		
+		if (msg == "failure"){
+			alert("로그인에 실패하였습니다.");
+		}
+    	 
          //set width to be 'x' times the number of slides
          $('#slider-wrap ul#slider').width(sliderWidth * totalSlides);
 

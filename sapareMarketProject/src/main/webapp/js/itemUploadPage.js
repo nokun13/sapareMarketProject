@@ -26,6 +26,13 @@
 };
 
   	$(document).ready(function(){
+  	
+  	  function maxLengthCheck(object){
+  	    if (object.value.length > object.maxLength){
+  	      object.value = object.value.slice(0, object.maxLength);
+  	    }    
+  	  }
+  		
   	  $('#sell').click(function(){
  		   if($('#ITEMNAME').val().length==0){
  		   alert('제목을 입력하세요.');
@@ -67,9 +74,64 @@
 	 		   $('#acution-time').focus();
 	 		   return false;
  		}
+ 		if ($('#filepath').get(0).files.length === 0) {
+ 		    alert("상품 이미지를 선택해주세요!");
+ 		    return false;
+ 		}
+ 		
  		 alert('판매등록되었습니다.');
  		 $('#frm').submit();
- 	   }) 
+ 	   }); 
+  	  
+  	 $('#update').click(function(){
+		   if($('#ITEMNAME').val().length==0){
+		   alert('제목을 입력하세요.');
+		   $('#ITEMNAME').focus();
+		   return false;
+	      }
+		  if($('#select1').val()=='big'){
+	 		   alert('대분류를 설정해주세요.');
+	 		   $('#select1').focus();
+	 		   return false;
+		  }
+		 if($('#tType').val()=='mid'){
+	 		   alert('중분류를 설정해주세요.');
+	 		   $('#tType').focus();
+	 		   return false;
+		  }
+		if($('#fType').val()=='so' && $('#fType').val()==''){
+	 		   alert('소분류를 설정해주세요.');
+	 		   $('#fType').focus();
+	 		   return false;
+		  }
+		if($('#map_info').val()==''){
+	 		   alert('지역을 선택해주세요.');
+	 		   $('#map_info').focus();
+	 		   return false;
+		}
+		if($('#ITEMPRICE').val()=='' && $('#select1').val()!='경매'){
+	 		   alert('가격을 설정하세요.');
+	 		   $('#ITEMPRICE').focus();
+	 		   return false;
+		}
+		if($('#auction-price').val()==''&& $('#select1').val()=='경매'){
+	 		   alert('경매 가격을 설정하세요.');
+	 		   $('#auction-price').focus();
+	 		   return false;
+		}
+		if($('#acution-time').val()=='AuctionTime' && $('#select1').val()=='경매'){
+	 		   alert('경매시간을 설정하세요.');
+	 		   $('#acution-time').focus();
+	 		   return false;
+		}
+		if ($('#filepath').get(0).files.length === 0) {
+		    alert("상품 이미지를 선택해주세요!");
+		    return false;
+		}
+		
+		 alert('상품 정보가 변경되었습니다.');
+		 $('#frm').attr('action', 'updateItem.do').submit();
+	   }); 
   	
   	   $('#cancel').click(function(){
   		   alert("취소되었습니다.");

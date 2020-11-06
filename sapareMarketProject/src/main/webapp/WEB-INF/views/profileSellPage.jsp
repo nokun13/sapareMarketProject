@@ -44,8 +44,8 @@
 
 #profileImageBox{
 	position: relative;
-	margin-left: 30px;
-	margin-top: 20px;
+	/* margin-left: 30px;
+	margin-top: 20px; */
 	height: 250px; 
 	width: 320px;
 	display: flex;
@@ -56,6 +56,8 @@
 	background: #ebf5ff;
 	box-shadow:  -6px 6px 9px #e6f0fa, 
              6px -6px 9px #f0faff;
+    margin-left: 15px;
+    margin-bottom: 20px;
 }
 
 .profileContainer{
@@ -126,6 +128,7 @@
     border-radius: 5px;
     background: #f0f8ff;
     box-shadow: -6px 6px 14px #ebf3fa, 6px -6px 14px #f5fdff;
+    padding: 10px;
 }
 
 .memberPointArea{
@@ -477,6 +480,163 @@
 	width: 0;
 }
 
+.memberFlag{
+	background-color: transparent;
+    outline: none;
+    border: none;
+}
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 35%;
+	height: 47%;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.auto {
+	margin-top: 5px;
+	margin-left: 10px;
+	padding-bottom: 50px;
+}
+
+.decl-title {
+	font-size: 24px;
+	font-weight: 900;
+	border-bottom: 2px solid darkgray;
+}
+/*신고 한줄 틀*/
+.decl-content-tle {
+	border-top: 1px solid rgb(238, 238, 238);
+	border-bottom: 1px solid rgb(238, 238, 238);
+	border-collapse: separate;
+}
+/*스팬 신고 컨텐츠*/
+.span-decl-content1 span, .span-decl-content2 span, .span-decl-content3 span,
+	.span-decl-content4 span, .span-decl-content5 span {
+	width: 100%;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+	color: rgb(102, 102, 102);
+	height: 60px;
+	font-size: 16px;
+	padding-left: 20px;
+}
+
+.1, .2, .3, .4, .5 {
+	display: none;
+}
+
+#sp {
+	background-color: lightgray;
+}
+
+.decl-conform {
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	border: 1px solid rgb(238, 238, 238);
+	width: 100%;
+	background: rgb(255, 255, 255);
+	font-size: 13px;
+}
+
+.decl-conform-input {
+	flex: 1 1 0%;
+	height: 36px;
+	padding: 6px 20px;
+	background-color: #f2f2f2;
+	border: 1px solid black;
+}
+
+.decl-conform button {
+	border: 1px solid rgb(238, 238, 238);
+	height: 28px;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	width: 56px;
+	-webkit-box-pack: center;
+	justify-content: center;
+	margin-right: 10px;
+	color: rgb(136, 136, 136);
+}
+
+#memberflagsubmit {
+	background-color: white;
+	font-size: 19px;
+	font-weight: 700;
+	/* padding-left: 20px; */
+}
+
+.up-de-class {
+	margin-left: 25%;
+}
+
+.up-de {
+	display: flex;
+}
+
+.up-bt {
+	background-color: white;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	color: cornflowerblue;
+	margin-right: 9px;
+}
+
+.de-bt {
+	background-color: white;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	color: coral;
+}
+
+#memberflagsubmit1, #memberflagsubmit2, #memberflagsubmit3, #memberflagsubmit4, #memberflagsubmit5 {
+	width: 70px;
+	font-size: 15px;
+	font-weight: 600;
+	background-color: white;
+	outline: none;
+    border: none;
+}
+
 </style>
 <meta charset="UTF-8">
 <title>${sessionScope.account_Name }의 프로필 페이지</title>
@@ -728,6 +888,69 @@
         	$("#searchFrm").submit();
 		});
 		
+		// function으로 파라미터값을 받아옴  
+	  	function getParam(sname) {
+		    var params = location.search.substr(location.search.indexOf("?") + 1);
+		    var sval = "";
+		    params = params.split("&");
+		    for (var i = 0; i < params.length; i++) {
+		        temp = params[i].split("=");
+		        if ([temp[0]] == sname) { sval = temp[1]; }
+		    }
+		    return sval;
+		}; 
+		// 신고된 회원이면 파라미터값으로 넘겨준다
+		var flag = getParam("flag");
+		if(flag == "d"){
+			alert("성공적으로 신고되었습니다.");
+		}
+		
+		// 모달
+		$('#memberFlag').click(function(){
+			 var session= $('#session_id').val();
+			 if(session!=''){
+				 $('.modal').toggle();
+			}else{
+				$('.modallogin').toggle();
+				return false;
+			}
+		});
+		
+		$('.close').click(function(){
+			$('#decl-modal').css("display","none");
+		});
+
+		$(".1").hide();	
+
+		$(".2").hide();
+		
+		$(".3").hide();
+		
+		$(".4").hide();
+		
+		$(".5").hide();
+		
+		$("#d1").hover(function() {
+			$(".1").toggle();
+			
+		});
+
+		$("#d2").hover(function() {
+			$(".2").toggle();
+		});
+
+		$("#d3").hover(function() {
+			$(".3").toggle();
+		});
+
+		$("#d4").hover(function() {
+			$(".4").toggle();
+		});
+
+		$("#d5").hover(function() {
+			$(".5").toggle();
+		});
+		
 	}); // end ready()
 </script>
 </head>
@@ -740,7 +963,10 @@
 			<div class="flagArea">
 			<!-- 아래 if 코드 신고하기 버튼 감싸기 !!! -->
 			<c:if test="${member.memberName != sessionScope.memberName}">
-				<button class="memberFlag" style="cursor:pointer; margin-right:15px;">신고하기</button>
+				<button class="memberFlag" id="memberFlag" type="button" style="cursor:pointer; margin-right:15px;">
+					<img src="image/declaration.png" width=15px; height=15px; alt="신고 아이콘"> 
+					<span>신고하기</span>
+				</button>
 			</c:if>
 			</div>
 			
@@ -795,20 +1021,20 @@
 				<div class="menuAndContentArea">
 					<div class="profileMenu">
 						<ul class="menuButtons">
-						  <li><a href="profileSell.do">판매상품</a>
+						  <li><a href="profileSell.do?memberName=${member.memberName }">판매상품</a>
 						  
 						  <c:if test="${member.memberName == sessionScope.memberName}">
-						  	<li><a href="profileBuy.do">구매상품</a></li>
+						  	<li><a href="profileBuy.do?memberName=${member.memberName }">구매상품</a></li>
 						  </c:if>
 						  
 						  <c:if test="${member.memberName == sessionScope.memberName}">
-						  	<li><a href="profileWant.do">찜</a></li>
+						  	<li><a href="profileWant.do?memberName=${member.memberName }">찜</a></li>
 						  </c:if>
 						  
-						  <li><a href="profileReview.do">후기</a></li>
+						  <li><a href="profileReview.do?memberName=${member.memberName }">후기</a></li>
 						  
 						  <c:if test="${member.memberName == sessionScope.memberName}">
-						  	<li><a href="profileSetting.do">회원정보수정</a></li>
+						  	<li><a href="profileSetting.do?memberName=${member.memberName }">회원정보수정</a></li>
 						  </c:if>
 						</ul>
 					</div>
@@ -817,6 +1043,7 @@
 							<form id="searchFrm" action="sellSearch.do">
 								<div class="searchBox">
 									<input class="searchText" name="searchWord" type="text" placeholder="검색어를 입력하세요">
+									<input hidden="hidden" name="memberName" value="${member.memberName }" />
 									<a class="searchBtn"></a>
 								</div>
 							</form>
@@ -824,10 +1051,10 @@
 								<button id="sellDateBtn">기간
 								</button>
 								<div class="sellDate-options">
-							      <a href="profileSell.do">전체</a>
-							      <a href="getWeekSellProcess.do">지난 7일</a>
-							      <a href="getMonthSellProcess.do">지난 30일</a>
-							      <a href="getSixMonthsProcess.do">지난 6개월</a>
+							      <a href="profileSell.do?memberName=${member.memberName }">전체</a>
+							      <a href="getWeekSellProcess.do?memberName=${member.memberName }">지난 7일</a>
+							      <a href="getMonthSellProcess.do?memberName=${member.memberName }">지난 30일</a>
+							      <a href="getSixMonthsProcess.do?memberName=${member.memberName }">지난 6개월</a>
 							    </div>
 							</div>
 							<select id="sellingOrSold">
@@ -840,7 +1067,7 @@
 							<c:forEach items="${iList}" var="dto">
 								<div class="sellItemBox" style="border-radius: 5px;background: #f0f8ff;box-shadow:  6px 6px 4px #eaf2f6,-6px -6px 4px #f4fcff;display: flex;width: 100%;height: 150px;flex-direction: row;margin-bottom: 2%;">
 									<div class="sellItemImg">
-										<a href="#"><img class="itemImg" style="object-fit:cover;" src="image/${dto.itemImagePath }"></a>
+										<a href="itemViewPage.do?itemId=${dto.itemId }"><img class="itemImg" style="object-fit:cover;" src="image/${dto.itemImagePath }"></a>
 									</div>
 									<div class="sellItemInfo">
 										<div class="allItemInfo">
@@ -860,10 +1087,10 @@
 										<div class="itemStatusBox">
 											<p class="itemP${dto.itemId }" style="color:black;text-align:center;">
 												<c:if test="${fn:contains(dto.itemStatus, 'y')}">
-													판매중: <br/>${dto.itemUploadDate }
+													판매중: <br/><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${dto.itemUploadDate }" />
 												</c:if>
 												<c:if test="${fn:contains(dto.itemStatus, 'n')}">
-													판매날짜: <br/>${dto.orderDate }
+													판매날짜: <br/><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${dto.orderDate }" />
 												</c:if>
 											</p>
 										</div>
@@ -872,7 +1099,7 @@
 								<c:if test="${dto.reviewNo != 0}">
 									<div class="reviewBox${dto.reviewNo }" style="border-radius: 5px;background: #e7eff3;box-shadow: 6px 6px 4px #e2eaee, -6px -6px 4px #ecf4f8;display:none;width: 100%;height: 150px;flex-direction: row;margin-bottom: 2%;border-radius: 5px;">
 										<div class="buyerImgBox">
-											<a href="#"><img class="buyerImg" src="image/${dto.profileImg }" style="border-radius:5px;object-fit:cover;"></a>
+											<a href="profileSell.do?memberName=${dto.sellerName }"><img class="buyerImg" src="image/${dto.profileImg }" style="border-radius:5px;object-fit:cover;"></a>
 										</div>
 										<div class="buyerReviewBox">
 											<div class="buyerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.nickname }</div>
@@ -928,9 +1155,110 @@
 						</div>
 					</div>
 				</div>
-				
+				<input hidden="hidden" id="session_id" value="${sessionScope.memberName }" />
 			</div>
 		</div>
+		
+<!-- 신고 모달창 -->
+<div id="decl-modal" class="modal">
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<div class="auto">
+			<span class="decl-title">신고하기</span>
+		</div>
+		<!-- 신고 전체 틀 -->
+
+		<div class="decl-content-all-tle">
+			<!-- 신고 틀 -->
+			<div class="decl-content-tle" id="d1">
+				<div class="span-decl-content1">
+					<span>광고(상점홍보, 낚시글, 도배글)</span>
+				</div>
+				<form id="if1" method="post" action="memberflag.do">
+					<div class="1" id="sp">
+						<div class="decl-conform">
+							<input class="decl-conform-input" type="text" placeholder="사유"
+								name="memberFlagContent" maxlength="50"/><input
+								hidden="hidden" name="memberName"
+								value="${member.memberName}" /> <input hidden="hidden"
+								name="memberFlagCategory" value="광고" /> <input type="submit"
+								id="memberflagsubmit1" value="등록" style="cursor:pointer;"></input>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="decl-content-tle" id="d2">
+				<div class="span-decl-content2">
+					<span>물품정보 부정확(카테고리, 가격, 사진)</span>
+				</div>
+				<form id="if2" method="post" action="memberflag2.do">
+					<div class="2" id="sp">
+						<div class="decl-conform">
+							<input class="decl-conform-input" type="text" placeholder="사유"
+								name="memberFlagContent" maxlength="50"/><input
+								hidden="hidden" name="memberName"
+								value="${member.memberName}" /> <input hidden="hidden"
+								name="memberFlagCategory" value="물품정보부정확" /> <input
+								type="submit" id="memberflagsubmit2" value="등록" style="cursor:pointer;"></input>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="decl-content-tle" id="d3">
+				<div class="span-decl-content3">
+					<span>거래 금지 품목(담배, 주류, 장물)</span>
+				</div>
+				<form id="if3" method="post" action="memberflag3.do">
+					<div class="3" id="sp">
+						<div class="decl-conform">
+							<input class="decl-conform-input" type="text" placeholder="사유"
+								name="memberFlagContent" maxlength="50"/><input
+								hidden="hidden" name="memberName"
+								value="${member.memberName}" /> <input hidden="hidden"
+								name="memberFlagCategory" value="거래금지품목" /> <input
+								type="submit" id="memberflagsubmit3" value="등록" style="cursor:pointer;"></input>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="decl-content-tle" id="d4">
+				<div class="span-decl-content4">
+					<span>언어폭력(비방, 욕설, 성희롱)</span>
+				</div>
+				<form id="if4" method="post" action="memberflag4.do">
+					<div class="4" id="sp">
+						<div class="decl-conform">
+							<input class="decl-conform-input" type="text" placeholder="사유"
+								name="memberFlagContent" maxlength="50"/><input
+								hidden="hidden" name="memberName"
+								value="${member.memberName}" /> <input hidden="hidden"
+								name="memberFlagCategory" value="언어폭력" /> <input type="submit"
+								id="memberflagsubmit4" value="등록" style="cursor:pointer;"></input>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="decl-content-tle" id="d5">
+				<div class="span-decl-content5">
+					<span>기타사유(직접입력)</span>
+				</div>
+				<form id="if5" method="post" action="memberflag5.do">
+					<div class="5" id="sp">
+						<div class="decl-conform">
+							<input class="decl-conform-input" type="text" placeholder="사유"
+								name="memberFlagContent" maxlength="50"/><input
+								hidden="hidden" name="memberName"
+								value="${member.memberName}" /> <input hidden="hidden"
+								name="memberFlagCategory" value="기타" /> <input type="submit"
+								id="memberflagsubmit5" value="등록" style="cursor:pointer;"></input>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 </body>
 <jsp:include page="footer.jsp" />

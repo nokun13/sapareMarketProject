@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -305,9 +305,8 @@ a:hover {
 						style="text-align: center; width: 245px; height: 20px; overflow: hidden;">
 						${dto.itemName} <br />
 					</p>
-					<p
-						style="text-align: center; width: 245px; height: 20px; overflow: hidden; margin-bottom: 10px;">
-						${dto.itemPrice}원</p>
+					<p style="text-align: center; width: 245px; height: 20px; overflow: hidden; margin-bottom: 10px;">
+						<fmt:formatNumber value="${dto.itemPrice }" pattern="#,###,###,###" />원</p>
 			</a></td>
 
 			<c:if test="${i%j == j-1 }">

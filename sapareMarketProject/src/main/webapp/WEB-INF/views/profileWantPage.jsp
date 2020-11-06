@@ -43,8 +43,8 @@
 
 #profileImageBox{
 	position: relative;
-	margin-left: 30px;
-	margin-top: 20px;
+	/* margin-left: 30px;
+	margin-top: 20px; */
 	height: 250px; 
 	width: 320px;
 	display: flex;
@@ -55,6 +55,8 @@
 	background: #ebf5ff;
 	box-shadow:  -6px 6px 9px #e6f0fa, 
              6px -6px 9px #f0faff;
+    margin-left: 15px;
+    margin-bottom: 20px;
 }
 
 .profileContainer{
@@ -125,6 +127,7 @@
     border-radius: 5px;
     background: #f0f8ff;
     box-shadow: -6px 6px 14px #ebf3fa, 6px -6px 14px #f5fdff;
+    padding: 10px;
 }
 
 .memberPointArea{
@@ -626,7 +629,7 @@
 		function after_review_change(res){
 			$(".wantItemBox").remove();
 			$.each(res, function(index, value){
-				var source = "<li class='wantItemBox'><a class='wantItemCard' href='searchItem.do?itemId="+value.itemId+"'>"
+				var source = "<li class='wantItemBox'><a class='wantItemCard' href='itemViewPage.do?itemId="+value.itemId+"'>"
 							+ "<div class='wantItemInside'><div class='itemImageBox'><img src='image/"+value.itemImagePath+"'/></div>"
 							+ "<div class='itemDescribeBox'><div><div class='itemName'>"+value.itemName+"</div>"
 							+ "<div class='itemPrice'>"+value.itemPrice+"</div></div></div></div></a>"
@@ -690,7 +693,7 @@
 			console.log('찜 목록에서 제거 되었습니다.');
 			$(".wantItemBox").remove();
 			$.each(res, function(index, value){
-				var source = "<li class='wantItemBox'><a class='wantItemCard' href='searchItem.do?itemId="+value.itemId+"'>"
+				var source = "<li class='wantItemBox'><a class='wantItemCard' href='itemViewPage.do?itemId="+value.itemId+"'>"
 							+ "<div class='wantItemInside'><div class='itemImageBox'><img src='image/"+value.itemImagePath+"'/></div>"
 							+ "<div class='itemDescribeBox'><div><div class='itemName'>"+value.itemName+"</div>"
 							+ "<div class='itemPrice'>"+value.itemPrice+"</div></div></div></div></a>"
@@ -774,20 +777,20 @@
 				<div class="menuAndContentArea">
 					<div class="profileMenu">
 						<ul class="menuButtons">
-						  <li><a href="profileSell.do">판매상품</a>
+						  <li><a href="profileSell.do?memberName=${member.memberName }">판매상품</a>
 						  
 						  <c:if test="${member.memberName == sessionScope.memberName}">
-						  	<li><a href="profileBuy.do">구매상품</a></li>
+						  	<li><a href="profileBuy.do?memberName=${member.memberName }">구매상품</a></li>
 						  </c:if>
 						  
 						  <c:if test="${member.memberName == sessionScope.memberName}">
-						  	<li><a href="profileWant.do">찜</a></li>
+						  	<li><a href="profileWant.do?memberName=${member.memberName }">찜</a></li>
 						  </c:if>
 						  
-						  <li><a href="profileReview.do">후기</a></li>
+						  <li><a href="profileReview.do?memberName=${member.memberName }">후기</a></li>
 						  
 						  <c:if test="${member.memberName == sessionScope.memberName}">
-						  	<li><a href="profileSetting.do">회원정보수정</a></li>
+						  	<li><a href="profileSetting.do?memberName=${member.memberName }">회원정보수정</a></li>
 						  </c:if>
 						</ul>
 					</div>
@@ -810,7 +813,7 @@
 									<c:forEach items="${wantList }" var="dto">
 									<li class="wantItemBox">
 										<!-- 나중에 찜 사진을 눌렀을 때 상품페이지로 건너가는 메소드로 아래 href를 바꿔줘야 된다 -->
-										<a class="wantItemCard" href="searchItem.do?itemId=${dto.itemId }">
+										<a class="wantItemCard" href="itemViewPage.do?itemId=${dto.itemId }">
 											<div class="wantItemInside">
 												<div class="itemImageBox">
 													<img src="image/${dto.itemImagePath }" />

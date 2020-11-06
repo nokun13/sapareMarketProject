@@ -348,6 +348,7 @@ img {
 	position: absolute;
 	transition: opacity 0.2s ease-in-out 0s;
 	opacity: 1;
+	object-fit: scale-down;
 }
 /* 상품 상세정보 보이는 위치 */
 .more-info-location {
@@ -386,17 +387,17 @@ img {
 
 /*가격*/
 .price {
-    font-size: 47px;
-    font-weight: 500;
-    display: flex;
+	font-size: 47px;
+	font-weight: 500;
+	display: flex;
 }
 
 /*가격 스팬*/
 .price span {
-    font-size: 32px;
-    font-weight: 400;
-    margin-left: 5px;
-    margin-top: 9px;
+	font-size: 32px;
+	font-weight: 400;
+	margin-left: 5px;
+	margin-top: 9px;
 }
 
 /*찜 조회수 날짜 신고 틀*/
@@ -574,7 +575,7 @@ button {
 	margin-right: 10px;
 }
 
-.bt-container{
+.bt-container {
 	width: 35%;
 }
 
@@ -633,6 +634,8 @@ button {
 	height: 200px;
 	width: 700px;
 	border: 4px solid rgb(238, 238, 238);
+	padding: 5px;
+    font-size: 20px;
 }
 
 .img-nik2-tle {
@@ -706,6 +709,7 @@ button {
 .ad-pic-all-tle {
 	display: flex;
 	overflow: hidden;
+	width: 96%;
 }
 /* 광고  사진 틀 */
 .ad-pic-tle {
@@ -721,6 +725,7 @@ button {
 .ad-pic img {
 	width: 100%;
 	display: block;
+	object-fit: cover;
 }
 
 .ad-pic2 {
@@ -883,4 +888,11 @@ button {
 	outline: none;
 	cursor: pointer;
 	color: coral;
-}}
+}
+
+#itemflagsubmit1, #itemflagsubmit2, #itemflagsubmit3, #itemflagsubmit4, #itemflagsubmit5 {
+	width: 70px;
+	font-size: 15px;
+	font-weight: 600;
+	background-color: white;
+}

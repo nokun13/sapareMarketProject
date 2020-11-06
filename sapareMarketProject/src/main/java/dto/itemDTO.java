@@ -6,11 +6,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class itemDTO {
 
-	private String itemUploadDate, orderId, memberName, itemAbout, itemName, itemImagePath, itemType, profileImg, nickname, reviewContent, searchWord;
-	private String itemBigCat, itemMidCat, itemSmallCat, itemCity, itemGu, itemDong, memberRank;
+	private String orderId, memberName, itemAbout, itemName, itemImagePath, itemType, profileImg, nickname, reviewContent, searchWord;
+	private String itemBigCat, itemMidCat, itemSmallCat, itemCity, itemGu, itemDong, memberRank, sellerName;
 	private int itemId, itemPrice, itemViewCnt, itemWantCnt, itemFlagCnt, reviewNo, reviewStar, orderPrice;
 	private char itemStatus;
-	private Date orderDate;
+	private Date orderDate, itemUploadDate;
 	private MultipartFile filepath;
 	
 	public String getMemberName() {
@@ -181,11 +181,17 @@ public class itemDTO {
 	public void setSearchWord(String searchWord) {
 		this.searchWord = searchWord;
 	}
-	public String getItemUploadDate() {
+	public Date getItemUploadDate() {
 		return itemUploadDate;
 	}
-	public void setItemUploadDate(String itemUploadDate) {
+	public void setItemUploadDate(Date itemUploadDate) {
 		this.itemUploadDate = itemUploadDate;
+	}
+	public String getSellerName() {
+		return sellerName;
+	}
+	public void setSellerName(String sellerName) {
+		this.sellerName = sellerName;
 	}
 	
 } // end class

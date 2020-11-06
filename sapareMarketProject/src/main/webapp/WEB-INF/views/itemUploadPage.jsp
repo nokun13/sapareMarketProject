@@ -22,11 +22,13 @@
 	</div>
 	<hr/>
 	<form id='frm' action="itemUpload.do" method='post' enctype="multipart/form-data">
+		<input hidden="hidden" name="nickname" value="${member.memberName }" />
+		<input hidden="hidden" name="itemId" value="${item.itemId }" />
 		<div id="itemimage" class='container'>
 			<span>상품이미지</span>
 			<div id='text-center'>
 					<label for='filepath'> <!-- <img id="img" style="width: 150px; height: 100px; border: 0px solid white;">-->
-						<img src="image/plus.jpg" class='img-circle'  id='ITEMIMAGEPATH' name='ITEMIMAGEPATH' style="width: 200px; height: 160px; object-fit: cover;" /> 
+						<img src="image/defaultAD.png" class='img-circle'  id='ITEMIMAGEPATH' name='ITEMIMAGEPATH' style="width: 200px; height: 160px;object-fit: contain;" />  
 						<input type="file" name='filepath' id='filepath' class='filepath'  style="display: none;" multiple />
 					</label>
 			</div>
@@ -35,7 +37,7 @@
 		<!-- 제목  -->
 		<div id="title" style="font-weight: bold;" class='container'>
 			<span>제목 <a style="color: red">*</a> </span>
-			<input type="text" style="width: 500px; height: 50px" class="form-control" id='ITEMNAME' name='itemName' placeholder="제목을 입력하세요"  maxlength="15">
+			<input type="text" style="width: 500px; height: 50px" class="form-control" id='ITEMNAME' name='itemName' placeholder="제목을 입력하세요"  maxlength="15" value="${item.itemName }">
 				<a style="color: red; font-size: x-small;">*15자이하로 입력해주세요</a>
 		</div>
 			
@@ -44,7 +46,7 @@
 		<!-- about -->
 		<div id="information" style="font-weight: bold;" class='container'>
 			<span>설명</span> 
-			<input type="text" style="width: 500px; height: 100px" class="form-control"  maxlength="100"  placeholder="설명을 입력하세요" id='ITEMABOUT' name='itemAbout'>
+			<input type="text" style="width: 500px; height: 100px" class="form-control"  maxlength="100"  placeholder="설명을 입력하세요" id='ITEMABOUT' name='itemAbout' value="${item.itemAbout }">
 				<a style="color: red; font-size: x-small;">*100자이하로 입력하세요</a>
 		</div>
 		<hr />
@@ -53,11 +55,10 @@
 		<!-- 가격입력 -->
 		<div id="price" class="container">
 			<span>가격<a style="color: red">*</a></span> 
-			<input type="number" min="100" style="width: 500px; height: 60px" class="form-control" 
-				placeholder="ex)10000~" id="ITEMPRICE" name='itemPrice'> 
+			<input type="number" maxlength="9" min="100" style="width: 500px; height: 60px" class="form-control" 
+				placeholder="ex)10000~" id="ITEMPRICE" name='itemPrice' value="${item.itemPrice }" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" /> 
 				<a style="color: red; font-size: x-small;">*100원이상의 단위로 입력해주세요.</a>
 		</div>
-
 
 		
 
@@ -137,15 +138,20 @@
 			 <div class="hAddr">
        		 <span class="title">주소정보</span>
       		 <span id="centerAddr"></span>
-    	</div>
+    		</div>
 		</div>  
 		 <hr />
 	</div>
 	
-	<div id="click" class='container'>
-			<a href="mainPage.do"><input type="button" value="취소" id="cancel" class="btn btn-secondary"></a> 
+	<div id="click" class='container' style="margin-bottom: 30px;">
+		<a href="mainPage.do"><input type="button" value="취소" id="cancel" class="btn btn-secondary"></a> 
+		<c:if test="${item.itemName != null}">
+			<input type="button" value="수정하기" id="update" class="btn btn-primary">
+		</c:if>
+		<c:if test="${item.itemName == null }">
 			<input type="button" value="판매하기" id="sell" class="btn btn-primary">
-		</div> 
+		</c:if>
+	</div> 
 </body>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

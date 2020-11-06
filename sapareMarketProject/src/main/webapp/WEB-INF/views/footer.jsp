@@ -24,6 +24,7 @@ footer {
 	width: 1300px;
 	min-width: 1300px;
 	margin: 0 auto;
+	margin-top: 40px;
 }
 address {
 	float: none;
@@ -88,7 +89,7 @@ address {
 		<address>
 			<img
 				alt="대표 OOO 사업자등록번호 000-00-0000 통신판매업신고 2020-0000-0000 대표전화 (02) 000-0000 팩스 (02) 000-000 이매일 00000@naver.com 주소 서울특별시 구로구 구로동 시흥대로 163길 33주호타워 2층,3층"
-				src="image/address.png">
+				src="image/address.png" style="margin-top: 35px;margin-bottom: 35px;">
 		</address>
 	</div>
 

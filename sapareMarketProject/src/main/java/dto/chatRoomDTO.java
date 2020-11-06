@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class chatRoomDTO {
 
-	private String memberName, sellerName;
+	private String memberName,itemMemberName;
 	private int chatRoomId, itemId;
 	private Date roomDate;
 	
@@ -32,11 +32,11 @@ public class chatRoomDTO {
 	public void setRoomDate(Date roomDate) {
 		this.roomDate = roomDate;
 	}
-	public String getSellerName() {
-		return sellerName;
+	public String getItemMemberName() {
+		return itemMemberName;
 	}
-	public void setSellerName(String sellerName) {
-		this.sellerName = sellerName;
+	public void setItemMemberName(String itemMemberName) {
+		this.itemMemberName = itemMemberName;
 	}
 	
 } // end class

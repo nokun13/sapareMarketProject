@@ -57,8 +57,8 @@ input, button{
 
 #profileImageBox{
 	position: relative;
-	margin-left: 30px;
-	margin-top: 20px;
+	/* margin-left: 30px;
+	margin-top: 20px; */
 	height: 250px; 
 	width: 320px;
 	display: flex;
@@ -69,6 +69,8 @@ input, button{
 	background: #ebf5ff;
 	box-shadow:  -6px 6px 9px #e6f0fa, 
              6px -6px 9px #f0faff;
+    margin-left: 15px;
+    margin-bottom: 20px;
 }
 
 .profileContainer{
@@ -139,6 +141,7 @@ input, button{
     border-radius: 5px;
     background: #f0f8ff;
     box-shadow: -6px 6px 14px #ebf3fa, 6px -6px 14px #f5fdff;
+    padding: 10px;
 }
 
 .memberPointArea{
@@ -485,7 +488,6 @@ input, button{
 			} else if(pwd1 === res.memberPw){
 				$.ajax({
 					type:'GET',
-					dataType:'json',
 					url:'memberPwChange.do?memberName=${member.memberName}&memberPw='+$(".memberPwNew").val(),
 					error:function(request,status,error){
 					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -732,7 +734,7 @@ input, button{
 		});
 		function after_check_phone(res){
 			if(res == 1){
-				alert("이미 사용되는 전화번호입니다.");
+				alert("이미 사용되고 있는 전화번호입니다.");
 				$(".phoneNumInput").val("");
 				return false;
 			} else{
@@ -847,20 +849,20 @@ input, button{
 				<div class="menuAndContentArea">
 					<div class="profileMenu">
 						<ul class="menuButtons">
-						  <li><a href="profileSell.do">판매상품</a>
+						  <li><a href="profileSell.do?memberName=${member.memberName }">판매상품</a>
 						  
 						  <c:if test="${member.memberName == sessionScope.memberName}">
-						  	<li><a href="profileBuy.do">구매상품</a></li>
+						  	<li><a href="profileBuy.do?memberName=${member.memberName }">구매상품</a></li>
 						  </c:if>
 						  
 						  <c:if test="${member.memberName == sessionScope.memberName}">
-						  	<li><a href="profileWant.do">찜</a></li>
+						  	<li><a href="profileWant.do?memberName=${member.memberName }">찜</a></li>
 						  </c:if>
 						  
-						  <li><a href="profileReview.do">후기</a></li>
+						  <li><a href="profileReview.do?memberName=${member.memberName }">후기</a></li>
 						  
 						  <c:if test="${member.memberName == sessionScope.memberName}">
-						  	<li><a href="profileSetting.do">회원정보수정</a></li>
+						  	<li><a href="profileSetting.do?memberName=${member.memberName }">회원정보수정</a></li>
 						  </c:if>
 						</ul>
 					</div>

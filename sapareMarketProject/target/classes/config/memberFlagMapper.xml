@@ -14,4 +14,13 @@
 		UPDATE SAPAREMEMBERFLAG SET MEMBERFLAGRES = 1
 		WHERE MEMBERFLAGNO = #{memberFlagNo}
 	</update> 
+	
+	<insert id="memberFlagInsert" parameterType="dto.memberFlagDTO">
+		insert into saparememberflag
+		values(saparememberflag_memflagno_seq.nextval,#{memberName},#{memberFlaggerName},#{memberFlagCategory},#{memberFlagContent},'n')
+	</insert>
+	
+	<update id="plusMemberFlag" parameterType="dto.memberFlagDTO">
+		update saparememberstatus set memberflagcnt = memberflagcnt + 1 where membername=#{memberName}
+	</update>
 </mapper>

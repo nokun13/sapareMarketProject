@@ -5,6 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import dto.boardDTO;
+import dto.chatMsgDTO;
+import dto.chatRoomDTO;
+import dto.chatviewDTO;
 import dto.itemCategoryDTO;
 import dto.itemDTO;
 import dto.itemFlagDTO;
@@ -21,7 +24,7 @@ public interface SapareService {
 	
 		// 회원정보 리턴
 	public memberDTO memberInfoProcess(memberDTO dto);
-	public memberStatusDTO memberStatInfoProcess(memberStatusDTO dto);
+	public memberStatusDTO memberStatInfoProcess(memberDTO dto);
 	
 		// 회원이 구매한 상품 리턴
 	public List<orderDTO> buyInfoProcess(memberDTO dto);
@@ -99,6 +102,20 @@ public interface SapareService {
 		// 회원 탈퇴
 	public void cancelMemberProcess(memberDTO dto);
 	
+		// 회원 중복 아이디 체크
+	public int idCheckProcess(memberDTO dto);
+	
+		// 회원가입 회원 정보
+	public void signupStatusProcess(memberDTO dto);
+	
+		// 신고 카운트 +1
+	public void plusItemFlagProcess(itemFlagDTO dto);
+	
+		// 회원 신고
+	public void memberFlagInsertProcess(memberFlagDTO dto);
+		// 회원 신고 카운트 +1
+	public void plusMemberFlagProcess(memberFlagDTO dto);
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	
@@ -136,6 +153,12 @@ public interface SapareService {
 	public memberDTO viewMember(memberDTO dto);
 
 	public void logout(HttpSession session);
+	
+	public memberDTO infoByIdProcess(memberDTO dto);
+	
+	public boolean cancelCheckProcess(memberDTO dto);
+	
+	public boolean flagCheckProcess(memberDTO dto);
 
 	// 김소정 end ////////////////////////////////////////
 
@@ -151,7 +174,11 @@ public interface SapareService {
 	public memberStatusDTO itemMemberStatProcess(int itemId);
 
 	
+	// 상품 삭제
 	public void deleteItemProcess(int itemId);
+	// 상품 수정
+	public void updateItemProcess(itemDTO dto);
+	public void updateItemCatProcess(itemDTO dto);
 
 	public List<itemDTO> itemCurrvalProcess(memberDTO dto);
 
@@ -200,7 +227,15 @@ public interface SapareService {
 	
 	
 	// 표다몬 start //////////////////////////////////////////
-
+	public List<chatviewDTO> friendProcess(String id);
+	public List<chatMsgDTO> msgProcess(int num); 
+	public void msgSaveProcess(chatMsgDTO dto);
+	public void enterTimeProcess(chatviewDTO dto);
+	public void exitTimeProcess(chatviewDTO dto);
+	public void RoomAddProcess(chatRoomDTO dto);
+	public List<chatviewDTO> LogProcess(String id);
+	public chatviewDTO fenterTimeProcess(chatviewDTO dto);
+	public String itemMemNameProcess(int itemId);
 	// 표다몬 end //////////////////////////////////////////
 	
 } // end interface

@@ -1,12 +1,8 @@
 <%@page import="dto.memberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	String contentPage = request.getParameter("");
-	if (contentPage == null)
-		contentPage = "mainPage.jsp";
-
 	String fid = (String) session.getAttribute("logOk");
 	String id = (String) session.getAttribute("id");
 	System.out.println(id);
@@ -19,10 +15,8 @@
 				admin = true;
 				System.out.println("admin");
 			}
-		}
+	}
 %>
-
-
 
 <!DOCTYPE html >
 <html>
@@ -38,6 +32,7 @@
 	padding: 16px;
 	font-size: 16px;
 	border: none;
+	box-sizing: content-box;
 }
 
 .dropdown-content {
@@ -164,7 +159,7 @@ a {
 	padding-left: 60px;
 	position: relative;
 	float: left;
-	margin-top: 53px;
+	margin-top: 40px;
 	/* border:solid 1px #000000; */
 }
 
@@ -187,6 +182,8 @@ a {
 	padding: 10px 20px 10px 20px;
 	border-radius: 5px;
 	margin-right: 20px;
+	cursor: pointer;
+	outline: none;
 }
 
 /* 메인 메뉴 */
@@ -365,19 +362,25 @@ input[type=email] {
 	border: none;
 	outline: none;
 }
+
+.bigCategory li a {
+    color: rgb(33, 33, 33);
+    text-decoration: none;
+    cursor: pointer;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	//윈도우 창을 닫을 때 로그아웃 처리
-	function closePage(event) {
+	/* function closePage(event) {
 		if (event.clientY < 0) {
 			// 로그아웃 처리
 		}
 
-	}
+	} */
 
-	document.onkeydown = function() {
+	/* document.onkeydown = function() {
 		// 새로고침 방지 ( Ctrl+R, Ctrl+N, F5 )
 		if (event.ctrlKey == true
 				&& (event.keyCode == 78 || event.keyCode == 82)
@@ -397,7 +400,7 @@ input[type=email] {
 		if (event.keyCode == 505) {
 			alert(document.body.onBeforeUnload);
 		}
-	}
+	} */
 
 	var login =
 <%=logok%>
@@ -406,6 +409,7 @@ input[type=email] {
 <%=admin%>
 	;
 	$(document).ready(function() {
+		
 		$('.mypage').hide();
 		$('.modalbtnlogin').on('click', modalRun);
 
@@ -472,8 +476,8 @@ input[type=email] {
 
 		var id = $('#top_menu a:nth-child(3)').text();
 
-		console.log(admin);
-		console.log(login);
+		console.log("admincheck: " + admin);
+		console.log("logincheck: " + login);
 
 		$('#top_menu a:nth-child(2)').hide();
 		/* if(admin==false)
@@ -501,7 +505,15 @@ input[type=email] {
 		$(".ss").click(function() {
 			$("#searchform").attr("action", "search.do");
 		});
-
+		
+		$(".sale").click(function(){
+			if (login == false || login == null){
+				$("#mylogin").click();
+			} else if(login == true){
+				location.href="itemUploadPage.do";
+			}
+		});
+		
 	}); //Readyfunction
 
 	//모달 
@@ -529,7 +541,7 @@ input[type=email] {
 	}
 </script>
 </head>
-<body onbeforeunload="closePage(event)" oncontextmenu="return false">
+<body>
 
 	<section id="top">
 		<div class="wrap">
@@ -582,10 +594,11 @@ input[type=email] {
 					</div>
 				</div>
 				<div id="top_menu">
-					<a class="sale" href="">판매하기</a> <a class="logout"
+					<button type="button" class="sale">판매하기</button> 
+					<a class="logout"
 						href="http://localhost:8090/sapare/logout.do">로그아웃</a>
-					<button type="button" id="mylogin">
-						<a class="login">로그인</a>
+					<button type="button" id="mylogin" class="login">
+						<p>로그인</p>
 					</button>
 					<!-- 로그인 모달창 시작  -->
 					<div id="myModallogin" class="modallogin">
@@ -626,8 +639,12 @@ input[type=email] {
 
 
 					<a class="signup" href="http://localhost:8090/sapare/signupPage.do">회원가입</a>
-					<a class="mypage" href="http://localhost:8090/sapare/mypage.do">마이페이지</a>
-
+					<c:if test="${sessionScope.memberName != 'admin' }">
+						<a class="mypage" href="http://localhost:8090/sapare/profileSell.do?memberName=${sessionScope.memberName }">마이페이지</a>
+					</c:if>
+					<c:if test="${sessionScope.memberName == 'admin'}">
+						<a class="mypage" href="http://localhost:8090/sapare/adminPage.do">관리자페이지</a>
+					</c:if>
 
 				</div>
 			</div>

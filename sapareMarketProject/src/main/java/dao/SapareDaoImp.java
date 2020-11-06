@@ -7,6 +7,9 @@ import javax.servlet.http.HttpSession;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import dto.boardDTO;
+import dto.chatMsgDTO;
+import dto.chatRoomDTO;
+import dto.chatviewDTO;
 import dto.itemCategoryDTO;
 import dto.itemDTO;
 import dto.itemFlagDTO;
@@ -37,7 +40,7 @@ public class SapareDaoImp implements SapareDAO{
 		return sqlSession.selectOne("member.info", dto);
 	}
 	@Override
-	public memberStatusDTO memberStatInfoMethod(memberStatusDTO dto) {
+	public memberStatusDTO memberStatInfoMethod(memberDTO dto) {
 		return sqlSession.selectOne("memberStatus.sInfo", dto);
 	}
 		
@@ -208,6 +211,34 @@ public class SapareDaoImp implements SapareDAO{
 		sqlSession.update("memberStatus.cancelMember", dto);
 	}
 	
+		// 회원 중복 아이디 체크
+	@Override
+	public int idCheckMethod(memberDTO dto) {
+		return sqlSession.selectOne("member.idCheck", dto);
+	}
+	
+		// 회원가입 회원 정보
+	@Override
+	public void signupStatusMethod(memberDTO dto) {
+		sqlSession.insert("memberStatus.signupstatus", dto);
+	}
+	
+		// 신고 카운트 +1
+	@Override
+	public void plusItemFlagMethod(itemFlagDTO dto) {
+		sqlSession.update("itemFlag.plusItemFlag", dto);
+	}
+	
+		// 회원 신고
+	@Override
+	public void memberFlagInsertMethod(memberFlagDTO dto) {
+		sqlSession.insert("memberFlagInsert", dto);
+	}
+		// 회원 신고 카운트 +1
+	@Override
+	public void plusMemberFlagMethod(memberFlagDTO dto) {
+		sqlSession.update("plusMemberFlag", dto);
+	}
 	// 김녹훈 end //////////////////////////////////////////
 	
 	
@@ -300,8 +331,6 @@ public class SapareDaoImp implements SapareDAO{
 
 	@Override
 	public boolean loginCheck(memberDTO dto) {
-		// TODO Auto-generated method stub
-	/*	String name = sqlSession.selectOne("member.loginCheck", dto);*/
 		
 		return (sqlSession.selectOne("member.loginCheck", dto) == null) ? false : true;
 	}
@@ -316,6 +345,19 @@ public class SapareDaoImp implements SapareDAO{
 	public void logout(HttpSession session) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public memberDTO infoByIdMethod(memberDTO dto) {
+		return sqlSession.selectOne("member.infoById", dto);
+	}
+	@Override
+	public memberStatusDTO cancelCheckMethod(memberDTO dto) {
+		return sqlSession.selectOne("member.cancelCheck", dto);
+	}
+	@Override
+	public int flagCheckMethod(memberDTO dto) {
+		return sqlSession.selectOne("member.flagCheck", dto);
 	}
 	
 	// 김소정 end ///////////////////////////////////////////
@@ -354,6 +396,17 @@ public class SapareDaoImp implements SapareDAO{
 	public void deleteItem(int itemId) {
 		sqlSession.delete("item.deleteItem", itemId);
 	}
+
+	// 상품 수정
+	@Override
+	public void updateItemMethod(itemDTO dto) {
+		sqlSession.update("item.uptItem", dto);
+	}
+	@Override
+	public void updateItemCatMethod(itemDTO dto) {
+		sqlSession.update("item.uptItemCat", dto);
+	}
+	
 	@Override
 	public List<itemDTO> itemCurrvalMethod(memberDTO dto) {
 		return sqlSession.selectList("item.currItem", dto);
@@ -460,7 +513,56 @@ public class SapareDaoImp implements SapareDAO{
 	
 	
 	// 표다몬 start //////////////////////////////////////////
-	
+	@Override
+	public List<chatviewDTO> friendList(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("chatRoom.RoomList", id);
+	}
+
+	@Override
+	public List<chatMsgDTO> msglog(int num) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("chatMsg.MsgList", num);
+	}
+
+	@Override
+	public void msgSave(chatMsgDTO dto) {
+		sqlSession.insert("chatMsg.MsgSave", dto);
+	}
+
+	@Override
+	public void enterTime(chatviewDTO dto) {
+		sqlSession.update("chatRoom.enterupdate", dto);
+	}
+
+	@Override
+	public void exitTime(chatviewDTO dto) {
+		sqlSession.update("chatRoom.exitupdate", dto);
+		
+	}
+
+	@Override
+	public List<chatviewDTO> chatLog(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("chatRoom.RoomLog", id);
+	}
+//FRoomlog
+
+	@Override
+	public chatviewDTO fenterTime(chatviewDTO dto) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("chatRoom.FRoomlog", dto);
+	}
+
+	@Override
+	public void addRoom(chatRoomDTO dto) {
+		sqlSession.insert("chatRoom.addRoom", dto);
+	}
+
+	@Override
+	public String findItemMember(int itemId) {
+		return sqlSession.selectOne("chatRoom.itemMember", itemId);
+	}
 	
 	// 표다몬 end //////////////////////////////////////////
 

@@ -1,11 +1,37 @@
 $(document).ready(function() {
 	
+	// function으로 파라미터값을 받아옴  
+  	function getParam(sname) {
+	    var params = location.search.substr(location.search.indexOf("?") + 1);
+	    var sval = "";
+	    params = params.split("&");
+	    for (var i = 0; i < params.length; i++) {
+	        temp = params[i].split("=");
+	        if ([temp[0]] == sname) { sval = temp[1]; }
+	    }
+	    return sval;
+	}; 
+	var flag = getParam("flag");
+	if(flag == "d"){
+		alert("성공적으로 신고되었습니다.");
+	}
+	
 	// 찜 버튼
 	$('.bt-tle').on('click', '.bt-heart', function(){
 		var itemid = $('#itemId').val();
 		var membername = $('#memberName').val();
 		var sellername = $('#sellerName').val();
 		var session = $('.session_id').val();
+		var memberid = $("#memberId").val();
+		var itemStatus = $("#itemStatus").val();
+		if(itemStatus == 'n'){
+			alert("이미 판매완료된 상품입니다!");
+			return false;
+		}
+		if(session == memberid){
+			alert("본인의 상품은 찜 할 수 없습니다!");
+			return false;
+		}
 		if (session != ''){
 			if($('.bt-heart').is('#btNotWant')){
 				$.ajax({
@@ -70,10 +96,47 @@ $(document).ready(function() {
 	
 	// 채팅 버튼
 	$('.bt2').on('click', function() {
-		 var session= $('.session_id').val();
-		console.log(session+'aaa')
+		 var session= $('#mynameid').val();
+		 var btn = document.getElementById("mychatBtn");
+		 var modal = document.getElementById('chatModal');
+		 var itemStatus = $("#itemStatus").val();
+		 if(itemStatus == 'n'){
+			 alert("이미 판매완료된 상품입니다!");
+			 return false;
+		 }
 		if(session!=''){
-			alert("채팅을 시작합니다");
+				if (btn.className == 'active') {
+					btn.classList.toggle('active')
+					$('#friends').children('.friend').remove()
+					
+				} else {
+					
+				}
+				btn.classList.toggle('active')
+			modal.style.display = "block";
+			 $.ajax({
+	                type: 'POST',
+	                dataType: 'json',
+	                async: false,
+	                url: 'addstart.do' ,
+	                data :'itemId='+$('#itemId').val()+'&memberName='+session,
+	                success: function (chatviewDTO) {
+							$(chatviewDTO).each(function(value){
+								var a	= '<div class="friend"><input type="hidden" id="itemId" value="'+$(this)[0].itemId+'"> '
+								+ '<input type="hidden" id="chatRoomId" value="'+$(this)[0].chatRoomId+'">'
+								+ '<input type="hidden" class="memberName" value="'+$(this)[0].memberName+'">  '
+								+ '<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />'
+								+ '<p><strong>"'+$(this)[0].memberName+'"</strong> <span>상품</span></p>'
+								if($(this)[0].isreadcount>0)
+								+ '<div class="readcount"><span>'+$(this)[0].isreadcount+'</span></div></div>'
+							$('#friends').prepend(a);
+							})
+	                }
+			 })
+			 addfriend()
+			closeanim();
+			
+			
 			
 		}else{
 			$('.modallogin').toggle();
@@ -175,10 +238,23 @@ $(document).ready(function() {
 		$('#deleteEvent').on('click',delItemRun);
 		
 		function delItemRun(){
-			$('form').attr('action','deleteItem.do').submit();
+			var itemStatus = $("#itemStatus").val();
+			if(itemStatus == 'n'){
+				alert("판매완료된 상품은 삭제할 수 없습니다!");
+				return false;
+			}
+			console.log('나와라');
+			$('form.up-de-class').attr('action','deleteItem.do').submit();
 		}
 		
-
-
-	
+		// 수정 버튼 클릭 수정 페이지로 이동
+		$(".up-bt").on("click", function(){
+			var itemStatus = $("#itemStatus").val();
+			if(itemStatus == 'n'){
+				alert("판매완료된 상품은 수정할 수 없습니다!");
+				return false;
+			}
+			$('form.up-de-class').attr('action', 'itemUploadPage.do').submit();
+		});
+		
 })

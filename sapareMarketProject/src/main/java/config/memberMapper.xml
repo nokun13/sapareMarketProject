@@ -94,7 +94,23 @@
 	</select>
 
 	<delete id="memberdelete" parameterType="String">
-	delete from saparemember where memberId=#{memberId}
+		delete from saparemember where memberId=#{memberId}
 	</delete>
 	
+	<select id="infoById" parameterType="dto.memberDTO" resultType="dto.memberDTO">
+		select * from sapareMember where memberId=#{memberId}
+	</select>
+
+	<select id="cancelCheck" parameterType="dto.memberDTO" resultType="dto.memberStatusDTO">
+		select * from saparememberstatus where memberName=#{memberName}
+	</select>
+
+	<select id="flagCheck" parameterType="dto.memberDTO" resultType="int">
+		select count(memberFlagRes) from sapareMemberFlag where memberName=#{memberName}
+	</select>
+	
+	<select id="idCheck" parameterType="dto.memberDTO" resultType="int">
+		select count(*) from saparemember where memberid=#{memberId}
+	</select>
+		
 </mapper>

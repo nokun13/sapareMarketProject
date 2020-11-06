@@ -119,6 +119,27 @@ $(document).ready(function(){
 		 }
 	 });
 	 */
+	 
+	// function으로 파라미터값을 받아옴  
+  	function getParam(sname) {
+	    var params = location.search.substr(location.search.indexOf("?") + 1);
+	    var sval = "";
+	    params = params.split("&");
+	    for (var i = 0; i < params.length; i++) {
+	        temp = params[i].split("=");
+	        if ([temp[0]] == sname) { sval = temp[1]; }
+	    }
+	    return sval;
+	};  
+	 
+	// 존재하는 아이디 알람
+	var existId = getParam("existId");
+	
+	if (existId == 1) {
+		alert("이미 존재하는 아이디입니다.");
+	};
+	 
+	
 	 $('.login_btn').on('click',function(){
 		 
 	
@@ -230,14 +251,14 @@ function chkhp(str) { //핸드폰번호 제약조건
 					<div class="password_title">비밀번호</div>
 					<div class="password_box">
 						<input type="password" name="memberPw" class="password_input" value=""
-							placeholder="영문, 숫자  포함 6~15자" name="password">
+							placeholder="영문, 숫자  포함 6~15자" name="password" maxlength="15">
 						
 					</div>
 					<div><div class="error_msg" id="pwerror">비밀번호를 입력해주세요.</div></div>
 					<div class="phone_title">휴대폰번호</div>
 					<div class="phone_area">
 						<input type="tel" name="phoneNum" class="phone_number"
-							placeholder="숫자만 입력" value="">
+							placeholder="숫자만 입력" maxlength="11" value="" pattern="[0-9]+">
 						<!-- <input type="button" id="reAuthcode" value="인증요청 "/>
 						<p></p>
 						<input type="tel" name="num" class="numsign" placeholder="인증번호 4자리" value="" style="width: 300px"> -->

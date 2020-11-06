@@ -6,6 +6,9 @@ import javax.servlet.http.HttpSession;
 
 import dao.SapareDAO;
 import dto.boardDTO;
+import dto.chatMsgDTO;
+import dto.chatRoomDTO;
+import dto.chatviewDTO;
 import dto.itemCategoryDTO;
 import dto.itemDTO;
 import dto.itemFlagDTO;
@@ -36,7 +39,7 @@ public class SapareServiceImp implements SapareService{
 		return dao.memberInfoMethod(dto);
 	}
 	@Override
-	public memberStatusDTO memberStatInfoProcess(memberStatusDTO dto) {
+	public memberStatusDTO memberStatInfoProcess(memberDTO dto) {
 		return dao.memberStatInfoMethod(dto);
 	}
 	
@@ -207,6 +210,35 @@ public class SapareServiceImp implements SapareService{
 		dao.cancelMemberMethod(dto);
 	}
 	
+		// 회원 중복 아이디 체크
+	@Override
+	public int idCheckProcess(memberDTO dto) {
+		return dao.idCheckMethod(dto);
+	}
+	
+		// 회원가입 회원 정보
+	@Override
+	public void signupStatusProcess(memberDTO dto) {
+		dao.signupStatusMethod(dto);
+	}
+	
+		// 신고 카운트 +1
+	@Override
+	public void plusItemFlagProcess(itemFlagDTO dto) {
+		dao.plusItemFlagMethod(dto);
+	}
+	
+		// 회원 신고
+	@Override
+	public void memberFlagInsertProcess(memberFlagDTO dto) {
+		dao.memberFlagInsertMethod(dto);
+	}
+		// 회원 신고 카운트 +1
+	@Override
+	public void plusMemberFlagProcess(memberFlagDTO dto) {
+		dao.plusMemberFlagMethod(dto);
+	}
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	
@@ -313,7 +345,20 @@ public class SapareServiceImp implements SapareService{
 		return result;
 	}
 	
+	@Override
+	public memberDTO infoByIdProcess(memberDTO dto) {
+		return dao.infoByIdMethod(dto);
+	}
 	
+	@Override
+	public boolean cancelCheckProcess(memberDTO dto) {
+		return (dao.cancelCheckMethod(dto).getDelFlag() == '\0') ? false:true;
+	}
+	
+	@Override
+	public boolean flagCheckProcess(memberDTO dto) {
+		return (dao.flagCheckMethod(dto) == 0) ? false:true;
+	}
 	
 	// 김소정 end ////////////////////////////////////////
 	
@@ -343,8 +388,17 @@ public class SapareServiceImp implements SapareService{
 	@Override
 	public void deleteItemProcess(int itemId) {
 		dao.deleteItem(itemId);
-		
+	}	
+	// 상품 수정
+	@Override
+	public void updateItemProcess(itemDTO dto) {
+		dao.updateItemMethod(dto);
 	}
+	@Override
+	public void updateItemCatProcess(itemDTO dto) {
+		dao.updateItemCatMethod(dto);
+	}
+	
 	@Override
 	public List<itemDTO> itemCurrvalProcess(memberDTO dto) {
 		return dao.itemCurrvalMethod(dto);
@@ -444,7 +498,56 @@ public class SapareServiceImp implements SapareService{
 	
 	
 	// 표다몬 start //////////////////////////////////////////
-	
+	@Override
+	public List<chatviewDTO> friendProcess(String id) {
+		// TODO Auto-generated method stub
+		return dao.friendList(id);
+	}
+
+	@Override
+	public List<chatMsgDTO> msgProcess(int num) {
+		// TODO Auto-generated method stub
+		return dao.msglog(num);
+	}
+
+	@Override
+	public void msgSaveProcess(chatMsgDTO dto) {
+		dao.msgSave(dto);
+	}
+
+	@Override
+	public void enterTimeProcess(chatviewDTO dto) {
+		dao.enterTime(dto);
+	}
+
+	@Override
+	public void exitTimeProcess(chatviewDTO dto) {
+		dao.exitTime(dto);
+	}
+
+	@Override
+	public List<chatviewDTO> LogProcess(String id) {
+		// TODO Auto-generated method stub
+		return dao.chatLog(id);
+	}
+
+	@Override
+	public chatviewDTO fenterTimeProcess(chatviewDTO dto) {
+		// TODO Auto-generated method stub
+		return dao.fenterTime(dto);
+	}
+
+	@Override
+	public void RoomAddProcess(chatRoomDTO dto) {
+		// TODO Auto-generated method stub
+		dao.addRoom(dto);
+	}
+
+	@Override
+	public String itemMemNameProcess(int itemId) {
+		// TODO Auto-generated method stub
+		return dao.findItemMember(itemId);
+	}
 	
 	// 표다몬 end //////////////////////////////////////////
 	

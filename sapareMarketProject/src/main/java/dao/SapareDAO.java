@@ -5,6 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import dto.boardDTO;
+import dto.chatMsgDTO;
+import dto.chatRoomDTO;
+import dto.chatviewDTO;
 import dto.itemCategoryDTO;
 import dto.itemDTO;
 import dto.itemFlagDTO;
@@ -21,7 +24,7 @@ public interface SapareDAO {
 	
 		// 회원정보 리턴
 	public memberDTO memberInfoMethod(memberDTO dto);
-	public memberStatusDTO memberStatInfoMethod(memberStatusDTO dto);
+	public memberStatusDTO memberStatInfoMethod(memberDTO dto);
 	
 		// 회원이 구매한 상품 리턴
 	public List<orderDTO> buyInfoMethod(memberDTO dto);
@@ -98,6 +101,18 @@ public interface SapareDAO {
 	public memberDTO checkPasswordMethod(memberDTO dto);
 		// 회원 탈퇴
 	public void cancelMemberMethod(memberDTO dto);
+		// 회원 중복 아이디 체크
+	public int idCheckMethod(memberDTO dto);
+		// 회원가입 회원정보
+	public void signupStatusMethod(memberDTO dto);
+	
+		// 신고 카운트 +1
+	public void plusItemFlagMethod(itemFlagDTO dto);
+	
+		// 회원 신고
+	public void memberFlagInsertMethod(memberFlagDTO dto);
+		// 회원 신고 카운트 +1
+	public void plusMemberFlagMethod(memberFlagDTO dto);
 	
 	// 김녹훈 end //////////////////////////////////////////
 	
@@ -122,6 +137,9 @@ public interface SapareDAO {
 	public boolean loginCheck(memberDTO dto);
 	public memberDTO viewMember(memberDTO dto);
 	public void logout(HttpSession session);
+	public memberDTO infoByIdMethod(memberDTO dto);
+	public memberStatusDTO cancelCheckMethod(memberDTO dto);
+	public int flagCheckMethod(memberDTO dto);
 	
 	// 김소정 end ///////////////////////////////////////////////
 	
@@ -141,6 +159,11 @@ public interface SapareDAO {
 	
 	//상품삭제
 	public void deleteItem(int itemId);
+
+	// 상품 수정
+	public void updateItemMethod(itemDTO dto);
+	public void updateItemCatMethod(itemDTO dto);
+	
 	public List<itemDTO> itemCurrvalMethod(memberDTO dto);
 	public void itemflaginsert(itemFlagDTO dto);
 	
@@ -187,8 +210,16 @@ public interface SapareDAO {
 	
 	
 	// 표다몬 start //////////////////////////////////////////
-	
-	
+	public List<chatviewDTO> friendList(String id);
+	public List<chatMsgDTO> msglog(int num);
+	public List<chatviewDTO> chatLog(String id);
+	public void msgSave(chatMsgDTO dto);
+	public void enterTime(chatviewDTO dto);
+	public void exitTime(chatviewDTO dto);
+	public void addRoom(chatRoomDTO dto);
+	public chatviewDTO fenterTime(chatviewDTO dto);
+	public String findItemMember(int itemId);
+
 	// 표다몬 end //////////////////////////////////////////
 	
 } // end interface
