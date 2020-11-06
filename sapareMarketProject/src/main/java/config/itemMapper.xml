@@ -243,7 +243,8 @@
 
 	<select id="countCategory" resultType="dto.itemCategoryDTO">
 		SELECT ITEMBIGCAT, COUNT(*) ITEMID FROM SAPAREITEMCATEGORY
-		GROUP BY ITEMBIGCAT;
+		GROUP BY ITEMBIGCAT
+		ORDER BY ITEMID 
 	</select>
 	
 </mapper>

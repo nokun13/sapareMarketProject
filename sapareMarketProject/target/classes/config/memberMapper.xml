@@ -80,7 +80,7 @@
 	</select>
 	
 	<select id="memberJo" resultType="dto.memberDTO">
-		SELECT a.memberId,b.enrollDate,b.memberRank,b.buyCount,b.sellCount,b.memberPremium
+		SELECT a.memberId,b.enrollDate,b.memberRank,b.buyCount,b.sellCount,b.memberPremium, b.memberflagcnt
 		FROM SAPAREMEMBER a
 		LEFT OUTER JOIN SAPAREMEMBERSTATUS b ON a.MEMBERNAME = b.MEMBERNAME
 		ORDER BY b.enrolldate DESC, a.memberId ASC
@@ -92,7 +92,7 @@
 		LEFT OUTER JOIN SAPAREMEMBERSTATUS b ON a.MEMBERNAME = b.MEMBERNAME
 		ORDER BY a.memberId ASC
 	</select>
-
+	
 	<delete id="memberdelete" parameterType="String">
 		delete from saparemember where memberId=#{memberId}
 	</delete>
@@ -112,5 +112,19 @@
 	<select id="idCheck" parameterType="dto.memberDTO" resultType="int">
 		select count(*) from saparemember where memberid=#{memberId}
 	</select>
-		
+	
+	<select id="memberDate" resultType="dto.memberDTO">
+		SELECT a.memberId,b.enrollDate,b.memberRank,b.buyCount,b.sellCount,b.memberPremium
+		FROM SAPAREMEMBER a
+		LEFT OUTER JOIN SAPAREMEMBERSTATUS b ON a.MEMBERNAME = b.MEMBERNAME
+		ORDER BY b.enrolldate 
+	</select>
+	
+	<select id="memberRankOrder" resultType="dto.memberDTO">
+		SELECT a.memberId,b.enrollDate,b.memberRank,b.buyCount,b.sellCount,b.memberPremium
+		FROM SAPAREMEMBER a
+		LEFT OUTER JOIN SAPAREMEMBERSTATUS b ON a.MEMBERNAME = b.MEMBERNAME
+		ORDER BY b.memberRank DESC,a.memberId ASC
+	</select>
+
 </mapper>

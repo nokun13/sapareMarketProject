@@ -594,7 +594,9 @@ input[type=email] {
 					</div>
 				</div>
 				<div id="top_menu">
-					<button type="button" class="sale">판매하기</button> 
+					<c:if test="${sessionScope.memberName != 'admin' }">
+						<button type="button" class="sale">판매하기</button> 
+					</c:if>
 					<a class="logout"
 						href="http://localhost:8090/sapare/logout.do">로그아웃</a>
 					<button type="button" id="mylogin" class="login">

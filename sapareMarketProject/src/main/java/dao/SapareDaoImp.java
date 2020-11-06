@@ -458,15 +458,24 @@ public class SapareDaoImp implements SapareDAO{
 		return sqlSession.selectList("member.memberIdOrder");
 	}
 	
+	public List<memberDTO> memberDateOrderMethod() {
+		return sqlSession.selectList("member.memberDate");
+	}
+	
+	public List<memberDTO> memberRankOrderMethod() {
+		return sqlSession.selectList("member.memberRankOrder");
+	}
+	
 	public List<memberFlagDTO> memberFlagMethod(){
 		return sqlSession.selectList("memberFlag.memberFlags");
 	}
 	
 	public void adminMemberFlagMethod(int memberFlagNo) {
 			sqlSession.update("memberFlag.memberFlagUpdate",memberFlagNo);
-		
 	}
-	
+	public void adminItemFlagMethod(int itemFlagNo) {
+		sqlSession.update("itemFlag.itemFlagUpdate",itemFlagNo);
+}
 	public void adminMemberDeleteMethod(String memberId) {
 		sqlSession.delete("member.memberdelete",memberId);
 	}
@@ -475,10 +484,13 @@ public class SapareDaoImp implements SapareDAO{
 		return sqlSession.selectList("itemFlag.itemFlags");
 	}
 	
-	public void countCategoryMethod(itemCategoryDTO dto) {
-		sqlSession.selectOne("item.countCategory", dto);
+	public List<itemCategoryDTO> countCategoryMethod() {
+		return sqlSession.selectList("item.countCategory");
 	}
 	
+	public List<questionDTO> questionMessageMethod(){
+		return sqlSession.selectList("question.questions");
+	}
 	// 마정협 end //////////////////////////////////////////
 	
 	

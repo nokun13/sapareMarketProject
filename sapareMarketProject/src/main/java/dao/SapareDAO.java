@@ -185,12 +185,15 @@ public interface SapareDAO {
 	public itemDTO uploadViewMethod();
 	public List<memberDTO> memberLookupMethod();
 	public List<memberDTO> memberIdOrderMethod();
+	public List<memberDTO> memberDateOrderMethod();
+	public List<memberDTO> memberRankOrderMethod();
 	public List<memberFlagDTO> memberFlagMethod();
 	public List<itemFlagDTO> itemFlagMethod();
 	public void adminMemberFlagMethod(int memberFlagNo);
+	public void adminItemFlagMethod(int itemFlagNo);
 	public void adminMemberDeleteMethod(String memberId);
-	public void countCategoryMethod(itemCategoryDTO dto);
-	
+	public List<itemCategoryDTO> countCategoryMethod();
+	public List<questionDTO> questionMessageMethod();
 	// 마정협 end //////////////////////////////////////////
 	
 	

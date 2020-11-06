@@ -681,73 +681,99 @@ public class SapareController {
 		return mav;
 	}
 	// http://localhost:8090/sapare/adminPage.do
-	//관리자 페이지 
+	// 관리자 페이지
 	@RequestMapping("/adminPage.do")
 	public ModelAndView adminPageProcess(ModelAndView mav) {
+		
+		List<itemCategoryDTO> counts = service.countCategoeyProcess();
+		mav.addObject("count", counts);
 		mav.setViewName("adminPage");
 		return mav;
 	}
-	//관리자 회원정보 페이지
-	//회원정보 불러오기
+
+	// 관리자 회원정보 페이지
+	// 회원정보 불러오기
 	// http://localhost:8090/sapare/adminMember.do
 	@RequestMapping("/adminMember.do")
 	public ModelAndView adminMemberProcess(ModelAndView mav) {
-		mav.addObject("memberJo",service.memberLookupProcess());
+		mav.addObject("memberJo", service.memberLookupProcess());
 		mav.setViewName("adminMember");
 		return mav;
 	}
-	//회원 탈퇴 시키기
+
+	// 회원 탈퇴 시키기
 	@RequestMapping("/adminMemberDelete.do")
-	public ModelAndView adminMemberDeleteProcess(ModelAndView mav,String memberId) {
+	public ModelAndView adminMemberDeleteProcess(ModelAndView mav, String memberId) {
 		service.MemberDeleteProcess(memberId);
-		mav.addObject("memberJo",service.memberLookupProcess());
+		mav.addObject("memberJo", service.memberLookupProcess());
 		mav.setViewName("adminMember");
 		return mav;
 	}
-	//회원정보 이름순으로 불러오기
+
+	// 회원정보 이름순으로 불러오기
 	@RequestMapping("/adminMemberorder.do")
 	public ModelAndView adminMemberOrderProcess(ModelAndView mav) {
-		mav.addObject("memberJo",service.memberIdOrderProcess());
+		mav.addObject("memberJo", service.memberIdOrderProcess());
 		mav.setViewName("adminMember");
 		return mav;
 	}
-	//관리자 회원신고내역 페이지
+	// 회원정보 가입일순으로 불러오기
+	@RequestMapping("/adminDateOrder.do")
+		public ModelAndView adminDateOrderProcess(ModelAndView mav) {
+			mav.addObject("memberJo", service.memberDateOrderProcess());
+			mav.setViewName("adminMember");
+			return mav;
+	}
+	
+	// 회원정보 등급순으로 불러오기
+	@RequestMapping("/adminRankOrder.do")
+		public ModelAndView adminRankOrderProcess(ModelAndView mav) {
+			mav.addObject("memberJo", service.memberRankOrderProcess());
+			mav.setViewName("adminMember");
+			return mav;
+	}
+
+	// 관리자 회원신고내역 페이지
 	// http://localhost:8090/sapare/adminMemberFlag.do
 	@RequestMapping("/adminMemberFlag.do")
 	public ModelAndView adminMemberFlagProcess(ModelAndView mav) {
-		mav.addObject("memberFlag",service.memberFlagProcess());
+		mav.addObject("memberFlag", service.memberFlagProcess());
 		mav.setViewName("adminMemberFlag");
 		return mav;
 	}
-	
-	//회원신고 처리 메소드
+
+	// 회원신고 처리 메소드
 	@RequestMapping("/memberFlagUpdate.do")
-	public ModelAndView memberFlagUpdateProcess(ModelAndView mav,int memberFlagNo) {
+	public ModelAndView memberFlagUpdateProcess(ModelAndView mav, int memberFlagNo) {
 		service.memberFlagUpdateProcess(memberFlagNo);
-		mav.addObject("memberFlag",service.memberFlagProcess());
+		mav.addObject("memberFlag", service.memberFlagProcess());
 		mav.setViewName("adminMemberFlag");
 		return mav;
 	}
-	
-	//관리자 게시글신고내역 페이지
+
+	// 관리자 게시글신고내역 페이지
 	// http://localhost:8090/sapare/adminItemFlag.do
 	@RequestMapping("/adminItemFlag.do")
 	public ModelAndView adminItemFlagProcess(ModelAndView mav) {
-		mav.addObject("itemFlag",service.itemFlagProcess());
+		mav.addObject("itemFlag", service.itemFlagProcess());
 		mav.setViewName("adminItemFlag");
 		return mav;
 	}
-	//관리자 메세지 페이지
-	@RequestMapping("/adminMessage.do")
-	public ModelAndView adminMessageProcess(ModelAndView mav) {
-		mav.setViewName("adminMessage");
+	
+	// 게시글신고 처리 메소드
+	@RequestMapping("/itemFlagUpdate.do")
+	public ModelAndView itemFlagUpdateProcess(ModelAndView mav, int itemFlagNo) {
+		service.itemFlagUpdateProcess(itemFlagNo);
+		mav.addObject("itemFlag", service.itemFlagProcess());
+		mav.setViewName("adminItemFlag");
 		return mav;
 	}
-	//그래프 메소드
-	@RequestMapping("/countCategory.do")
-	public ModelAndView countCategoryProcess(ModelAndView mav,itemCategoryDTO dto) {
-		mav.addObject("count",countCategoryProcess(mav, dto));
-		mav.setViewName("adminPage");
+
+	// 관리자 메세지 페이지
+	@RequestMapping("/adminMessage.do")
+	public ModelAndView adminMessageProcess(ModelAndView mav) {
+		mav.addObject("Messages",service.questionMessageProcess());
+		mav.setViewName("adminMessage");
 		return mav;
 	}
 

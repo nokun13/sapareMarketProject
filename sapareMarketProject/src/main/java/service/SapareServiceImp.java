@@ -435,7 +435,6 @@ public class SapareServiceImp implements SapareService{
 	
 	
 	// 마정협 start //////////////////////////////////////////
-	//item에 정보저장
 	public void itemUploadProcess(itemDTO dto) {
 		dao.itemUploadMethod(dto);
 	}
@@ -452,11 +451,21 @@ public class SapareServiceImp implements SapareService{
 		return dao.memberIdOrderMethod();
 	}
 	
+	public List<memberDTO> memberDateOrderProcess() {
+		return dao.memberDateOrderMethod();
+	}
+	
+	public List<memberDTO> memberRankOrderProcess() {
+		return dao.memberRankOrderMethod();
+	}
 	public List<memberFlagDTO> memberFlagProcess() {
 		return dao.memberFlagMethod();
 	}
 	public void memberFlagUpdateProcess(int memberFlagNo) {
 		 dao.adminMemberFlagMethod(memberFlagNo);
+	}
+	public void itemFlagUpdateProcess(int itemFlagNo) {
+		 dao.adminItemFlagMethod(itemFlagNo);
 	}
 	public void MemberDeleteProcess(String memberId) {
 		dao.adminMemberDeleteMethod(memberId);
@@ -464,8 +473,11 @@ public class SapareServiceImp implements SapareService{
 	public List<itemFlagDTO> itemFlagProcess() {
 		return dao.itemFlagMethod();
 	}
-	public void countCategoeyProcess(itemCategoryDTO dto) {
-		dao.countCategoryMethod(dto);
+	public List<itemCategoryDTO> countCategoeyProcess() {
+		return dao.countCategoryMethod();
+	}
+	public List<questionDTO> questionMessageProcess(){
+		return dao.questionMessageMethod();
 	}
 	
 	// 마정협 end //////////////////////////////////////////

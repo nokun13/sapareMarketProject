@@ -21,6 +21,7 @@
 	vertical-align: top;
 	padding: 5px;
 	border-radius: 15px;
+	object-fit: cover;
 }
 
 .touch_bullet li {
@@ -300,7 +301,7 @@ a:hover {
 			</c:if>
 			<td class="c1"><a href="itemViewPage.do?itemId=${dto.itemId}"
 				style="text-decoration: none;"> <img
-					src="${dto.itemImagePath}.jpg" width="235" height="240">
+					src="image/${dto.itemImagePath}" width="235" height="240">
 					<p
 						style="text-align: center; width: 245px; height: 20px; overflow: hidden;">
 						${dto.itemName} <br />

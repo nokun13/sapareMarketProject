@@ -6,12 +6,16 @@
 <mapper namespace="question">
 	<select id="questionSelect" resultType="dto.questionDTO">
 		select * from sapareQuestion
-		
 	</select>
 	
 	<insert id="questioninsert" parameterType="dto.questionDTO">
-	insert into sapareQuestion(qNo,qEmail,qContent)
-	values(question_num_seq.nextval,#{qEmail},#{qContent})
+		insert into sapareQuestion(qNo,qEmail,qContent)
+		values(question_num_seq.nextval,#{qEmail},#{qContent})
 	</insert>
+	
+	<select id="questions" resultType="dto.questionDTO">
+		select * from SapareQuestion
+		order by qNo desc
+	</select> 
 	
 </mapper>

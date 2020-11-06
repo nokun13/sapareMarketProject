@@ -202,11 +202,15 @@ public interface SapareService {
 	public itemDTO uploadViewProcess();
 	public List<memberDTO> memberLookupProcess();
 	public List<memberDTO> memberIdOrderProcess();
+	public List<memberDTO> memberDateOrderProcess();
+	public List<memberDTO> memberRankOrderProcess();
 	public List<memberFlagDTO> memberFlagProcess();
 	public List<itemFlagDTO> itemFlagProcess();
 	public void memberFlagUpdateProcess(int memberFlagNo);
+	public void itemFlagUpdateProcess(int itemFlagNo);
 	public void MemberDeleteProcess(String memberId);
-	public void countCategoeyProcess(itemCategoryDTO dto);
+	public List<itemCategoryDTO> countCategoeyProcess();
+	public List<questionDTO> questionMessageProcess();
 	// 마정협 end //////////////////////////////////////////
 
 	

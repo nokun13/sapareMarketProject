@@ -4,17 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="memberFlag">
-	<select id="memberFlags" resultType="dto.memberFlagDTO">
-		select *from SAPAREMEMBERFLAG
-		where MEMBERFLAGRES='0'
-		order by memberFlagNo DESC
-	</select>
 
- 	<update id="memberFlagUpdate" parameterType="int">
-		UPDATE SAPAREMEMBERFLAG SET MEMBERFLAGRES = 1
-		WHERE MEMBERFLAGNO = #{memberFlagNo}
-	</update> 
-	
 	<insert id="memberFlagInsert" parameterType="dto.memberFlagDTO">
 		insert into saparememberflag
 		values(saparememberflag_memflagno_seq.nextval,#{memberName},#{memberFlaggerName},#{memberFlagCategory},#{memberFlagContent},'n')
@@ -22,5 +12,16 @@
 	
 	<update id="plusMemberFlag" parameterType="dto.memberFlagDTO">
 		update saparememberstatus set memberflagcnt = memberflagcnt + 1 where membername=#{memberName}
+	</update>
+	
+	<select id="memberFlags" resultType="dto.memberFlagDTO">
+		select *from SAPAREMEMBERFLAG
+		where MEMBERFLAGRES='0'
+		order by MEMBERFLAGNO DESC
+	</select>
+
+ 	<update id="memberFlagUpdate" parameterType="int">
+		UPDATE SAPAREMEMBERFLAG SET MEMBERFLAGRES = 1
+		WHERE MEMBERFLAGNO = #{memberFlagNo}
 	</update>
 </mapper>

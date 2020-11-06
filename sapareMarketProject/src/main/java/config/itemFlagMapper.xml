@@ -16,13 +16,19 @@
 		sapareQuestion
 	</select>
 	
-	<select id="itemFlags" resultType="dto.itemFlagDTO">
-		select *from sapareitemflag
-		order by itemflagno desc
-	</select>
-	
 	<update id="plusItemFlag" parameterType="dto.itemFlagDTO">
 		update sapareitem set itemflagcnt = itemflagcnt + 1 where itemid=#{itemId}
+	</update>
+	
+	<select id="itemFlags" resultType="dto.itemFlagDTO">
+		select *from SAPAREITEMFLAG
+		where itemFlagres='n'
+		order by ITEMFLAGNO DESC
+	</select>
+	
+	<update id="itemFlagUpdate" parameterType="int">
+	UPDATE SAPAREITEMFLAG SET ITEMFLAGRES = 'y'
+	WHERE ITEMFLAGNO = #{itemFlagNo}
 	</update>
 	
 </mapper>

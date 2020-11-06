@@ -439,334 +439,20 @@ white
 	$(document)
 			.ready(
 					function() {
+						
+						
 						$('.btn').click(function(){
 							alert('처리되었습니다.');
 							$('.'+ this.id).submit();
+							
+
+
 						});
-						// 후기 toggle 기능 
-						$(".reviewToggleBtn").click(function(e) {
-							$('.' + this.id).slideToggle();
-							$('.' + this.id).css('display', 'flex');
-						});
-
-						// 후기 올리기 toggle 기능
-						$(".leaveReviewBtn").click(function() {
-							$('.' + this.id).slideToggle();
-							$('.' + this.id).css('display', 'flex');
-						});
-						// 닉네임 변경 버튼 클릭 후 현재 닉네임 가져오기
-						$("#changeNick")
-								.click(
-										function() {
-
-											$
-													.ajax({
-														type : 'GET',
-														dataType : 'json',
-														url : 'memberInfoGet.do?memberName=${member.memberName}',
-														success : change_nickname,
-														error : function(
-																request,
-																status, error) {
-															alert("code:"
-																	+ request.status
-																	+ "\n"
-																	+ "message:"
-																	+ request.responseText
-																	+ "\n"
-																	+ "error:"
-																	+ error);
-														}
-													});
-
-										});
-
-						// 닉네임 중복 체크
-						function change_nickname(res) {
-
-							$("#changeNick")
-									.prev()
-									.html(
-											'<input type="text" id="newNickname" maxlength="15" value="'+res.nickname+'" style="font-size:16px;outline:none;"> <button type="button" id="submitNick" style="cursor:pointer;">확인</button>');
-							$("#changeNick").hide();
-
-							// 닉네임 변경 엔터 버튼 클릭 기능
-							var input = document.getElementById("newNickname");
-
-							input.addEventListener("keyup", function(event) {
-								if (event.keyCode === 13) {
-									event.preventDefault();
-									document.getElementById("submitNick")
-											.click();
-								}
-							});
-
-							$('#submitNick').click(
-									function() {
-										$.ajax({
-											type : 'GET',
-											dataType : 'json',
-											url : 'checkNickname.do?nickname='
-													+ $("#newNickname").val(),
-											success : get_new_nickname,
-											error : function(request, status,
-													error) {
-												alert("code:" + request.status
-														+ "\n" + "message:"
-														+ request.responseText
-														+ "\n" + "error:"
-														+ error);
-											}
-										});
-									});
-						}
-						;
-
-						// 닉네임 변경
-						function get_new_nickname(res) {
-							if (res == 1) {
-								alert("이미 존재하는 닉네임입니다.");
-							} else {
-								$
-										.ajax({
-											type : 'GET',
-											dataType : 'json',
-											url : 'changeNickname.do?memberName=${member.memberName}&nickname='
-													+ $("#newNickname").val(),
-											success : change_to_new_nickname,
-											error : function(request, status,
-													error) {
-												alert("code:" + request.status
-														+ "\n" + "message:"
-														+ request.responseText
-														+ "\n" + "error:"
-														+ error);
-											}
-										});
-							}
-						}
-						;
-
-						// 닉네임 변경 후 변경 된 닉네임으로 바꿔주고 수정버튼 재생성
-						function change_to_new_nickname(res) {
-							$('.nickname').html(res.nickname);
-							$('#changeNick').show();
-						}
-						;
-
-						// 소개글 변경 버튼 클릭 후 소개글 가져오기
-						$("#changeAbout")
-								.click(
-										function() {
-
-											$
-													.ajax({
-														type : 'GET',
-														dataType : 'json',
-														url : 'memberInfoGet.do?memberName=${member.memberName}',
-														success : change_about_content,
-														error : function(
-																request,
-																status, error) {
-															alert("code:"
-																	+ request.status
-																	+ "\n"
-																	+ "message:"
-																	+ request.responseText
-																	+ "\n"
-																	+ "error:"
-																	+ error);
-														}
-													});
-
-										});
-
-						// textarea 변경가능으로 바꾸고 소개글 뿌려주기, 확인 버튼 누르면 저장
-						function change_about_content(res) {
-
-							$(".memberAbout")
-									.html(
-											'<textarea id="aboutContent" rows="8" cols="65" maxlength="80" style="background-color:white;border:1px solid black;cursor:auto;">'
-													+ res.memberAbout
-													+ '</textarea>')
-							$(".aboutChangeBox")
-									.append(
-											'<button type="button" id="submitAbout" style="margin: 10px; cursor:pointer;">확인</button>');
-
-							$("#changeAbout").hide();
-
-							$("#submitAbout")
-									.click(
-											function() {
-												$
-														.ajax({
-															type : 'GET',
-															dataType : 'json',
-															url : 'changeMemberAbout.do?memberName=${member.memberName}&memberAbout='
-																	+ $(
-																			"#aboutContent")
-																			.val(),
-															success : after_about_change,
-															error : function(
-																	request,
-																	status,
-																	error) {
-																alert("code:"
-																		+ request.status
-																		+ "\n"
-																		+ "message:"
-																		+ request.responseText
-																		+ "\n"
-																		+ "error:"
-																		+ error);
-															}
-														});
-											});
-
-						}
-						;
-
-						// 소개글 저장 후 textarea 복구, 버튼 복구
-						function after_about_change(res) {
-
-							$("#submitAbout").remove();
-							$("#changeAbout").show();
-							$(".memberAbout").html(
-									'<textarea readonly id="aboutContent" rows="8" cols="65" maxlength="80">'
-											+ res.memberAbout + '</textarea>');
-						}
-						;
-
-						// 프로필 사진이나 사진수정버튼 누르면 '사진 고르기' 버튼 클릭
-						$("#profileImgChange").click(function() {
-							$("#filepath").click();
-						});
-						$("#memberImg").click(function() {
-							$("#filepath").click();
-						});
-
-						// 새로운 프로필 사진 선택 후
-						$('#filepath')
-								.on(
-										'change',
-										function() {
-											var str = $('#filepath').val();
-
-											// 이미지 첨부파일인지 체크
-											var patt = /(.jpeg$|.jpg$|.gif$|.png$)/gi;
-											var result = str.match(patt);
-
-											if ($("#filepath").val() === "") {
-												alert("프로필 사진 변경을 취소하였습니다.")
-												$('#memberImg')
-														.attr("src",
-																"image/${member.profileImg }");
-												$(".imgChangeBox")
-														.html(
-																'<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
-												return false;
-											}
-
-											if (!result) {
-												alert('jpeg, jpg, gif, png만 가능합니다.');
-												$('#filepath').val("");
-												$('#memberImg')
-														.attr("src",
-																"image/${member.profileImg }");
-												$(".imgChangeBox")
-														.html(
-																'<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
-												return false;
-											}
-
-											// 파일첨부 사이즈 체크
-											if (this.files[0].size > 100000000) {
-												alert('100MB 이하만 가능합니다.');
-												$('#filepath').val("");
-												$('#memberImg')
-														.attr("src",
-																"image/${member.profileImg }");
-												$(".imgChangeBox")
-														.html(
-																'<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
-												return false;
-											}
-
-											// 파일을 읽기 위한 FileReader객체 생성
-											var reader = new FileReader();
-
-											// File내용을 읽어 dataURL형식의 문자열 저장
-											reader.readAsDataURL(this.files[0]); // 배열 형식이기에 꼭 [i] 배열의 순서를 알려줘야한다.
-
-											// 파일 일거들이기를 성공했을 때 호출되는 이벤트 메소드
-											reader.onload = function(e) {
-												// img요소의 src속성에 읽어들인 File내용을 지정해준다.
-												$('#memberImg').attr('src',
-														e.target.result);
-											};
-
-											// 프로필사진수정 버튼을 확인 버튼으로 교체
-											if (!($("#submitProfileImg").length)) {
-												$("#profileImgChange").hide();
-												$(".imgChangeBox")
-														.append(
-																'<button type="button" id="submitProfileImg" style="margin: 5px; cursor:pointer;">확인</button>')
-											}
-
-											$("#submitProfileImg")
-													.click(
-															function() {
-																// 첨부파일을 Form안에 담아내기 위해서 작성한다.
-																var form_data = new FormData();
-																form_data
-																		.append(
-																				'memberName',
-																				'${member.memberName}');
-																form_data
-																		.append(
-																				'profileFile',
-																				$("#filepath")[0].files[0]);
-
-																// 변경된 프로필 사진 저장
-																$
-																		.ajax({
-																			type : 'POST',
-																			dataType : 'json',
-																			// 첨부파일을 ajax로 보내기 위하여 아래 3개의 문을 사용한다. 
-																			contentType : false,
-																			enctype : 'filename/form-data',
-																			processData : false,
-																			url : 'profileImgChange.do',
-																			// data는 첨부파일을 포함한 form_data를 사용할 수 있다
-																			data : form_data,
-																			success : profile_img_change,
-																			error : function(
-																					request,
-																					status,
-																					error) {
-																				alert("code:"
-																						+ request.status
-																						+ "\n"
-																						+ "message:"
-																						+ request.responseText
-																						+ "\n"
-																						+ "error:"
-																						+ error);
-																			}
-																		});
-															});
-										}); // end change()
-
-						// 변경된 프로필 사진으로 보이게끔 한다
-						function profile_img_change(res) {
-							$("#memberImg").attr('src',
-									"image/" + res.profileImg);
-							$("#submitProfileImg").remove();
-							$("#profileImgChange").show();
-						}
-						;
-
-					}); // end ready()
+							$("#selectbox > option[value="+'<c:out value="${ param.selectbox }"/>'+"]").attr("selected","selected");
+					});
+	
+				
+					
 </script>
 </head>
 <body>
@@ -774,53 +460,6 @@ white
 	<!-- header 끝 -->
 
 	<div class="wrap">
-		<div class="profileArea">
-			<div class="flagArea">
-				<button class="memberFlag"
-					style="cursor: pointer; margin-right: 15px;">신고하기</button>
-				<!-- 아래 if 코드 신고하기 버튼 감싸기 !!! -->
-				<!-- <c:if test="${requestScope.memberName != sessionScope.memberName}"> -->
-				<!-- </c:if> -->
-			</div>
-
-			<div class="profileContainer">
-				<div id="profileImageBox">
-					<img id="memberImg"
-						style="height: 70%; width: 70%; border-radius: 15px; margin-bottom: 5px; cursor: pointer;"
-						src="image/${member.profileImg }">
-					<div class="nickname">${member.nickname }</div>
-					<div class="imgChangeBox">
-						<button type="button" id="profileImgChange"
-							style="cursor: pointer; margin: 5px 0;">프로필사진수정</button>
-					</div>
-					<input type="file" name="filepath" id="filepath"
-						style="display: none;" />
-					<div class="memberStars" style="margin-top: 10px;">
-						<!-- 회원이 받은 총 별점을 계산, avg를 찾고 이쪽으로 리턴해준다. -->
-					</div>
-				</div>
-				<div class="memberInfoContainer">
-					<div class="nicknameBox">
-						<div class="nickname">${member.nickname }</div>
-						<button type="button" id="changeNick"
-							style="cursor: pointer; margin-right: 10px;">닉네임수정</button>
-						<div class="memberRank">${status.memberRank }</div>
-					</div>
-					<div class="memberAbout">
-						<textarea readonly id="aboutContent" rows="8" cols="65"
-							maxlength="80">${member.memberAbout }</textarea>
-					</div>
-					<div class="aboutChangeBox">
-						<button type="button" id="changeAbout"
-							style="margin: 10px; cursor: pointer;">소개수정</button>
-					</div>
-					<div class="memberPointArea">
-						<div class="memberPoint"
-							style="margin: 10px; white-space: nowrap; overflow: hidden;">${status.memberPoint }</div>
-					</div>
-				</div>
-			</div>
-
 			<div class="menuAndContentArea">
 				<div class="profileMenu">
 					<ul class="menuButtons">
@@ -831,35 +470,37 @@ white
 						<li><a href="adminMessage.do">문의메세지</a></li>
 					</ul>
 				</div>
-				<div class="profileContent">
+				<div class="profileContent" style="height: 800px; ">
 					<div class="contentOptions">
-						<select class="form-control" id="selectbox"style="width: 150px;" onchange="if(this.value) location.href=(this.value)">
-							<option value="adminMemberorder.do" >이름순</option>
-							<option value="adminMember.do">가입일순</option>
-							<option value="adminMemberorder.do">등급순</option>
-							<option value="flag">구매상품수</option>
+						<select class="form-control" id="selectbox" name="selectbox" style="width: 150px;" onchange="if(this.value) location.href=(this.value)">
+							<option value="">선택</option>
+							<option value="adminMemberorder.do?selectbox=adminMemberorder.do" ${param.selectbox eq "adminMemberorder.do" ? "selected":""}>이름순</option>
+							<option value="adminDateOrder.do?selectbox=adminDateOrder.do" ${param.selectbox eq "adminDateOrder.do" ? "selected":""}>가입일순</option>
+							<option value="adminRankOrder.do?selectbox=adminRankOrder.do" ${param.selectbox eq "adminRankOrder.do" ? "selected":""}>등급순</option>
 						</select>
 					</div>
 					<div class="contents">
 						<div id="members">
-							<table class="table table-dark" style="font-size: small;">
-								<tr>
+							<table class="table" style="font-size: small;">
+								<tr class="table-primary">
 									<th scope="col">아이디</th>
 									<th scope="col">가입일</th>
 									<th scope="col">등급</th>
-									<th scope="col">판매상품수</th>
-									<th scope="col">구매상품수</th>
-									<th scope="col">프리미엄여부</th>
+									<th scope="col">판매상품</th>
+									<th scope="col">구매상품</th>
+									<th scope="col">신고횟수</th>
+									<th scope="col">프리미엄</th>
 									<th scope="col">탈퇴관리</th>
 								</tr>
 								<c:forEach items="${memberJo}" var="dto">
 									<tr>	
 										<form action="adminMemberDelete.do" id="frmm" method="post" class="btn${dto.memberId}">
 										<td>${dto.memberId}<input hidden="hidden" name="memberId" value="${dto.memberId}"/></td>
-										<td>${dto.enrollDate}</td>
+										<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${dto.enrollDate}" /></td>
 										<td>${dto.memberRank}</td>
 										<td>${dto.buyCount}</td>
 										<td>${dto.sellCount}</td>
+										<td>${dto.memberFlagCnt}</td>
 										<td>${dto.memberPremium}</td>
 										<td><button type="button" class="btn" id="btn${dto.memberId}">X</button></td>
 										</form>
@@ -872,7 +513,6 @@ white
 			</div>
 
 		</div>
-	</div>
 
 	<footer> footer area </footer>
 </body>

@@ -24,12 +24,16 @@ $(document).ready(function() {
 		var session = $('.session_id').val();
 		var memberid = $("#memberId").val();
 		var itemStatus = $("#itemStatus").val();
-		if(itemStatus == 'n'){
-			alert("이미 판매완료된 상품입니다!");
+		if(session == ''){
+			$('.modallogin').toggle();
 			return false;
 		}
 		if(session == memberid){
 			alert("본인의 상품은 찜 할 수 없습니다!");
+			return false;
+		}
+		if(itemStatus == 'n'){
+			alert("이미 판매완료된 상품입니다!");
 			return false;
 		}
 		if (session != ''){
@@ -97,9 +101,14 @@ $(document).ready(function() {
 	// 채팅 버튼
 	$('.bt2').on('click', function() {
 		 var session= $('#mynameid').val();
+		 var session2 = $('.session_id').val();
 		 var btn = document.getElementById("mychatBtn");
 		 var modal = document.getElementById('chatModal');
 		 var itemStatus = $("#itemStatus").val();
+		 if(session2 == ''){
+			$('.modallogin').toggle();
+			return false;
+		}
 		 if(itemStatus == 'n'){
 			 alert("이미 판매완료된 상품입니다!");
 			 return false;
