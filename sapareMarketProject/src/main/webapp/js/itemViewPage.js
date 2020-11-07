@@ -105,10 +105,15 @@ $(document).ready(function() {
 		 var btn = document.getElementById("mychatBtn");
 		 var modal = document.getElementById('chatModal');
 		 var itemStatus = $("#itemStatus").val();
+		 var memberid = $("#memberId").val();
 		 if(session2 == ''){
 			$('.modallogin').toggle();
 			return false;
-		}
+		 }
+		 if(session2 == memberid){
+			 alert("본인의 상품은 구매할 수 없습니다!");
+			 return false;
+		 }
 		 if(itemStatus == 'n'){
 			 alert("이미 판매완료된 상품입니다!");
 			 return false;

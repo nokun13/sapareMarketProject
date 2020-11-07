@@ -173,9 +173,10 @@
 	</select>
 	
 	<select id="itemView" parameterType="int" resultType="dto.itemDTO">
-		select *
-		from sapareItem
-		where itemId =#{itemId}
+		select a.*, b.*
+		from sapareitem a, sapareitemcategory b
+		where a.itemid=b.itemid
+		and a.itemid=#{itemId}
 	</select>
 
 	<select id="itemCat" parameterType="int" resultType="dto.itemCategoryDTO">
@@ -245,6 +246,16 @@
 		SELECT ITEMBIGCAT, COUNT(*) ITEMID FROM SAPAREITEMCATEGORY
 		GROUP BY ITEMBIGCAT
 		ORDER BY ITEMID 
+	</select>
+	
+	<select id="categorySearch" parameterType="dto.itemDTO" resultType="dto.itemDTO">
+		SELECT a.*
+		FROM SAPAREITEM a
+		LEFT OUTER JOIN
+		SAPAREITEMCATEGORY b ON a.ITEMID = b.ITEMID
+		where ITEMBIGCAT like '%'||#{searchWord}||'%' or
+		ITEMMIDCAT like '%'||#{searchWord}||'%' or
+		ITEMSMALLCAT like '%'||#{searchWord}||'%'
 	</select>
 	
 </mapper>

@@ -454,6 +454,8 @@ public class SapareController {
 		}
 		boolean result = service.loginCheck(dto, session);
 		mav.addObject("memberList", result);
+		System.out.println(session.getId());
+		System.out.println("logindo");
 		if (result == true) {
 			session.setAttribute("logOk", "ok");
 			session.setAttribute("id", dto.getMemberId());// 세션에 아이디저장
@@ -960,9 +962,11 @@ public class SapareController {
 
 	} // end
 
+	//카테고리 검색페이지
 	@RequestMapping("/searchcategory.do")
 	public ModelAndView searchcategoryProcess(ModelAndView mav, itemDTO dto) {
-		mav.addObject("searchList", service.itemCategoryProcess(dto));
+		mav.addObject("searchWord", dto.getSearchWord());
+		mav.addObject("searchList", service.searchCategoryProcess(dto));
 		mav.setViewName("searchPage");
 		return mav;
 	}
@@ -978,7 +982,7 @@ public class SapareController {
 		List<chatviewDTO> aa = service.friendProcess(memberName);
 		List<chatviewDTO> bb = service.LogProcess(memberName);
 		for (int i = 0; i < aa.size(); i++) {
-			for (int j = 0; i < bb.size(); j++)
+			for (int j = 0; j < bb.size(); j++)
 				if (aa.get(i).getChatRoomId() == bb.get(j).getChatRoomId()) {
 					aa.get(i).setIsreadcount(bb.get(j).getIsreadcount());
 					System.out.println(bb.get(j).getIsreadcount());
@@ -1001,8 +1005,10 @@ public class SapareController {
 		service.RoomAddProcess(dto);
 		List<chatviewDTO> aa = service.friendProcess(dto.getMemberName());
 		List<chatviewDTO> bb = service.LogProcess(dto.getMemberName());
+		System.out.println("aa size: "+aa.size());
+		System.out.println("bb size: "+bb.size());
 		for (int i = 0; i < aa.size(); i++) {
-			for (int j = 0; i < bb.size(); j++)
+			for (int j = 0; j < bb.size(); j++)
 				if (aa.get(i).getChatRoomId() == bb.get(j).getChatRoomId()) {
 					aa.get(i).setIsreadcount(bb.get(j).getIsreadcount());
 					System.out.println(bb.get(j).getIsreadcount());

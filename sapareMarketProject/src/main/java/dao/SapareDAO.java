@@ -205,6 +205,7 @@ public interface SapareDAO {
 	public List<itemDTO> selectMethod();
 	public List<itemDTO> searchMethod(itemDTO dto);
 	public List<itemDTO> itemCategoryMethod(itemDTO dto);
+	public List<itemDTO> searchCategoryMethod(itemDTO dto);
 	
 	// 오정우 end //////////////////////////////////////////
 	

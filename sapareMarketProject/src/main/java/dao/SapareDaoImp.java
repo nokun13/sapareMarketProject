@@ -519,6 +519,10 @@ public class SapareDaoImp implements SapareDAO{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("item.category", dto);
 	}
+	@Override
+	public List<itemDTO> searchCategoryMethod(itemDTO dto) {
+		return sqlSession.selectList("item.categorySearch", dto);
+	}
 
 
 	// 오정우 end //////////////////////////////////////////

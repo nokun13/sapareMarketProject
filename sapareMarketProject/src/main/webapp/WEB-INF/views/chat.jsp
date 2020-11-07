@@ -33,7 +33,7 @@ var websocket;
 	$(document)
 			.ready(
 					function() {
-						if(login)
+						if(login=="ok")
 							{
 						        websocket = new WebSocket("ws://localhost:8090/sapare/chatws.do");
 						        // 웹 소켓 이벤트 처리 -> 로그인 할때 달아주기(주소 바꿔서)
@@ -154,7 +154,7 @@ $(document).keydown(function (e) {
 						<!-- 여기서 데이터 추가 for each문 -->
 
 						<div id="friends">
-							<div id="search">
+							<div id="chatsearch">
 								<input type="text" id="searchfield" value="Search contacts..." />
 							</div>
 						</div>

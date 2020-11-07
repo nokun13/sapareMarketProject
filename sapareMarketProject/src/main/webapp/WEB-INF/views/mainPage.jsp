@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="java.net.URLEncoder"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,7 +79,7 @@ body, div, ul, li, p {
 	padding: 0;
 }
 
-.c1 img  {
+.c1 img {
 	border: none;
 	vertical-align: top;
 	padding: 5px;
@@ -109,7 +110,7 @@ a:hover {
 #wrapper {
 	width: 1000px;
 	margin: 15px auto;
-	height: 250px;
+	height: 210px;
 	position: relative;
 	color: #fff;
 	text-shadow: rgba(0, 0, 0, 0.1) 2px 2px 0px;
@@ -117,7 +118,7 @@ a:hover {
 
 #slider-wrap {
 	width: 1000px;
-	height: 250px;
+	height: 210px;
 	position: relative;
 	overflow: hidden;
 }
@@ -134,7 +135,7 @@ a:hover {
 	float: left;
 	position: relative;
 	width: 1000px;
-	height: 250px;
+	height: 210px;
 }
 
 #slider-wrap ul#slider li>div {
@@ -355,6 +356,7 @@ h2 {
 	margin-bottom: 20px;
 	font-weight: bolder;
 	font-size: 15px;
+	cursor: pointer;
 }
 
 .moreButton:hover {
@@ -370,7 +372,7 @@ h2 {
 
 .icon_section {
 	width: 100%;
-	height: 270px;
+	height: 240px;
 	margin: auto;
 	margin-top: 40px;
 }
@@ -383,12 +385,33 @@ h2 {
 
 .icon_button {
 	width: 720px;
-	height: 270px;
+	height: 220px;
 	margin: auto;
 }
 
 .icon {
 	margin: 0 4.5% 2.5% 4.5%;
+}
+
+img.icon {
+    -webkit-transform:scale(1);
+    -moz-transform:scale(1);
+    -ms-transform:scale(1); 
+    -o-transform:scale(1);  
+    transform:scale(1);
+    -webkit-transition:.3s;
+    -moz-transition:.3s;
+    -ms-transition:.3s;
+    -o-transition:.3s;
+    transition:.3s;
+}
+/*상단 이미지 6개 브랜드*/
+img.icon:hover {
+    -webkit-transform:scale(1.2);
+    -moz-transform:scale(1.2);
+    -ms-transform:scale(1.2);   
+    -o-transform:scale(1.2);
+    transform:scale(1.2);
 }
 
 /* 아이콘 구분선 */
@@ -454,9 +477,9 @@ h2 {
 	cursor: pointer;
 }
 
-.nothing {
+/* .nothing {
 	color: #BFBFBF;
-}
+} */
 </style>
 </head>
 
@@ -470,22 +493,25 @@ h2 {
 				<div id="#quick_menu">
 					<div class="quickmenu">
 						<div class="save">
-							<div class="saveproduct">찜한상품</div>
-							<div class="saveproducticon">
-								<a class="spi" href=""><img src="data:imgae/png;" width="9"
-									height="9" alt="">0</a>
+							<div class="saveproduct">
+								<a class="spi" href="profileWant.do">찜한상품 <!-- <img src="data:imgae/png" width="9"	height="9" alt="">0 -->
+								</a>
 							</div>
 						</div>
 						<div class="recently">
-							<div class="recentlyproduct">최근본상품"${msg}"</div>
-
-							<div class="rpi">
-								<img src="image/my.png" width="70" height="70" alt="">
-								<div class="nothing">
-									최근 본 상품이<br>없습니다.
+							<div class="recentlyproduct">
+								최근본상품
+								<ul>
+								</ul>
+								<div id="paging">
+									<a class="btn_prev" style="cursor: pointer">이전</a><span
+										id="currentPage"></span><span id="totalPageCount"></span><a
+										class="btn_next" style="cursor: pointer">다음</a>
 								</div>
 							</div>
-
+							<!-- <div class="nothing">
+								최근 본 상품이<br>없습니다.
+							</div> -->
 						</div>
 						<div class="buttontop">
 							<button class="bt" onclick="topUP">TOP</button>
@@ -497,7 +523,7 @@ h2 {
 				<!-- left banner -->
 				<div class="ADD">
 					<div class="ADD_position">
-						<a href="">
+						<a href="http://www.naver.com" target="_blank">
 						<img id="#left_banner_" alt="banner_" src="image/banner11.jpeg">
 						</a>
 					</div>
@@ -586,22 +612,38 @@ h2 {
 					class="icon_line_bottom2"></i> <i class="icon_line_bottom3"></i>
 			</div>
 			<div class="icon_button">
-				<a href="search.do?searchWord=의류"><img class="icon" alt="버튼 1" src="image/clothes.png" style="width: 100px; height: 100px;"></a> 
-					<a href="search.do?searchWord=스포츠"><img class="icon" alt="버튼 2" src="image/bicycle.png" style="width: 100px; height: 100px;"></a> 
-					<a href="search.do?searchWord=화장품"><img	class="icon" alt="버튼 3" src="image/cosmetics.png" style="width: 100px; height: 100px;"></a> 
-					<a href="search.do?searchWord=음식"><img	class="icon" alt="버튼 4" src="image/fork.png" style="width: 100px; height: 100px;"></a> 
-					<br /> 
-					<a href="search.do?searchWord=게임"><img class="icon" alt="버튼 5" src="image/console.png" style="width: 100px; height: 100px;"></a> 
-					<a href="search.do?searchWord=책"><img class="icon" alt="버튼 6" src="image/book.png" style="width: 100px; height: 100px;"></a> 
-					<a href="search.do?searchWord=전자"><img class="icon" alt="버튼 7" src="image/desktop.png" style="width: 100px; height: 100px;"></a> 
-					<a href="search.do?searchWord=리포트"><img class="icon" alt="버튼 8" src="image/digital-marketing.png" style="width: 100px; height: 100px;"></a>
+				<a href="searchcategory.do?searchWord=의류">
+					<img class="icon" alt="버튼 1" src="image/clothes.png" style="width: 100px; height: 100px;">
+				</a> 
+				<a href="searchcategory.do?searchWord=스포츠">
+					<img class="icon" alt="버튼 2" src="image/bicycle.png" style="width: 100px; height: 100px;">
+				</a> 
+				<a href="searchcategory.do?searchWord=화장품">
+					<img class="icon" alt="버튼 3" src="image/cosmetics.png" style="width: 100px; height: 100px;">
+				</a> 
+				<a href="searchcategory.do?searchWord=음식">
+					<img class="icon" alt="버튼 4" src="image/fork.png" style="width: 100px; height: 100px;"> 
+				</a> 
+				
+				<br />
+				<a href="searchcategory.do?searchWord=게임">
+					<img class="icon" alt="버튼 5" src="image/console.png" style="width: 100px; height: 100px;">
+				</a> 
+				<a href="searchcategory.do?searchWord=책">
+					<img class="icon" alt="버튼 6" src="image/book.png" style="width: 100px; height: 100px;"> 
+				</a> 
+				<a href="searchcategory.do?searchWord=전자">
+					<img class="icon" alt="버튼 7" src="image/desktop.png" style="width: 100px; height: 100px;">
+				</a> 
+				<a href="search.do?searchWord=유아">
+					<img class="icon" alt="버튼 8" src="image/baby-products.png" style="width: 100px; height: 100px;"> 
+				</a>
 			</div>
+			<!-- icon_button End -->
 		</div>
 	</div>
 
-	<div id="poptext">
-		<hr width="1000px" style="width: 1000px; margin: auto;" >
-	</div>
+	<hr width="1000px" style="width: 1000px; margin: auto;" >
 	<c:set var="i" value="0" />
 	<c:set var="j" value="4" />
 	<table class="c">
@@ -639,6 +681,71 @@ h2 {
 	<div class="loadMore" id="loadMore">
 		<button class="moreButton">더보기</button>
 	</div>
+	<script>
+	//
+	// recent item    
+	var Cpage; // 현재 페이지 
+	var pagingSize = 4; // 원하는 페이지 사이즈로 조정하세용 
+	function chkRecent(a) {
+		var itemID = getCookie("${itemId}");
+		$("#recentlyproduct ul").html(''); // 일단 Ul 내용 지우기... 
+		if (itemID) {
+			var totcount = itemID.split('&').length - 1; //
+			var totpage = Math.ceil(totcount / pagingSize) * 1;
+			
+			Cpage = (totpage >= a) ? a : 1;
+			Cpage = (Cpage < 1) ? totpage : Cpage;
+			
+			var start = (Cpage - 1) * pagingSize;
+			
+			for (i = start; i <= start + (pagingSize - 1); i++) {
+			var thisItem = itemID.split('&')[i];
+				if (thisItem) {
+					var itemId = thisItem.split(':')[0];
+					var itemImg = thisItem.split(':')[1];
+					
+					var ap = "<li><a href='http://localhost:8090/sapare/itemViewPage.do?itemId='"+itemId
+							+ "' target='_top'><img src='image/"+itemImg
+							+ "' width='75' border=1></a>"
+							+ "<div class='detail'><a href='javascript:removeRecentItem('\'"+itemname+"'\')' class='btn_delete'>삭제</a></div></li>";
+							
+					$("#recentlyproduct ul").append(ap);
+				}
+			}
+			$("#paging").show();
+		} else {
+			$("#recentlyproduct ul").append('<p class="noData">최근 본 상품이<br> 없습니다.</p>');
+			$("#paging").hide();
+			$("#recentCnt").text('');
+		}
+		updateRecentPage(totcount, Cpage);
+	}
+	chkRecent(1);
+	
+/* 	function removeRecentItem(itemname) {
+		var itemID = getCookie("${itemId}");
+		itemID = itemID.replace(itemname + "&", "");
+		setCookie("${itemId}", itemID, 1);
+		chkRecent(Cpage);
+	} */
+	/* function updateRecentPage(totcount, Cpage) { //
+		
+		$("#recentCnt").text(totcount); //
+		
+		$("#totalPageCount").text("/" + Math.ceil((totcount / pagingSize) * 1));
+		if (Math.ceil((totcount / pagingSize) * 1) < Cpage) {
+			$("#currentPage").text(Math.ceil((totcount / pagingSize) * 1));
+		} else {
+			$("#currentPage").text(Cpage); //
+		}
+	} */
+	$(".btn_next").on('click', function() {
+		chkRecent(Cpage + 1);
+	});
+	$(".btn_prev").on('click', function() {
+		chkRecent(Cpage - 1);
+	});
+	</script>
 	<script>
       /* 더보기버튼 기능 */
       const tbody = document.querySelector("tbody");
@@ -766,7 +873,7 @@ h2 {
 				var scv = $(document).scrollTop();
 				$('.quickmenu').stop().animate({
 					'top' : scv + defaultTop + 'px'
-				}, -1);
+				}, 0);
 			});
 
 			$('.bt').click(function() {

@@ -776,7 +776,11 @@
 		    $("#filepath").click();
 		});
 		$("#memberImg").click(function() {
-		    $("#filepath").click();
+			if($("#membernamechk").val() == $("#sessionnamechk").val()){
+			    $("#filepath").click();
+			} else{
+				return false;
+			}
 		});
 		
 		// 새로운 프로필 사진 선택 후
@@ -990,6 +994,8 @@
 					<div class="nicknameBox">
 						<div class="nickname">
 							${member.nickname }
+							<input hidden="hidden" id="membernamechk" value="${member.memberName }" />
+							<input hidden="hidden" id="sessionnamechk" value="${sessionScope.memberName }" />
 						</div>
 							<c:if test="${member.memberName == sessionScope.memberName}">
 								<button type="button" id="changeNick" style="cursor:pointer;margin-right:10px;">닉네임수정</button>

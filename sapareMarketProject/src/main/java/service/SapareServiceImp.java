@@ -505,6 +505,11 @@ public class SapareServiceImp implements SapareService{
 		// TODO Auto-generated method stub
 		return dao.itemCategoryMethod(dto);
 	}
+	
+	@Override
+	public List<itemDTO> searchCategoryProcess(itemDTO dto) {
+		return dao.searchCategoryMethod(dto);
+	}
 
 	// 오정우 end //////////////////////////////////////////
 	

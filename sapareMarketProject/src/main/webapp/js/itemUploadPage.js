@@ -675,7 +675,7 @@ function displayCenterInfo(result, status) {
 	    	$('#fType').append("<option value='안경' >안경</option>'");
 	    	$('#fType').append("<option value='주얼리/액세서리' >주얼리/액세서리</option>'");
 	    	$('#fType').append("<option value='모자' >모자</option>'");
-	    	$('#fType').append("<option value='모자' >지갑</option>'");
+	    	$('#fType').append("<option value='지갑' >지갑</option>'");
 	    	$('#fType').append("<option value='기타' >기타</option>'");
 	    }
 	    
@@ -687,7 +687,7 @@ function displayCenterInfo(result, status) {
 	    	$('#fType').append("<option value='교양/시사/잡지' >교양/시사/잡지</option>'");
 	    	$('#fType').append("<option value='시/소설' >시/소설</option>'");
 	    	$('#fType').append("<option value='수필' >수필</option>'");
-	    	$('#fType').append("<option value='아동도서' >아동도서</option>'");
+	    	$('#fType').append("<option value='유아도서' >유아도서</option>'");
 	    	$('#fType').append("<option value='여행/취미/건강' >여행/취미/건강</option>'");
 	    }else if(type=='취미'){
 	    	$('#fType').append("<option value='so' >소분류</option>'");

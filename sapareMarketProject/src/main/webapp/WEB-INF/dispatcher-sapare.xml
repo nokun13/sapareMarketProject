@@ -15,19 +15,19 @@
 	<mvc:annotation-driven />
 
 	<!-- DataSource Bean 선언 -->
-<!--	
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin://@172.16.5.131:1521:xe" />
-		<property name="username" value="sapare" />
-		<property name="password" value="a1234" />  
--->	
-<!--	<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />  -->
+	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
 		<property name="username" value="sapare" />
-		<property name="password" value="a1234" />
+		<property name="password" value="a1234" />  
 	</bean>
+<!--	<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />  
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+		<property name="username" value="sapare" />
+		<property name="password" value="a1234" />
+	 -->
 	
 	<!-- SqlSessionFactoryBean Bean 선언 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
@@ -93,6 +93,12 @@
 	<bean class="controller.SapareController">
 		<property name="service" ref="service" />
 	</bean>
+		<bean id="chatWebSocketHandler" class="controller.ChatWebSocketHandler">
+		<property name="service" ref="service" />
+		</bean>
+	<websocket:handlers >
+	<websocket:mapping handler="chatWebSocketHandler" path="/chatws.do"/>
+	</websocket:handlers>
 	
 	<!-- View -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

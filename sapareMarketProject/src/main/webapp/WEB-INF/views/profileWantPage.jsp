@@ -816,7 +816,12 @@
 										<a class="wantItemCard" href="itemViewPage.do?itemId=${dto.itemId }">
 											<div class="wantItemInside">
 												<div class="itemImageBox">
-													<img src="image/${dto.itemImagePath }" />
+													<c:if test="${fn:contains(dto.itemStatus, 'n')}">
+												    	<img src="image/soldout.png" style="object-fit:contain;">
+													</c:if> 
+													<c:if test="${fn:contains(dto.itemStatus, 'y')}">
+													    <img src="image/${dto.itemImagePath}">
+													</c:if> 
 												</div>
 												<div class="itemDescribeBox">
 													<div>

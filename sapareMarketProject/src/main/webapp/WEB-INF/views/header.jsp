@@ -8,6 +8,7 @@
 	System.out.println(id);
 	boolean logok = false;
 	boolean admin = false;
+	System.out.println(fid);
 	if (fid != null)
 		if (fid.equals("ok")) {
 			logok = true;
@@ -46,11 +47,11 @@
 
 .dropdown-content li {
 	color: black;
-	padding: 12px 16px;
+	padding: 14px 10px;
 	text-decoration: none;
 	height: auto;
 	float: left;
-	width: 100px;
+	width: 138px;
 	height: auto;
 	list-style: none;
 }
@@ -63,6 +64,17 @@
 	display: flex;
 	flex-direction: column;
 	z-index: 101;
+}
+
+.bigCategory li {
+	border-right: 1px solid #0000000e; 
+}
+
+.bigCategory li a {
+    color: rgb(33, 33, 33);
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
 }
 
 * {
@@ -88,7 +100,7 @@ a {
 	margin: auto;
 }
 
-.wrap {
+.headerwrap {
 	/* width: 1191.34px; */
 	width: 1245px;
 	margin-left: 47px;
@@ -159,7 +171,7 @@ a {
 	padding-left: 60px;
 	position: relative;
 	float: left;
-	margin-top: 40px;
+	margin-top: 41px;
 	/* border:solid 1px #000000; */
 }
 
@@ -183,7 +195,6 @@ a {
 	border-radius: 5px;
 	margin-right: 20px;
 	cursor: pointer;
-	outline: none;
 }
 
 /* 메인 메뉴 */
@@ -363,11 +374,7 @@ input[type=email] {
 	outline: none;
 }
 
-.bigCategory li a {
-    color: rgb(33, 33, 33);
-    text-decoration: none;
-    cursor: pointer;
-}
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -477,13 +484,13 @@ input[type=email] {
 		var id = $('#top_menu a:nth-child(3)').text();
 
 		console.log("admincheck: " + admin);
-		console.log("logincheck: " + login);
+		console.log("1111111logincheck: " + login);
 
 		$('#top_menu a:nth-child(2)').hide();
 		/* if(admin==false)
 			$('#admin').remove(); */
 
-		if (login == true) {
+		if (login=="ok") {
 
 			$('.login').each(function() {
 				$('.logout').show();
@@ -491,7 +498,7 @@ input[type=email] {
 				$('.signup').hide();
 				$('.mypage').show();
 			});
-		} else if (login == false) {
+		} else {
 
 			$('.logout').click(function() {
 				$('.logout').hide();
@@ -507,9 +514,10 @@ input[type=email] {
 		});
 		
 		$(".sale").click(function(){
-			if (login == false || login == null){
+			if (login != 'ok'){
+				console.log(login + " login");
 				$("#mylogin").click();
-			} else if(login == true){
+			} else if(login == 'ok'){
 				location.href="itemUploadPage.do";
 			}
 		});
@@ -544,36 +552,36 @@ input[type=email] {
 <body>
 
 	<section id="top">
-		<div class="wrap">
-			<div id="all">
+		<div class="headerwrap">
+			<div id="headerall">
 				<div class="categorymenu">
 					<img class="menubtn" src="image/menucategory.png">
 					<div class="dropdown-content">
 						<ul class="bigCategory">
-							<li><a href="search.do?searchWord=스포츠">스포츠/레저</a></li>
-							<li><a href="search.do?searchWord=디지털">디지털/가전</a></li>
-							<li><a href="search.do?searchWord=의류">의류</a></li>
-							<li><a href="search.do?searchWord=취미">취미</a></li>
-							<li><a href="search.do?searchWord=뷰티미용">뷰티미용</a></li>
-							<li><a href="search.do?searchWord=티켓">티켓</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
-							<li><a href="search.do?searchWord=기타">기타</a></li>
+							<li><a href="searchcategory.do?searchWord=">카테고리 전체</a></li>
+							<li><a href="searchcategory.do?searchWord=스포츠/레저">스포츠 / 레저</a></li>
+							<li><a href="searchcategory.do?searchWord=디지털/가전">디지털 / 가전</a></li>
+							<li><a href="searchcategory.do?searchWord=도서/티켓/취미">도서 / 티켓 / 취미</a></li>
+							<li id="BC"><a href="searchcategory.do?searchWord=차량용품">차량용품</a></li>
+							<li><a href="searchcategory.do?searchWord=여성의류">여성의류</a></li>
+							<li><a href="searchcategory.do?searchWord=헬스/요가">헬스 / 요가</a></li>
+							<li><a href="searchcategory.do?searchWord=스마트폰">스마트폰</a></li>
+							<li><a href="searchcategory.do?searchWord=아동도서">아동도서</a></li>
+							<li id="BC"><a href="searchcategory.do?searchWord=굿즈">굿즈</a></li>
+							<li><a href="searchcategory.do?searchWord=남성의류">남성의류</a></li>
+							<li><a href="searchcategory.do?searchWord=자전거/MTB">자전거 / MTB</a></li>
+							<li><a href="searchcategory.do?searchWord=PC/모니터">PC / 모니터</a></li>
+							<li><a href="searchcategory.do?searchWord=보드게임/다트">보드게임 / 다트</a></li>
+							<li id="BC"><a href="searchcategory.do?searchWord=식품">식품</a></li>
+							<li><a href="searchcategory.do?searchWord=패션잡화">패션잡화</a></li>
+							<li><a href="searchcategory.do?searchWord=낚시">낚시</a></li>
+							<li><a href="searchcategory.do?searchWord=게임">게임</a></li>
+							<li><a href="searchcategory.do?searchWord=뮤지컬/연극">뮤지컬 / 연극</a></li>
+							<li id="BC"><a href="searchcategory.do?searchWord=가구">가구</a></li>
+							<li><a href="searchcategory.do?searchWord=가방">가방</a></li>
+							<li><a href="searchcategory.do?searchWord=등산">등산</a></li>
+							<li><a href="searchcategory.do?searchWord=카메라">카메라</a></li>
+							<li><a href="searchcategory.do?searchWord=수집품/희귀품">수집품 / 희귀품</a></li>
 						</ul>
 					</div>
 				</div>
@@ -659,6 +667,6 @@ input[type=email] {
 
 	<nav id="main_menu"></nav>
 	<div id="headerend"></div>
-
+<jsp:include page="chat.jsp"></jsp:include>
 </body>
 </html>

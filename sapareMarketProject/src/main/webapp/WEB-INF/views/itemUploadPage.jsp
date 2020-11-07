@@ -15,7 +15,9 @@
 </head>
 <body>
 	<jsp:include page="header.jsp" flush="false" />
-	<div id="all">
+	<div class="position">	
+	</div>	
+	<div id="all" class='container'>
 	<br>
 	<div id='basic' class='container'>
 		<h3>기본정보</h3> 

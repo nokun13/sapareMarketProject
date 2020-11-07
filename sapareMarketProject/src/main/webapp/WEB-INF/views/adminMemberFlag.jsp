@@ -408,7 +408,7 @@ white
 						<li><a href="adminPage.do">현황</a>
 						<li><a href="adminMember.do">회원관리</a></li>
 						<li><a href="adminMemberFlag.do">회원신고접수</a></li>
-						<li><a href="adminItemFlag.do">게시글 신고접수</a></li>
+						<li><a href="adminItemFlag.do">상품 신고접수</a></li>
 						<li><a href="adminMessage.do">문의메세지</a></li>
 					</ul>
 				</div>

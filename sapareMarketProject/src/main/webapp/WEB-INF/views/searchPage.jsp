@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -130,6 +131,7 @@ a:hover {
 	margin-bottom: 20px;
 	font-weight: bolder;
 	font-size: 15px;
+	cursor: pointer;
 }
 
 .moreButton:hover {
@@ -254,22 +256,25 @@ a:hover {
 	<div id="#quick_menu">
 		<div class="quickmenu">
 			<div class="save">
-				<div class="saveproduct">찜한상품</div>
-				<div class="saveproducticon">
-					<a class="spi" href=""><img src="data:imgae/png;" width="9"
-						height="9" alt="">0</a>
+				<div class="saveproduct">
+					<a class="spi" href="profileWant.do">찜한상품 <!-- <img src="data:imgae/png" width="9"	height="9" alt="">0 -->
+					</a>
 				</div>
 			</div>
 			<div class="recently">
-				<div class="recentlyproduct">최근본상품</div>
-
-				<div class="rpi">
-					<img src="image/my.png" width="70" height="70" alt="">
-					<div class="nothing">
-						최근 본 상품이<br>없습니다.
+				<div class="recentlyproduct">
+					최근본상품
+					<ul>
+					</ul>
+					<div id="paging">
+						<a class="btn_prev" style="cursor: pointer">이전</a><span
+							id="currentPage"></span><span id="totalPageCount"></span><a
+							class="btn_next" style="cursor: pointer">다음</a>
 					</div>
 				</div>
-
+				<!-- <div class="nothing">
+					최근 본 상품이<br>없습니다.
+				</div> -->
 			</div>
 			<div class="buttontop">
 				<button class="bt" onclick="topUP">TOP</button>
@@ -281,7 +286,7 @@ a:hover {
 	<!-- left banner -->
 	<div class="ADD">
 		<div class="ADD_position">
-			<a href="www.naver.com">
+			<a href="http://www.naver.com" target="_blank">
 				<img id="#left_banner_" alt="banner_" src="image/banner11.jpeg">
 			</a>
 		</div>
@@ -292,7 +297,14 @@ a:hover {
 
 	<c:set var="i" value="0" />
 	<c:set var="j" value="4" />
-	<div class="searchNameP">' ${searchWord} ' 에 검색 결과</div>
+	<div class="searchNameP">
+		<c:if test="${searchWord == '' }">
+			전체 검색
+		</c:if>
+		<c:if test="${searchWord != '' }">
+			' ${searchWord} ' 에 검색 결과
+		</c:if>
+	</div>
 	<table class="c">
 
 		<c:forEach items="${searchList}" var="dto">
@@ -300,8 +312,13 @@ a:hover {
 				<tr style="display: none">
 			</c:if>
 			<td class="c1"><a href="itemViewPage.do?itemId=${dto.itemId}"
-				style="text-decoration: none;"> <img
-					src="image/${dto.itemImagePath}" width="235" height="240">
+				style="text-decoration: none;"> 
+				<c:if test="${fn:contains(dto.itemStatus, 'n')}">
+			    	<img src="image/soldout.png" style="object-fit:contain;" width="235" height="240">
+				</c:if> 
+				<c:if test="${fn:contains(dto.itemStatus, 'y')}">
+				    <img src="image/${dto.itemImagePath}" width="235" height="240">
+				</c:if> 
 					<p
 						style="text-align: center; width: 245px; height: 20px; overflow: hidden;">
 						${dto.itemName} <br />

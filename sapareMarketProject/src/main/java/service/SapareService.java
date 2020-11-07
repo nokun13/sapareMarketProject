@@ -225,6 +225,8 @@ public interface SapareService {
 	public List<itemDTO> searchProcess(itemDTO dto);
 
 	public List<itemDTO> itemCategoryProcess(itemDTO dto);
+	
+	public List<itemDTO> searchCategoryProcess(itemDTO dto);
 
 	// 오정우 end //////////////////////////////////////////
 
