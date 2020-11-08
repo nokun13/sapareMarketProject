@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>사파리 채팅</title>
 <link rel="stylesheet" type="text/css" href="css/ChatCss.css">
 <style type="text/css">
 body {

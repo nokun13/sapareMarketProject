@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자주묻는질문</title>
+<title>자주하는 질문</title>
 <style type="text/css">
 .notice {
 	padding-bottom: 5px;

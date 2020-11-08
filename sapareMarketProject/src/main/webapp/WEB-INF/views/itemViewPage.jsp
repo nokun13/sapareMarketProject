@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>상품조회</title>
+<title>${item.itemName} 상품</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="js/itemViewPage.js" type="text/javascript"></script>
@@ -514,10 +514,14 @@
 														해제</span> 되었습니다.
 												</div> --%>
 											</div>
-											<button type="button" class="bt2" id="chat-btn">채팅하기</button>
+											<c:if test="${member.memberId != sessionScope.id}">
+												<button type="button" class="bt2" id="chat-btn">채팅하기</button>
+											</c:if>
+											<c:if test="${member.memberId == sessionScope.id }">
+												<button type="button" class="bt2" id="selectBuyer">구매자 선택</button>
+											</c:if>
 											<input type="hidden" value="${sessionScope.id}"
 												class="session_id">
-
 											<%-- </c:if> --%>
 
 										</div>

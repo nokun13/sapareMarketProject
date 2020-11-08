@@ -14,7 +14,7 @@
 	</select>
 	
 	<select id="get" parameterType="dto.memberDTO" resultType="dto.itemDTO">
-		select a.*, b.orderDate, b.orderPrice, b.orderId, b.memberName as sellerName, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
+        select a.*, b.orderDate, b.orderPrice, b.orderId, b.memberName as sellerName, c.reviewNo, c.reviewContent, c.reviewStar, d.profileImg, d.nickname
 		from sapareItem a
 		left outer join
 		    sapareOrder b on a.itemId = b.itemId
@@ -81,6 +81,20 @@
         or lower(itemabout) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
         or lower(itemname) like lower('%'||#{searchWord, jdbcType=VARCHAR}||'%')
         order by itemuploaddate desc
+	</select>
+	
+	<select id="wantItemMini" parameterType="dto.memberDTO" resultType="dto.itemDTO">
+		select x.* from
+        (select rownum as rn, z.*
+        from(
+        select a.wantitemid, b.*
+		from saparewantitem a
+		inner join sapareitem b on b.itemId=a.itemId
+		where a.memberName=#{memberName}
+		order by a.wantitemid desc)z)x
+        <![CDATA[
+        where rn >= 1 and rn <= 3
+        ]]>
 	</select>
 	
 	<select id="wantNumItem" parameterType="dto.memberDTO" resultType="dto.itemDTO">

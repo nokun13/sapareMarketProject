@@ -946,7 +946,12 @@ public class SapareController {
 	// 오정우 start /////////////////////////////////
 
 	@RequestMapping("/mainPage.do")
-	public ModelAndView mainPageProcess(ModelAndView mav) {
+	public ModelAndView mainPageProcess(ModelAndView mav, HttpSession session) {
+		if(session.getAttribute("id") != null) {
+			memberDTO dto = new memberDTO();
+			dto.setMemberName(session.getAttribute("memberName").toString());
+			mav.addObject("wantList", service.wantItemMiniProcess(dto));
+		}
 		mav.addObject("itemList", service.selectProcess());
 		mav.setViewName("mainPage");
 		return mav;
@@ -954,7 +959,12 @@ public class SapareController {
 	} // end
 
 	@RequestMapping("/search.do")
-	public ModelAndView searchProcess(ModelAndView mav, itemDTO dto) {
+	public ModelAndView searchProcess(ModelAndView mav, itemDTO dto, HttpSession session) {
+		if(session.getAttribute("id") != null) {
+			memberDTO mdto = new memberDTO();
+			mdto.setMemberName(session.getAttribute("memberName").toString());
+			mav.addObject("wantList", service.wantItemMiniProcess(mdto));
+		}
 		mav.addObject("searchWord", dto.getSearchWord());
 		mav.addObject("searchList", service.searchProcess(dto));
 		mav.setViewName("searchPage");
@@ -964,7 +974,12 @@ public class SapareController {
 
 	//카테고리 검색페이지
 	@RequestMapping("/searchcategory.do")
-	public ModelAndView searchcategoryProcess(ModelAndView mav, itemDTO dto) {
+	public ModelAndView searchcategoryProcess(ModelAndView mav, itemDTO dto, HttpSession session) {
+		if(session.getAttribute("id") != null) {
+			memberDTO mdto = new memberDTO();
+			mdto.setMemberName(session.getAttribute("memberName").toString());
+			mav.addObject("wantList", service.wantItemMiniProcess(mdto));
+		}
 		mav.addObject("searchWord", dto.getSearchWord());
 		mav.addObject("searchList", service.searchCategoryProcess(dto));
 		mav.setViewName("searchPage");

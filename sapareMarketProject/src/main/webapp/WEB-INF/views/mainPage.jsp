@@ -492,27 +492,41 @@ img.icon:hover {
 			<div id="wrapper">
 				<div id="#quick_menu">
 					<div class="quickmenu">
+						<c:if test="${sessionScope.memberName != null}">
 						<div class="save">
 							<div class="saveproduct">
-								<a class="spi" href="profileWant.do">찜한상품 <!-- <img src="data:imgae/png" width="9"	height="9" alt="">0 -->
+								<a class="spi" href="profileWant.do?memberName=${sessionScope.memberName }">찜한상품 <!-- <img src="data:imgae/png" width="9"	height="9" alt="">0 -->
 								</a>
 							</div>
 						</div>
 						<div class="recently">
 							<div class="recentlyproduct">
-								최근본상품
 								<ul>
+									<c:forEach items="${wantList }" var="dto">
+									<li class="wantItemBox" style="height: 110px;">
+										<a class="wantItemCard" href="itemViewPage.do?itemId=${dto.itemId }">
+											<div class="wantItemInside">
+												<div class="itemImageBox">
+													<c:if test="${fn:contains(dto.itemStatus, 'n')}">
+												    	<img src="image/soldout.png" width=75 height=75 style="object-fit:contain;">
+													</c:if> 
+													<c:if test="${fn:contains(dto.itemStatus, 'y')}">
+													    <img src="image/${dto.itemImagePath}" width=75 height=75 style="object-fit:contain;">
+													</c:if> 
+												</div>
+												<div class="itemDescribeBox">
+													<div>
+														<div class="itemName" style="font-size: smaller;line-height: 15px;">${dto.itemName }</div>
+													</div>
+												</div>
+											</div>
+										</a>
+									</li>
+									</c:forEach>
 								</ul>
-								<div id="paging">
-									<a class="btn_prev" style="cursor: pointer">이전</a><span
-										id="currentPage"></span><span id="totalPageCount"></span><a
-										class="btn_next" style="cursor: pointer">다음</a>
-								</div>
 							</div>
-							<!-- <div class="nothing">
-								최근 본 상품이<br>없습니다.
-							</div> -->
 						</div>
+						</c:if>
 						<div class="buttontop">
 							<button class="bt" onclick="topUP">TOP</button>
 						</div>
@@ -535,50 +549,50 @@ img.icon:hover {
 						<li>
 							<div>
 								<h3>Slide #1</h3>
-							</div> <img src="image/banner1.jpg">
+							</div> <img src="image/banner1.jpg" style="object-fit:cover;">
 						</li>
 
 						<li>
 							<div>
 								<h3>Slide #2</h3>
-							</div> <img src="image/banner2.png">
+							</div> <img src="image/banner2.png" style="object-fit:cover;">
 						</li>
 
 						<li>
 							<div>
 								<h3>Slide #3</h3>
-							</div> <img src="image/banner3.jpg">
+							</div> <img src="image/banner3.jpg" style="object-fit:cover;">
 						</li>
 
 						<li>
 							<div>
 								<h3>Slide #4</h3>
-							</div> <img src="image/banner4.jpg">
+							</div> <img src="image/banner4.jpg" style="object-fit:cover;">
 						</li>
 						<li>
 							<div>
 								<h3>Slide #5</h3>
-							</div> <img src="image/banner5.jpg">
+							</div> <img src="image/banner5.jpg" style="object-fit:cover;">
 						</li>
 						<li>
 							<div>
 								<h3>Slide #6</h3>
-							</div> <img src="image/banner6.jpg">
+							</div> <img src="image/banner6.jpg" style="object-fit:cover;">
 						</li>
 						<li>
 							<div>
 								<h3>Slide #7</h3>
-							</div> <img src="image/banner7.jpg">
+							</div> <img src="image/banner7.jpg" style="object-fit:cover;">
 						</li>
 						<li>
 							<div>
 								<h3>Slide #8</h3>
-							</div> <img src="image/banner8.jpg">
+							</div> <img src="image/banner8.jpg" style="object-fit:cover;">
 						</li>
 						<li>
 							<div>
 								<h3>Slide #9</h3>
-							</div> <img src="image/banner9.jpg">
+							</div> <img src="image/banner9.jpg" style="object-fit:cover;">
 						</li>
 
 					</ul>

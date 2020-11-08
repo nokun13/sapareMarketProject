@@ -432,7 +432,7 @@ white
 }
 </style>
 <meta charset="UTF-8">
-<title>관리페이지</title>
+<title>사파리 회원관리</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">

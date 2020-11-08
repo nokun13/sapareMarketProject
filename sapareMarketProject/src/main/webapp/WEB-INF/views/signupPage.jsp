@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>사파리 회원가입</title>
 <style type="text/css">
 * {
     margin: 0;

@@ -10,7 +10,7 @@
 	crossorigin="anonymous">
 <link rel='stylesheet' href='css/itemUploadPage.css'>
 <meta charset="UTF-8">
-<title>상품작성</title>
+<title>상품 등록</title>
 <!-- <link rel="stylesheet" href="css/itemUploadPage.css"> -->
 </head>
 <body>

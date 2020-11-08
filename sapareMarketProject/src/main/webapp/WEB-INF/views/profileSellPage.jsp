@@ -639,7 +639,7 @@
 
 </style>
 <meta charset="UTF-8">
-<title>${sessionScope.account_Name }의 프로필 페이지</title>
+<title>${member.nickname }님의 판매상품</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -954,7 +954,7 @@
 		$("#d5").hover(function() {
 			$(".5").toggle();
 		});
-		
+			
 	}); // end ready()
 </script>
 </head>
@@ -1010,7 +1010,7 @@
 					<div class="memberAbout">
 						<textarea readonly id="aboutContent" rows="8" cols="65" maxlength="80">${member.memberAbout }</textarea>
 					</div>
-					<div class="aboutChangeBox">
+					<div class="aboutChangeBox" style="margin-top: 5px;">
 						 <c:if test="${member.memberName == sessionScope.memberName}">
 							<button type="button" id="changeAbout" style="margin: 10px; cursor:pointer;">소개수정</button>
 						 </c:if>

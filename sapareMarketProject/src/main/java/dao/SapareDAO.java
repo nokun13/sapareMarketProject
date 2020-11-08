@@ -114,6 +114,9 @@ public interface SapareDAO {
 		// 회원 신고 카운트 +1
 	public void plusMemberFlagMethod(memberFlagDTO dto);
 	
+		// 최근 찜 3개 가져오기
+	public List<itemDTO> wantItemMiniMethod(memberDTO dto);
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

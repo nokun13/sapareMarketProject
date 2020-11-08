@@ -232,12 +232,18 @@ public class SapareDaoImp implements SapareDAO{
 		// 회원 신고
 	@Override
 	public void memberFlagInsertMethod(memberFlagDTO dto) {
-		sqlSession.insert("memberFlagInsert", dto);
+		sqlSession.insert("memberFlag.memberFlagInsert", dto);
 	}
 		// 회원 신고 카운트 +1
 	@Override
 	public void plusMemberFlagMethod(memberFlagDTO dto) {
-		sqlSession.update("plusMemberFlag", dto);
+		sqlSession.update("memberFlag.plusMemberFlag", dto);
+	}
+	
+		// 최근 찜 3개
+	@Override
+	public List<itemDTO> wantItemMiniMethod(memberDTO dto) {
+		return sqlSession.selectList("item.wantItemMini", dto);
 	}
 	// 김녹훈 end //////////////////////////////////////////
 	

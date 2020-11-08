@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>고객센터</title>
+<title>공지사항</title>
 <style type="text/css">
 .notice {
 	padding-bottom: 5px;

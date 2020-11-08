@@ -397,7 +397,7 @@ header ul li a {
 }
 </style>
 <meta charset="UTF-8">
-<title>${sessionScope.account_Name }의 프로필 페이지</title>
+<title>사파리 현황</title>
 <script type="text/javascript" src ="https://www.gstatic.com/charts/loader.js" ></script>
 <script type="text/javascript">
 

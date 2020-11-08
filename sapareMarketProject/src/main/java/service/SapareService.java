@@ -116,6 +116,9 @@ public interface SapareService {
 		// 회원 신고 카운트 +1
 	public void plusMemberFlagProcess(memberFlagDTO dto);
 	
+		// 최근 찜 3개
+	public List<itemDTO> wantItemMiniProcess(memberDTO dto);
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

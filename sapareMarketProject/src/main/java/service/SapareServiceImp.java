@@ -239,6 +239,12 @@ public class SapareServiceImp implements SapareService{
 		dao.plusMemberFlagMethod(dto);
 	}
 	
+		// 최근 찜 3개
+	@Override
+	public List<itemDTO> wantItemMiniProcess(memberDTO dto) {
+		return dao.wantItemMiniMethod(dto);
+	}
+	
 	// 김녹훈 end //////////////////////////////////////////
 	
 	
