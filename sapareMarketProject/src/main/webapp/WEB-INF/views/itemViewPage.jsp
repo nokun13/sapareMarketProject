@@ -518,13 +518,19 @@
 												<button type="button" class="bt2" id="chat-btn">채팅하기</button>
 											</c:if>
 											<c:if test="${member.memberId == sessionScope.id }">
-												<button type="button" class="bt2" id="selectBuyer">구매자 선택</button>
+												<button type="button" class="bt3" id="selectBuyer">구매자 선택</button>
 											</c:if>
 											<input type="hidden" value="${sessionScope.id}"
 												class="session_id">
 											<%-- </c:if> --%>
-
 										</div>
+									</div>
+									<div class="buyerContainer">
+										<form id="buyerConfirmFrm" method="post" action="buyerConfirm.do">
+											<input hidden="hidden" name="itemId" value="${item.itemId }" />
+											<input hidden="hidden" name="memberName" value="${sessionScope.memberName }" />
+											<input hidden="hidden" name="orderPrice" value="${item.itemPrice }" />
+										</form>
 									</div>
 								</div>
 							</div>
@@ -669,7 +675,7 @@
 									</c:url>
 									<a class="ad-rink" href="${path}"> <!-- 광고 사진 -->
 										<div class="ad-pic">
-											<img src="/sapare/img/${dto.itemImagePath}" width="155" height="155"
+											<img src="image/${dto.itemImagePath}" width="155" height="155"
 												onerror="this.src='image/quokka.jpg'" alt="상품 이미지">
 											<div class="ad-pic2"></div>
 										</div>

@@ -80,17 +80,17 @@
 	</select>
 	
 	<select id="memberJo" resultType="dto.memberDTO">
-		SELECT a.memberId,b.enrollDate,b.memberRank,b.buyCount,b.sellCount,b.memberPremium, b.memberflagcnt
+		SELECT a.nickname,b.enrollDate,b.memberRank,b.buyCount,b.sellCount,b.memberPremium, b.memberflagcnt, b.delFlag
 		FROM SAPAREMEMBER a
 		LEFT OUTER JOIN SAPAREMEMBERSTATUS b ON a.MEMBERNAME = b.MEMBERNAME
-		ORDER BY b.enrolldate DESC, a.memberId ASC
+		ORDER BY b.enrolldate DESC, a.nickname ASC
 	</select>
 
 	<select id="memberIdOrder" resultType="dto.memberDTO">
-		SELECT a.memberId,b.enrollDate,b.memberRank,b.buyCount,b.sellCount,b.memberPremium
+		SELECT a.nickname,b.enrollDate,b.memberRank,b.buyCount,b.sellCount,b.memberPremium, b.delFlag
 		FROM SAPAREMEMBER a
 		LEFT OUTER JOIN SAPAREMEMBERSTATUS b ON a.MEMBERNAME = b.MEMBERNAME
-		ORDER BY a.memberId ASC
+		ORDER BY a.nickname ASC
 	</select>
 	
 	<delete id="memberdelete" parameterType="String">
@@ -114,17 +114,21 @@
 	</select>
 	
 	<select id="memberDate" resultType="dto.memberDTO">
-		SELECT a.memberId,b.enrollDate,b.memberRank,b.buyCount,b.sellCount,b.memberPremium
+		SELECT a.nickname,b.enrollDate,b.memberRank,b.buyCount,b.sellCount,b.memberPremium, b.delFlag
 		FROM SAPAREMEMBER a
 		LEFT OUTER JOIN SAPAREMEMBERSTATUS b ON a.MEMBERNAME = b.MEMBERNAME
 		ORDER BY b.enrolldate 
 	</select>
 	
 	<select id="memberRankOrder" resultType="dto.memberDTO">
-		SELECT a.memberId,b.enrollDate,b.memberRank,b.buyCount,b.sellCount,b.memberPremium
+		SELECT a.nickname,b.enrollDate,b.memberRank,b.buyCount,b.sellCount,b.memberPremium, b.delFlag
 		FROM SAPAREMEMBER a
 		LEFT OUTER JOIN SAPAREMEMBERSTATUS b ON a.MEMBERNAME = b.MEMBERNAME
-		ORDER BY b.memberRank DESC,a.memberId ASC
+		ORDER BY b.memberRank DESC,a.nickname ASC
+	</select>
+	
+	<select id="getByNickname" parameterType="String" resultType="dto.memberDTO">
+		select * from saparemember where nickname=#{nickname}
 	</select>
 
 </mapper>

@@ -117,6 +117,20 @@ public interface SapareDAO {
 		// 최근 찜 3개 가져오기
 	public List<itemDTO> wantItemMiniMethod(memberDTO dto);
 	
+		// 채팅 구매자 이름
+	public List<chatRoomDTO> getBuyerNameMethod(int itemId);
+	
+		// 닉네임으로 회원 정보
+	public memberDTO getInfoByNickMethod(String nickname);
+	
+		// 거래완료 주문
+	public void submitOrderMethod(orderDTO odto);
+		// 상품 판매완료 변경
+	public void itemSoldMethod(int itemId);
+		// 구매 횟수 증가
+	public void plusBuyCountMethod(memberDTO dto);
+		// 판매 횟수 증가
+	public void plusSellCountMethod(memberDTO dto);
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

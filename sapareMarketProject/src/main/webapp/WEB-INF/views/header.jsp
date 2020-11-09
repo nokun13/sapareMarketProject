@@ -600,7 +600,7 @@ input[type=email] {
 							</button>
 						</form>
 					</div>
-				</div>
+				
 				<div id="top_menu">
 					<c:if test="${sessionScope.memberName != 'admin' }">
 						<button type="button" class="sale">판매하기</button> 
@@ -658,6 +658,7 @@ input[type=email] {
 
 				</div>
 			</div>
+		</div>
 		</div>
 		<!-- top_menu -->
 		<div class="clear"></div>

@@ -245,6 +245,39 @@ public class SapareDaoImp implements SapareDAO{
 	public List<itemDTO> wantItemMiniMethod(memberDTO dto) {
 		return sqlSession.selectList("item.wantItemMini", dto);
 	}
+	
+		// 채팅 구매자 이름
+	@Override
+	public List<chatRoomDTO> getBuyerNameMethod(int itemId) {
+		return sqlSession.selectList("chatRoom.getBuyerName", itemId);
+	}
+	
+		// 닉네임으로 회원 정보
+	@Override
+	public memberDTO getInfoByNickMethod(String nickname) {
+		return sqlSession.selectOne("member.getByNickname", nickname);
+	}
+	
+		// 거래완료 주문
+	@Override
+	public void submitOrderMethod(orderDTO odto) {
+		sqlSession.insert("order.submitOrder", odto);
+	}
+		// 상품 판매완료 변경
+	@Override
+	public void itemSoldMethod(int itemId) {
+		sqlSession.update("item.itemStatusSold", itemId);
+	}
+		// 구매 횟수 증가
+	@Override
+	public void plusBuyCountMethod(memberDTO dto) {
+		sqlSession.update("memberStatus.plusBuyCount", dto);
+	}
+		// 판매 횟수 증가
+	@Override
+	public void plusSellCountMethod(memberDTO dto) {
+		sqlSession.update("memberStatus.plusSellCount", dto);
+	}
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

@@ -79,4 +79,9 @@
         or lower(orderprice) like lower('%'||#{searchWord}||'%')
         order by orderdate desc
 	</select>
+	
+	<insert id="submitOrder" parameterType="dto.orderDTO">
+		insert into sapareorder
+		values(sapareorder_orderid_seq.nextval, #{memberName}, #{itemId}, '구매완료', sysdate, #{orderPrice}, #{sellerName})
+	</insert>
 </mapper>

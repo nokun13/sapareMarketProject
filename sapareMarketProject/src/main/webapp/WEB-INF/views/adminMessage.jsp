@@ -52,7 +52,6 @@ footer {
 	/* justify-content: space-between;*/
 	align-items: center;
 	z-index: 100;
-	background-color: cornflowerblue;
 }
 
 header ul {
@@ -435,6 +434,6 @@ header ul li a {
 				</div>
 			</div>
 		</div>
-	<footer> footer area </footer>
 </body>
+<jsp:include page="footer.jsp" />
 </html>

@@ -26,7 +26,6 @@ footer {
 	/* justify-content: space-between;*/
 	align-items: center;
 	z-index: 100;
-	background-color: cornflowerblue;
 }
 
 header ul {
@@ -444,11 +443,11 @@ white
 						$('.btn').click(function(){
 							alert('처리되었습니다.');
 							$('.'+ this.id).submit();
-							
-
 
 						});
 							$("#selectbox > option[value="+'<c:out value="${ param.selectbox }"/>'+"]").attr("selected","selected");
+					
+						
 					});
 	
 				
@@ -483,27 +482,25 @@ white
 						<div id="members">
 							<table class="table" style="font-size: small;">
 								<tr class="table-primary">
-									<th scope="col">아이디</th>
+									<th scope="col">닉네임</th>
 									<th scope="col">가입일</th>
 									<th scope="col">등급</th>
 									<th scope="col">판매상품</th>
 									<th scope="col">구매상품</th>
 									<th scope="col">신고횟수</th>
 									<th scope="col">프리미엄</th>
-									<th scope="col">탈퇴관리</th>
+									<th scope="col">탈퇴유무</th>
 								</tr>
 								<c:forEach items="${memberJo}" var="dto">
 									<tr>	
-										<form action="adminMemberDelete.do" id="frmm" method="post" class="btn${dto.memberId}">
-										<td>${dto.memberId}<input hidden="hidden" name="memberId" value="${dto.memberId}"/></td>
+										<td>${dto.nickname}<input hidden="hidden" name="memberId" value="${dto.memberId}"/></td>
 										<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${dto.enrollDate}" /></td>
 										<td>${dto.memberRank}</td>
 										<td>${dto.buyCount}</td>
 										<td>${dto.sellCount}</td>
 										<td>${dto.memberFlagCnt}</td>
 										<td>${dto.memberPremium}</td>
-										<td><button type="button" class="btn" id="btn${dto.memberId}">X</button></td>
-										</form>
+										<td>${dto.delFlag }</td>
 									</tr>
 								</c:forEach>
 							</table>
@@ -514,6 +511,6 @@ white
 
 		</div>
 
-	<footer> footer area </footer>
 </body>
+<jsp:include page="footer.jsp" />
 </html>

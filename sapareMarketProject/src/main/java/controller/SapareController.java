@@ -26,6 +26,7 @@ import dto.itemDTO;
 import dto.itemFlagDTO;
 import dto.memberDTO;
 import dto.memberFlagDTO;
+import dto.orderDTO;
 import dto.questionDTO;
 import dto.reviewDTO;
 import service.SapareService;
@@ -425,9 +426,41 @@ public class SapareController {
 		mav.setViewName("redirect:/profileSell.do?flag=d&memberName=" + dto.getMemberName());
 		return mav;
 	}
+	
+	@RequestMapping("/getBuyerNameProcess.do")
+	public List<chatRoomDTO> getBuyerNameProcess(int itemId) {
+		return service.getBuyerNameProcess(itemId);
+	}
+	
+	@RequestMapping("/buyerConfirm.do")
+	public ModelAndView buyerConfirmProcess(ModelAndView mav, String nickname, int itemId, int orderPrice, String memberName) {
+		// 아래가 구매자 정보
+		memberDTO dto = service.getInfoByNickProcess(nickname);
+		// 아래가 판매자 정보 (pdto)
+		memberDTO mdto = new memberDTO();
+		mdto.setMemberName(memberName);
+		memberDTO pdto = service.memberInfoProcess(mdto);
+		
+		orderDTO odto = new orderDTO();
+		odto.setMemberName(dto.getMemberName());
+		odto.setItemId(itemId);
+		odto.setOrderPrice(orderPrice);
+		odto.setSellerName(pdto.getMemberName());
+		
+		service.submitOrderProcess(odto);
+		service.itemSoldProcess(itemId);
+		service.plusBuyCountProcess(dto);
+		service.plusSellCountProcess(pdto);
+		mav.setViewName("redirect:/itemViewPage.do?itemId=" + itemId);
+		return mav;
+	}
 
 	// 김녹훈 end //////////////////////////////////////////
 
+	
+	
+	
+	
 	// 김소정 start ////////////////////////////////
 
 	@RequestMapping("/header.do")
@@ -506,6 +539,7 @@ public class SapareController {
 		HttpSession session = req.getSession();
 		session.setAttribute("logOk", "ok");
 		session.setAttribute("id", dto.getMemberId());// 세션에 아이디저장
+		session.setAttribute("memberName", dto.getMemberName());
 		
 		mav.addObject("itemList", service.selectProcess());
 		mav.setViewName("redirect:/mainPage.do");
@@ -685,8 +719,10 @@ public class SapareController {
 	// http://localhost:8090/sapare/adminPage.do
 	// 관리자 페이지
 	@RequestMapping("/adminPage.do")
-	public ModelAndView adminPageProcess(ModelAndView mav) {
-		
+	public ModelAndView adminPageProcess(ModelAndView mav, HttpSession session) {
+		if(session.getAttribute("memberName") == "admin"){
+			mav.addObject("adminok", 1);
+		}
 		List<itemCategoryDTO> counts = service.countCategoeyProcess();
 		mav.addObject("count", counts);
 		mav.setViewName("adminPage");
@@ -697,7 +733,10 @@ public class SapareController {
 	// 회원정보 불러오기
 	// http://localhost:8090/sapare/adminMember.do
 	@RequestMapping("/adminMember.do")
-	public ModelAndView adminMemberProcess(ModelAndView mav) {
+	public ModelAndView adminMemberProcess(ModelAndView mav, HttpSession session) {
+		if(session.getAttribute("memberName") == "admin"){
+			mav.addObject("adminok", 1);
+		}
 		mav.addObject("memberJo", service.memberLookupProcess());
 		mav.setViewName("adminMember");
 		return mav;
@@ -947,7 +986,7 @@ public class SapareController {
 
 	@RequestMapping("/mainPage.do")
 	public ModelAndView mainPageProcess(ModelAndView mav, HttpSession session) {
-		if(session.getAttribute("id") != null) {
+		if(session.getAttribute("memberName") != null) {
 			memberDTO dto = new memberDTO();
 			dto.setMemberName(session.getAttribute("memberName").toString());
 			mav.addObject("wantList", service.wantItemMiniProcess(dto));

@@ -822,7 +822,7 @@ input, button{
 							<c:if test="${member.memberName == sessionScope.memberName}">
 								<button type="button" id="changeNick" style="cursor:pointer;margin-right:10px;">닉네임수정</button>
 						 	</c:if>
-						<div class="memberRank">${status.memberRank }</div>
+						<div class="memberRank" style="margin-left:10px;">  판매횟수: ${status.sellCount }    구매횟수: ${status.buyCount }</div>
 						<%-- <div class="premiumIcon">
 							<c:if test="${fn:contains(status.memberPremium, 'n')}">
 								프리미엄 아님/나중에 변경

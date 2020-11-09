@@ -245,6 +245,39 @@ public class SapareServiceImp implements SapareService{
 		return dao.wantItemMiniMethod(dto);
 	}
 	
+		// 채팅 구매자 이름
+	@Override
+	public List<chatRoomDTO> getBuyerNameProcess(int itemId) {
+		return dao.getBuyerNameMethod(itemId);
+	}
+	
+		// 닉네임으로 회원 정보
+	@Override
+	public memberDTO getInfoByNickProcess(String nickname) {
+		return getInfoByNickProcess(nickname);
+	}
+	
+		// 거래완료 주문
+	@Override
+	public void submitOrderProcess(orderDTO odto) {
+		dao.submitOrderMethod(odto);
+	}
+		// 상품 판매완료 변경
+	@Override
+	public void itemSoldProcess(int itemId) {
+		dao.itemSoldMethod(itemId);
+	}
+	
+		// 구매 횟수 증가
+	@Override
+	public void plusBuyCountProcess(memberDTO dto) {
+		dao.plusBuyCountMethod(dto);
+	}
+		// 판매 횟수 증가
+	@Override
+	public void plusSellCountProcess(memberDTO dto) {
+		dao.plusSellCountMethod(dto);
+	}
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

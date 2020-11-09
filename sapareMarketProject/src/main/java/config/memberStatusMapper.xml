@@ -14,7 +14,18 @@
 	
 	<insert id="signupstatus" parameterType="dto.memberDTO">
 		insert into saparememberstatus(membername, memberrank, memberpremium, memberpoint, buycount, sellcount, enrolldate, memberflagcnt)
-        values(#{memberName}, 'Rank1', 'n', 0, 0, 0, sysdate, 0)
+        values(#{memberName}, '', 'n', 0, 0, 0, sysdate, 0)
 	</insert>
 	
+	<update id="plusBuyCount" parameterType="dto.memberDTO">
+		update saparememberstatus
+		set buyCount = buyCount + 1
+		where memberName=#{memberName}
+	</update>
+	
+	<update id="plusSellCount" parameterType="dto.memberDTO">
+		update saparememberstatus
+		set sellCount = sellCount + 1
+		where memberName=#{memberName}
+	</update>
 </mapper>

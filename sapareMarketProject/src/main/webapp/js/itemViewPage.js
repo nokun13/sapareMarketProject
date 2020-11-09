@@ -1,5 +1,39 @@
 $(document).ready(function() {
 	
+	$("#selectBuyer").on("click", function(){
+		$(".buyerContainer").empty();
+		$.ajax({
+			type:'GET',
+			dataType:'json',
+			url:'getBuyerNameProcess.do?itemId='+$('#itemId').val(),
+			success: after_buyer_name,
+			error:function(request,status,error){
+			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		});
+	});
+	
+	function after_buyer_name(res){
+		console.log("after buyer");
+		$(".buyerContainer").append("<select id='buyerName' name='nickname'></select>");
+		$(".buyerContainer").append("<button type='button' id='confirmBuyer'>거래결정</button>");
+		
+		$.each(res, function(index, value){
+			$("#buyerName").append("<option value='"+value.nickname+"'>"+value.nickname+"</option>");
+		});
+		
+		$("#confirmBuyer").on('click', function(){
+			var buyer = $("#buyerName option:selected").val();
+			if (confirm(buyer+'님과 거래를 완료하겠습니까?')) {
+				$("#buyerConfirmFrm").submit();
+			} else {
+				alert('구매자 선택을 취소하였습니다.');
+				return false;
+			}
+		});
+	};
+	
+	
 	// function으로 파라미터값을 받아옴  
   	function getParam(sname) {
 	    var params = location.search.substr(location.search.indexOf("?") + 1);

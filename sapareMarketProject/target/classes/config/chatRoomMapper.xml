@@ -32,7 +32,6 @@
 		membername != #{id}) r
 		where e.chatroomid = r.chatroomid
 		order by r.chatroomid
-
 	</select>
 	<update id="enterupdate" parameterType="dto.chatviewDTO">
 		UPDATE saparechatlog set
@@ -64,14 +63,21 @@
 	
 	</select>
 	<insert id="addRoom" parameterType="dto.chatRoomDTO">
-	insert all
-into SAPARECHATROOM VALUES (SAPARECHATROOM_CHATROOMID_SEQ.NEXTVAL,#{itemId},#{memberName},sysdate)
-into saparechatlog values (SAPARECHATROOM_CHATROOMID_SEQ.CURRVAL,#{memberName},null,null)
-into saparechatlog values (SAPARECHATROOM_CHATROOMID_SEQ.CURRVAL,#{itemMemberName},null,null)
-select *from dual
+		insert all
+		into SAPARECHATROOM VALUES (SAPARECHATROOM_CHATROOMID_SEQ.NEXTVAL,#{itemId},#{memberName},sysdate)
+		into saparechatlog values (SAPARECHATROOM_CHATROOMID_SEQ.CURRVAL,#{memberName},null,null)
+		into saparechatlog values (SAPARECHATROOM_CHATROOMID_SEQ.CURRVAL,#{itemMemberName},null,null)
+		select *from dual
 	</insert>
 	<select id="itemMember" parameterType="int" resultType="String">
 		select membername from sapareitem where ITEMID=#{itemId}
 	</select>
 
+	<select id="getBuyerName" parameterType="int" resultType="dto.chatRoomDTO">
+		select a.*, b.nickname, b.profileimg
+        from saparechatroom a
+        left outer join saparemember b
+         on a.membername=b.membername
+        where a.itemid=#{itemId}
+	</select>
 </mapper>

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class chatRoomDTO {
 
-	private String memberName,itemMemberName;
+	private String memberName,itemMemberName, profileImg, nickname;
 	private int chatRoomId, itemId;
 	private Date roomDate;
 	
@@ -37,6 +37,18 @@ public class chatRoomDTO {
 	}
 	public void setItemMemberName(String itemMemberName) {
 		this.itemMemberName = itemMemberName;
+	}
+	public String getProfileImg() {
+		return profileImg;
+	}
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	
 } // end class

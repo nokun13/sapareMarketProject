@@ -30,7 +30,7 @@
 			<span>상품이미지</span>
 			<div id='text-center'>
 					<label for='filepath'> <!-- <img id="img" style="width: 150px; height: 100px; border: 0px solid white;">-->
-						<img src="image/defaultAD.png" class='img-circle'  id='ITEMIMAGEPATH' name='ITEMIMAGEPATH' style="width: 200px; height: 160px;object-fit: contain;" />  
+						<img src="image/defaultAD.png" class='img-circle'  id='ITEMIMAGEPATH' name='ITEMIMAGEPATH' style="width: 200px; height: 160px;object-fit: contain;cursor:pointer;" />  
 						<input type="file" name='filepath' id='filepath' class='filepath'  style="display: none;" multiple />
 					</label>
 			</div>

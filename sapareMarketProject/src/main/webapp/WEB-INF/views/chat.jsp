@@ -59,8 +59,8 @@ var websocket;
 													var a	= '<div class="friend"><input type="hidden" id="itemId" value="'+$(this)[0].itemId+'"> '
 													+ '<input type="hidden" id="chatRoomId" value="'+$(this)[0].chatRoomId+'">'
 													+ '<input type="hidden" class="memberName" value="'+$(this)[0].memberName+'">  '
-													+ '<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />'
-													+ '<p><strong>"'+$(this)[0].memberName+'"</strong> <span>상품</span></p>'
+													+ '<img src="image/'+$(this)[0].profileImg+'" />'
+													+ '<p><strong>'+$(this)[0].nickname+'</strong> <span>'+$(this)[0].itemName+'</span></p>'
 													if($(this)[0].isreadcount>0)
 													+ '<div class="readcount"><span>'+$(this)[0].isreadcount+'</span></div></div>'
 												$('#friends').prepend(a);
@@ -112,6 +112,7 @@ $(document).keydown(function (e) {
 <script type="text/javascript" src="js/ChatJS.js"></script>
 <body>
 	<div id="aaa">
+		<c:if test="${sessionScope.memberName != null }">
 		<div id="mychatBtn">
 			<div class="background"></div>
 			<svg class="chat-bubble" width="100" height="100"
@@ -130,8 +131,9 @@ $(document).keydown(function (e) {
         <circle class="circle circle1" r="1.9" cy="50.7" cx="42.5" />
         <circle class="circle circle2" cx="49.9" cy="50.7" r="1.9" />
         <circle class="circle circle3" r="1.9" cy="50.7" cx="57.3" />
-      </svg>
+      	</svg>
 		</div>
+		</c:if>
 
 
 
@@ -166,8 +168,8 @@ $(document).keydown(function (e) {
 								<div class="cy"></div>
 								<div class="cx"></div>
 							</div>
-							<p>"${dto.memberName}"</p>
-							<span>상품</span>
+							<p>${dto.nickname}</p>
+							<span>${dto.itemName}</span>
 							<!-- 대화창 프로필 -->
 						</div>
 						<div id="chat-messages">

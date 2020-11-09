@@ -615,6 +615,13 @@ button {
 	width: 50%;
 }
 
+.bt3 {
+	background: rgb(255, 164, 37);
+	border: 1px solid rgb(243, 150, 20);
+	color: rgb(255, 255, 255);
+	width: 50%;
+}
+
 .cancle-bt {
 	margin-right: 10px;
 	display: none;
@@ -915,3 +922,25 @@ button {
 	font-weight: 600;
 	background-color: white;
 }
+
+#buyerName{
+	width: 30%;
+    margin-top: 15px;
+    margin-left: 150px;
+    outline: none;
+    border: 1px solid lightgray;
+}
+
+#confirmBuyer{
+	margin-left: 10px;
+    background-color: rgb(41, 171, 226);
+    border: 1px rgb(41, 171, 226);
+    font-size: 15px;
+    font-weight: bolder;
+    color: white;
+    text-decoration: none;
+    padding: 6px 12px 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+

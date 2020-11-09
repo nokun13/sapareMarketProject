@@ -119,6 +119,21 @@ public interface SapareService {
 		// 최근 찜 3개
 	public List<itemDTO> wantItemMiniProcess(memberDTO dto);
 	
+		// 채팅 구매자 이름
+	public List<chatRoomDTO> getBuyerNameProcess(int itemId);
+	
+		// 닉네임으로 회원 정보
+	public memberDTO getInfoByNickProcess(String nickname);
+	
+		// 거래완료 주문
+	public void submitOrderProcess(orderDTO odto);
+		// 상품 판매완료 변경
+	public void itemSoldProcess(int itemId);
+	
+		// 구매 횟수 증가
+	public void plusBuyCountProcess(memberDTO dto);
+		// 판매 횟수 증가
+	public void plusSellCountProcess(memberDTO dto);
 	// 김녹훈 end //////////////////////////////////////////
 	
 	

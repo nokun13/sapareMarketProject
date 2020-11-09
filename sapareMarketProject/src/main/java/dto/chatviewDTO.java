@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class chatviewDTO {
 
-	private String memberName, itemName;
+	private String memberName, itemName, nickname, itemImagePath, profileImg;
 	private int chatRoomId, itemId, isreadcount;
 	private Timestamp myenter, myexit, enterTime, exitTime;
 	public String getMemberName() {
@@ -61,9 +61,23 @@ public class chatviewDTO {
 	public void setExitTime(Timestamp exitTime) {
 		this.exitTime = exitTime;
 	}
-
-	
-	
-	
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getItemImagePath() {
+		return itemImagePath;
+	}
+	public void setItemImagePath(String itemImagePath) {
+		this.itemImagePath = itemImagePath;
+	}
+	public String getProfileImg() {
+		return profileImg;
+	}
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
+	}
 	
 } // end class

@@ -15,13 +15,13 @@
 	</update>
 	
 	<select id="memberFlags" resultType="dto.memberFlagDTO">
-		select *from SAPAREMEMBERFLAG
-		where MEMBERFLAGRES='0'
+		select * from SAPAREMEMBERFLAG
+		where MEMBERFLAGRES='n'
 		order by MEMBERFLAGNO DESC
 	</select>
 
  	<update id="memberFlagUpdate" parameterType="int">
-		UPDATE SAPAREMEMBERFLAG SET MEMBERFLAGRES = 1
+		UPDATE SAPAREMEMBERFLAG SET MEMBERFLAGRES = 'y'
 		WHERE MEMBERFLAGNO = #{memberFlagNo}
 	</update>
 </mapper>

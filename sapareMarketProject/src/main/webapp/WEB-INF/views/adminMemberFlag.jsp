@@ -39,7 +39,6 @@ footer {
 	/* justify-content: space-between;*/
 	align-items: center;
 	z-index: 100;
-	background-color: cornflowerblue;
 }
 
 header ul {
@@ -417,8 +416,8 @@ white
 					<table class="table " style="font-size: small;">
 						<tr class="table-primary">
 							<th scope="col">신고번호</th>
-							<th scope="col">신고자 아이디</th>
-							<th scope="col">신고할 아이디</th>
+							<th scope="col">신고받은 회원</th>
+							<th scope="col">신고자 회원</th>
 							<th scope="col">신고카테고리</th>
 							<th scope="col">신고내용</th>
 							<th scope="col">처리유무</th>
@@ -443,6 +442,6 @@ white
 				</div>
 			</div>
 </div>
-			<footer> footer area </footer>
 </body>
+<jsp:include page="footer.jsp" />
 </html>

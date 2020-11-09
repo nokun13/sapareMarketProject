@@ -272,4 +272,10 @@
 		ITEMSMALLCAT like '%'||#{searchWord}||'%'
 	</select>
 	
+	<update id="itemStatusSold" parameterType="int">
+		update sapareitem
+		set itemStatus = 'n'
+		where itemId=#{itemId}
+	</update>
+	
 </mapper>
