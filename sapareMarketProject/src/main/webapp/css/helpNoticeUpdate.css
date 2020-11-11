@@ -1,0 +1,72 @@
+#title {
+	height: 16;
+	font-family: '돋움';
+	font-size: 20px;
+	text-align: center;
+	margin-top: 50px;
+	/* border-left: 1px solid white; */
+	border-top: 1px solid white;
+	color: #9D5CBB;
+}
+
+#textsb {
+	text-align: left;
+}
+
+#textct {
+	text-align: left;
+}
+
+#write {
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+	border-top: 1px solid white;
+	margin-left: 250px;
+	font: bold;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+#btn {
+	border-bottom: 1px solid white;
+}
+
+#num {
+	display: none;
+}
+
+#commenttitle {
+	margin-left: 300px;
+	margin-bottom: 15px;
+	color: #9D5CBB;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+#commentta {
+	margin-left: 280px;
+	margin-bottom: 100px;
+	border: 1.5px solid #cccccc;
+	width: 1500px;
+	height: 150px;
+	background-color: #E8F5FF;
+}
+
+#commentta td {
+	color: #666666;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: left;
+}
+
+#commentta td:nth-child(1) {
+	padding-left: 30px;
+	width: 200px;
+}
+
+.upt, .list, .del {
+	cursor: pointer;
+	background-color: #0484f6;
+	color: white;
+	border: none;
+}

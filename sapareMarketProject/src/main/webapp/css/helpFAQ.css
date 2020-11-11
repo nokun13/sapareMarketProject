@@ -1,0 +1,268 @@
+.notice {
+	padding-bottom: 5px;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	justify-content: center;
+	font-weight: 600;
+	position: relative;
+	color: black;
+	float: left;
+	/* border-bottom: 2px solid rgb(255, 80, 88); */
+	width: 400px;
+	font-size: 18px;
+}
+
+.faq {
+    font-size: 18px;
+	padding-bottom: 5px;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	font-weight: 600;
+	justify-content: center;
+	color: #FF0000;
+	width: 400px;
+	text-align: center;
+    border-bottom: 3px solid #FF0000; 
+}
+
+a {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.menu1 {
+	display: flex;
+	justify-content: center;
+}
+
+.menu {
+	height: 44px;
+	display: block;
+	background: rgb(255, 255, 255);
+}
+
+.wrap1 {
+	margin-top: 100px;
+	margin-bottom: 5px;
+	display: flex;
+	justify-content: center;
+}
+
+.no1 {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: flex-start;
+	font-size: 14px;
+	flex: 1 1 0%;
+}
+
+.notice1 {
+	padding: 0px 20px;
+	height: 75px;
+	width: 850px;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	background: rgb(255, 255, 255);
+	border-bottom: 1px solid rgb(238, 238, 238);
+	border: 1px solid rgb(238, 238, 238);
+	justify-content: center;
+	cursor: pointer;
+	-webkit-box-align: center;
+	
+}
+
+h3, time {
+	text-align: left;
+}
+
+ul, li {
+	list-style: none;
+}
+
+li {
+	display: flex;
+	justify-content: center;
+}
+
+.no2 {
+	margin-top: -5px;
+	color: rgb(153, 153, 153);
+	font-weight: 400;
+}
+
+.no_1 {
+	padding: 0px;
+	height: auto;
+	width: 892px;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	background: rgb(255, 255, 255);
+	justify-content: center;
+	cursor: pointer;
+	background-color: rgb(238, 238, 238);
+}
+
+.no__1 {
+	padding-left: 20px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: flex-start;
+	font-size: 16px;
+	flex: 1 1 0%;
+	text-align: left;
+}
+
+.writepage {
+	margin-left: 800px;
+	text-align: right;
+	margin-left: 800px;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.write {
+	margin-top: -32px;
+	margin-bottom: 5px;
+}
+
+.modify {
+    float:left;
+	text-align: right;
+	border: none;
+	background: none;
+	cursor: pointer;
+	margin-top: -4px;
+}
+.no2 {
+}
+
+form {
+display: inline;}
+
+.table {
+display:flex;
+justify-content: center;
+}
+
+.no_1{
+overflow: auto;}
+.hh {
+	margin-top: 50px;
+	display: flex;
+	justify-content: center;
+	display: flex;
+}
+
+#myBtn {
+	width: 200px;
+	height: 10px;
+	background-color: white;
+	color: #29ABE2;
+	border: none;
+	font-weight: bolder;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.ask {
+	font-size: 14px;
+}
+
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 35px;
+	border: 1px solid #888;
+	width: 23%;
+	height: 53%;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.emailid {
+	margin-top: 12%
+}
+
+input[type=email]{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.contenttext {
+  width: 100%;
+  height:95%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  outline: none;
+  resize: none;
+}
+.content_area{
+height: 63%;
+}
+
+.ll{
+display: grid;
+height: 50px;
+margin-bottom: 15px;
+}
+
+.modalbtn{
+background-color: #29ABE2;
+color:white;
+font-size:18px;
+font-weight: bolder;
+border: 1px solid #29ABE2;
+cursor: pointer;
+outline: none;
+
+}
+
+.mm{
+	margin-top: 30px;
+}
+
+.space{
+padding:20px 65px 20px 0}

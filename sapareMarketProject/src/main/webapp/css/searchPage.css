@@ -1,0 +1,231 @@
+.c1 img  {
+	border: none;
+	vertical-align: top;
+	padding: 5px;
+	border-radius: 15px;
+	object-fit: cover;
+}
+
+.touch_bullet li {
+	list-style: none;
+}
+
+/*GLOBALS*/
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: #666;
+}
+
+a:hover {
+	color: dodgerblue;
+}
+
+#wrapper {
+    width: 1000px;
+    position: relative;
+    color: #fff;
+    text-shadow: rgba(0, 0, 0, 0.1) 2px 2px 0px;
+}
+
+/*btns*/
+.btns {
+	position: absolute;
+	width: 50px;
+	height: 60px;
+	top: 50%;
+	margin-top: -25px;
+	line-height: 57px;
+	text-align: center;
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0.1);
+	z-index: 100;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-ms-user-select: none;
+	-webkit-transition: all 0.1s ease;
+	-moz-transition: all 0.1s ease;
+	-o-transition: all 0.1s ease;
+	-ms-transition: all 0.1s ease;
+	transition: all 0.1s ease;
+}
+
+.btns:hover {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+#previous {
+	left: -50px;
+	border-radius: 0px 7px 7px 7px;
+}
+
+
+
+
+#visual {
+	position: relative;
+}
+
+.c {
+	display: block;
+	width: 1000px;
+	margin: 20px auto;
+	/* padding-left: 105px; */
+	position: relative;
+}
+
+#poptext p {
+	font-weight: 500;
+	font-size: 30px;
+	text-align: center;
+	font-family: 'LotteMartHappy';
+	font-style: normal;
+	font-weight: 400;
+	border-bottom: 1px solid #f2f2f2;
+	width: 47%;
+	margin: auto;
+}
+
+.btn {
+	background-color: white;
+	padding: 8px 18px;
+	font-size: 16px;
+	cursor: pointer;
+	margin-left: 46%;
+	outline: none;
+}
+
+/* 더보기 */
+.moreButton {
+	border-color: dodgerblue;
+	color: #0042a5;
+	border-radius: 15px;
+	width: 100px;
+	height: 40px;
+	outline: none;
+	margin-bottom: 20px;
+	font-weight: bolder;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.moreButton:hover {
+	background: dodgerblue;
+	color: white;
+	border-radius: 15px;
+}
+
+.loadMore {
+	display: flex;
+	justify-content: center;
+}
+
+
+/*퀵메뉴*/
+#wrapper {
+	width: 1000px;
+	margin: 15px auto;
+	position: relative;
+	color: #fff;
+	text-shadow: rgba(0, 0, 0, 0.1) 2px 2px 0px;
+}
+
+#quick_menu {
+	width: 95px;
+	text-align: left;
+	position: absolute;
+	top: 100px;
+	right: -150px;
+	float: left;
+}
+
+#quick_menu img {
+	width: 45px;
+	height: 45px;
+	opacity: 0.7;
+	filter: alpha(opacity = 70); /* For IE8 and earlier */
+}
+
+.quickmenu {
+	margin-left: 1050px;
+	text-align: center;
+	width: 80px;
+	height: auto;
+	position: absolute;
+}
+/*퀵메뉴 끝*/
+
+/* left banner */
+.ADD {
+	position: absolute;
+	right: 1050px;
+}
+
+.ADD_position {
+	border: 0px;
+	border-style: none;
+}
+
+/* left banner END */
+.saveproduct, .recentlyproduct, .buttontop {
+	color: #595959;
+	font-size: 15px;
+	font-weight: bolder;
+}
+
+.recentlyproduct {
+	padding-bottom: 5px;
+	border-bottom: 2px dotted rgb(136, 136, 136);
+}
+
+.save {
+	padding: 10px;
+	width: 100%;
+	border: 1px solid rgb(204, 204, 204);
+	background: rgb(255, 255, 255);
+	margin-bottom: 6px;
+}
+
+.recently {
+	padding: 10px;
+	width: 100%;
+	border: 1px solid rgb(204, 204, 204);
+	background: rgb(255, 255, 255);
+	margin-bottom: 6px;
+}
+
+.buttontop {
+	padding: 10px;
+	width: 100%;
+	border: 1px solid rgb(204, 204, 204);
+	background: rgb(255, 255, 255);
+	margin-bottom: 6px;
+}
+
+.bt {
+	background: none;
+	border: white;
+	font-size: 14px;
+	font-weight: bolder;
+	color: #595959;
+	outline: none;
+	cursor: pointer;
+}
+
+.nothing {
+	color: #BFBFBF;
+}
+
+.searchNameP {
+	margin: auto;
+	height: 35px;
+	width: 990px;
+	-webkit-text-stroke: thin;
+    font-size: x-large;
+}

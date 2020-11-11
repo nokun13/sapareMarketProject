@@ -1,0 +1,43 @@
+#title {
+ 	height: 16; 
+	font-size: 20px;
+	text-align: center;
+	margin-top: 50px;
+	/* border-left: 1px solid white; */
+	border-top: 1px solid white;
+	color : #0484f6;
+	
+	
+}
+
+#textsb {
+	text-align: left;
+}
+
+#textct {
+	text-align: left;
+}
+
+#write {
+border-left: 1px solid white;
+	border-right: 1px solid white;
+	border-top: 1px solid white;
+	margin-left:250px;
+    font : bold;
+    margin-top : 50px;
+    margin-bottom: 50px;
+}
+
+ #btn{
+border-bottom: 1px solid white;
+}  
+
+ .modi, .canc {
+background: none;
+background-color: #0484f6;
+font-size: 12px;
+font-weight: bold;
+color:white;
+border: none;
+width: 50px;
+height: 30px;}

@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    font-weight: 400;
+    color: #333;
+   }
+   
+div {
+display:block;
+
+}
+
+#signup {
+display: flex;
+justify-content: center;
+margin-top :150px;
+
+}    
+
+
+div .title_text {
+font-size: 30px;
+font-weight: 600;
+letter-spacing: 5px;
+margin-left:35%;
+}
+
+
+.auth_form_box {
+
+margin-top : 50px;
+
+
+}
+
+
+.auth_form_box input {
+    border-radius: 3px;
+    border: 1px solid #e8ebed;
+    height: 38px;
+    width: 95%;
+    background-color: #fff;
+    padding: 3px 3px 3px 8px;
+    font-size: 14px;
+    outline: none;
+}
+
+.email_title ,.password_title ,.phone_title ,.terms_text{
+margin-top: 25px;
+margin-bottom: 10px;
+}
+
+.sign_box .phone_area .phone_number {
+    width: 300px;
+    margin-right: 5px;
+}
+
+.sign_box .phone_area #reAuthcode {
+    width: 75px;
+    height: 40px;
+    border: 1px solid #0484f6;
+    color: #0484f6;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+#reAuthcode {
+background: none;
+cursor: pointer;
+
+}
+
+.login_btn{
+background: none;
+cursor: pointer;
+}
+.terms_text {
+font-size: 12px;
+color: gray;
+}
+
+.sign_box .login_btn {
+    width: 400px;
+    height: 57px;
+    background-color: #0484f6;
+    font-size: 17px;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.error_msg {
+margin-left: 8px;
+font-size: 14px;
+color: red;
+}
