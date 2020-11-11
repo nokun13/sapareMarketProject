@@ -211,6 +211,9 @@ public interface SapareDAO {
 	public void adminMemberDeleteMethod(String memberId);
 	public List<itemCategoryDTO> countCategoryMethod();
 	public List<questionDTO> questionMessageMethod();
+	public void adminMemberHoldMethod(int memberFlagNo);
+	public void adminItemFlagHoldMethod(int itemFlagNo);
+	public int adminItemFlagCheckMethod(memberDTO dto);
 	// 마정협 end //////////////////////////////////////////
 	
 	

@@ -510,11 +510,11 @@ public class SapareDaoImp implements SapareDAO{
 	}
 	
 	public void adminMemberFlagMethod(int memberFlagNo) {
-			sqlSession.update("memberFlag.memberFlagUpdate",memberFlagNo);
+		sqlSession.update("memberFlag.memberFlagUpdate",memberFlagNo);
 	}
 	public void adminItemFlagMethod(int itemFlagNo) {
 		sqlSession.update("itemFlag.itemFlagUpdate",itemFlagNo);
-}
+	}
 	public void adminMemberDeleteMethod(String memberId) {
 		sqlSession.delete("member.memberdelete",memberId);
 	}
@@ -529,6 +529,18 @@ public class SapareDaoImp implements SapareDAO{
 	
 	public List<questionDTO> questionMessageMethod(){
 		return sqlSession.selectList("question.questions");
+	}
+	@Override
+	public void adminMemberHoldMethod(int memberFlagNo) {
+		sqlSession.update("memberFlag.memberFlagHold",memberFlagNo);
+	}
+	@Override
+	public void adminItemFlagHoldMethod(int itemFlagNo) {
+		sqlSession.update("itemFlag.itemFlagHold", itemFlagNo);
+	}
+	@Override
+	public int adminItemFlagCheckMethod(memberDTO dto) {
+		return sqlSession.selectOne("itemFlag.itemFlagCheck", dto);
 	}
 	// 마정협 end //////////////////////////////////////////
 	
@@ -611,7 +623,11 @@ public class SapareDaoImp implements SapareDAO{
 
 	@Override
 	public void addRoom(chatRoomDTO dto) {
-		sqlSession.insert("chatRoom.addRoom", dto);
+		System.out.println("addRoom");
+		System.out.println(dto.getItemMemberName());
+		System.out.println(dto.getMemberName());
+		System.out.println(dto.getItemId());
+		sqlSession.update("chatRoom.addRoom", dto);
 	}
 
 	@Override

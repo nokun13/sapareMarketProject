@@ -384,17 +384,6 @@ white
 <title>사파리 회원 신고관리</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$('.Updd').click(function(){
-							alert('처리되었습니다.');
-							$('.'+ this.id).submit();
-						});
-
-					}); // end ready()
-</script>
 </head>
 <body>
 	<jsp:include page="header.jsp" flush="false" />
@@ -411,7 +400,7 @@ white
 						<li><a href="adminMessage.do">문의메세지</a></li>
 					</ul>
 				</div>
-				<div id="members" style="height: 800px; ">
+				<div id="members" style="height: 800px; overflow:auto;">
 				
 					<table class="table " style="font-size: small;">
 						<tr class="table-primary">
@@ -424,13 +413,14 @@ white
 						</tr>
 						<c:forEach items="${memberFlag}" var="dto">
 							<tr>
-								<form action="memberFlagUpdate.do" id="frmm" method="post" class="Updd${dto.memberFlagNo}"> 
+								<form action="memberFlagUpdate.do" id="frmm" method="post" class="Updd${dto.memberFlagNo} Modd${dto.memberFlagNo}"> 
 								<td>${dto.memberFlagNo}<input hidden="hidden" name="memberFlagNo" value="${dto.memberFlagNo}"/></td>
 								<td>${dto.memberName}</td>
 								<td><a>${dto.memberFlaggerName}</a></td>
 								<td>${dto.memberFlagCategory}</td>
 								<td>${dto.memberFlagContent}</td>
-								<td><button type="button" id="Updd${dto.memberFlagNo}" class="Updd">처리</button></td>
+								<td><button type="button" id="Updd${dto.memberFlagNo}" class="Updd">처리</button>
+								<button type="button" id="Modd${dto.memberFlagNo }" class="Modd">보류</button></td>
 								<!-- <a href='<c:url value='memberFlagUpdate.do=${memberFlagNo}'/>'>처리</a> -->
 								</form>
 							</tr>

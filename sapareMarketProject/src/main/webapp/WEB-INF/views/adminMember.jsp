@@ -276,7 +276,7 @@ white
 	width: 100%;
 	height: 100%;
 	margin-top: 10px;
-	overflow: hidden;
+	overflow: auto;
 	margin-bottom: 15px;
 }
 

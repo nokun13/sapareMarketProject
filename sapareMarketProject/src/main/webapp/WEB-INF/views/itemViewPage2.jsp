@@ -29,12 +29,12 @@
 					<!-- 카테고리 시작점 -->
 					<div class="ctg-start">
 						<a href="http://localhost:8090/sapare/mainPage.do"><img
-							src="image/home.jpg" width=20px; height=20px alt="홈">
+							src="sapare/img/home.jpg" width=20px; height=20px alt="홈">
 							홈</a>
 					</div>
 					<!-- 첫번째 카테고리 구역 -->
 					<div class="ctg1-section">
-						<img src="image/loc.jpg" width=15px; height=15px;
+						<img src="sapare/img/loc.jpg" width=15px; height=15px;
 							alt="카테고리 선택 아이콘">
 						<!-- 첫번째 카테고리 창 길이 -->
 						<div class="ctg1-width">
@@ -42,7 +42,7 @@
 							<div class="ctg1-tle">
 								<!-- 카테고리 옵션 -->
 								<div class="ctg1-op">
-									경매 <img src="image/down.jpg" width=20px;
+									경매 <img src="sapare/img/down.jpg" width=20px;
 										height=15px; alt="카테고리 화살표 아이콘" />
 								</div>
 
@@ -70,7 +70,7 @@
 						<div class="pic-tle">
 							<!-- 상품사진  -->
 							<div class="pic-show">
-								<img src="image/${list.itemImagePath }" class="sc-pic" />
+								<img src="sapare/img/${list.itemImagePath }" class="sc-pic" />
 							</div>
 						</div>
 					</div>
@@ -102,18 +102,18 @@
 										<div class="sa-co-date-tle">
 											<!-- 조회수 틀 -->
 											<div class="co-tle">
-												<img src="image/eye.jpg" width=16px;
+												<img src="sapare/img/eye.jpg" width=16px;
 													height=16px; alt="상품 상태 아이콘">${list.itemViewCnt }
 											</div>
 											<!-- 올린 날짜 틀 -->
 											<div class="date-tle">
-												<img src="image/date.jpg" width=16px;
+												<img src="sapare/img/date.jpg" width=16px;
 													height=16px; alt="상품 상태 아이콘">${list.itemUploadPath }
 											</div>
 										</div>
 										<!-- 신고하기 버튼 -->
 										<button id="decl-btn" class="declaration">
-											<img src="image/declaration.png" width=15px;
+											<img src="sapare/img/declaration.png" width=15px;
 												height=15px; alt="신고 아이콘">신고하기
 										</button>
 										<div id="decl-modal" class="modal">
@@ -287,7 +287,7 @@
 							연관상품
 							<!-- 광고 틀 -->
 							<div class="ad-tle">AD</div>
-							<img src="image/ad.png" alt="AD 가이드" width="16"
+							<img src="sapare/img/ad.png" alt="AD 가이드" width="16"
 								height="16" style="margin-top: 6px;">
 						</div>
 					</div>
@@ -298,7 +298,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> <!-- 광고 사진 -->
 								<div class="ad-pic">
-									<img src="image/carrier.jpg" width="155"
+									<img src="sapare/img/carrier.jpg" width="155"
 										height="155" alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -309,7 +309,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> <!-- 광고 사진 -->
 								<div class="ad-pic">
-									<img src="image/carrier.jpg" width="155"
+									<img src="sapare/img/carrier.jpg" width="155"
 										height="155" alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -320,7 +320,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> <!-- 광고 사진 -->
 								<div class="ad-pic">
-									<img src="image/carrier.jpg" width="155"
+									<img src="sapare/img/carrier.jpg" width="155"
 										height="155" alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -331,7 +331,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> <!-- 광고 사진 -->
 								<div class="ad-pic">
-									<img src="image/carrier.jpg" width="155"
+									<img src="sapare/img/carrier.jpg" width="155"
 										height="155" alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -342,7 +342,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> <!-- 광고 사진 -->
 								<div class="ad-pic">
-									<img src="image/carrier.jpg" width="155"
+									<img src="sapare/img/carrier.jpg" width="155"
 										height="155" alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -365,7 +365,7 @@
 								<!-- 회원 이미지-->
 								<div class="member-img">
 									<a href="profileSell.do">
-									<img src="image/${list.profileImg }" width="80" height="80"
+									<img src="sapare/img/${list.profileImg }" width="80" height="80"
 										alt="회원 이미지">
 									</a>
 								</div>

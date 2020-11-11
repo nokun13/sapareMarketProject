@@ -49,7 +49,7 @@
 	 		   $('#tType').focus();
 	 		   return false;
 		  }
- 		if($('#fType').val()=='so' && $('#fType').val()==''){
+ 		if($('#fType').val()=='so' || $('#fType').val()==''){
 	 		   alert('소분류를 설정해주세요.');
 	 		   $('#fType').focus();
 	 		   return false;
@@ -78,7 +78,6 @@
  		    alert("상품 이미지를 선택해주세요!");
  		    return false;
  		}
- 		
  		 alert('판매등록되었습니다.');
  		 $('#frm').submit();
  	   }); 
@@ -99,7 +98,7 @@
 	 		   $('#tType').focus();
 	 		   return false;
 		  }
-		if($('#fType').val()=='so' && $('#fType').val()==''){
+		if($('#fType').val()=='so' || $('#fType').val()==''){
 	 		   alert('소분류를 설정해주세요.');
 	 		   $('#fType').focus();
 	 		   return false;
@@ -469,6 +468,8 @@ function displayCenterInfo(result, status) {
 	function chnQnaType(type,select,object) {
 		
 	    $('#tType').empty();
+	    $('#fType').empty();
+	    $('#fType').css('visibility', 'hidden');
 	    
 	    $('#tType').css('visibility', 'visible');
 	    $('#AuctionStartPrice').hide();
@@ -481,7 +482,7 @@ function displayCenterInfo(result, status) {
 	        $('#tType').append("<option value='낚시/캠핑' >낚시/캠핑</option>'");
 	        $('#tType').append("<option value='볼링/테니스/배드민턴' >볼링/테니스/배드민턴</option>'");
 	        $('#tType').append("<option value='스키/스노우보드' >스키/스노우보드</option>'");
-	        $('#tType').append("<option value='자건거/MTB' >자건거/MTB</option>'");
+	        $('#tType').append("<option value='자전거/MTB' >자전거/MTB</option>'");
 	        $('#tType').append("<option value='등산' >등산</option>'");
 	        $('#tType').append("<option value='수영' >수영</option>'");	       
 	    } else if (type == '디지털/가전') {  // 일반관련
@@ -528,10 +529,9 @@ function displayCenterInfo(result, status) {
 	    	$("#price").hide() //활성화
 	    }
 	    
-	   
 	    document.getElementById("tType").style.display = "";
 	}
-	function chnQnaTypes(type,select,object) {   
+	function chnQnaTypes(type,select) {   
 	    if ($.trim(select) != "") {
 	        $('#select1').val(type);
 	        $('#fType').val(select);
@@ -784,10 +784,10 @@ function displayCenterInfo(result, status) {
 	    	$('#fType').css('visibility','hidden');
 	    }    
 	   
-	    if($.trim(type) != "") {
+	    /*if($.trim(type) != "") {
 	        $('#select2').val(type);
 	        $('#fType').val(object);
-	    }
+	    }*/
 	    
 	    document.getElementById("fType").style.display = "";
 	}

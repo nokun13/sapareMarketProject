@@ -1,6 +1,10 @@
 $(document).ready(function() {
 	
 	$("#selectBuyer").on("click", function(){
+		if($("#itemStatus").val() === 'n'){
+			alert("이미 판매완료된 상품입니다!");
+			return false;
+		}
 		$(".buyerContainer").empty();
 		$.ajax({
 			type:'GET',
@@ -14,7 +18,6 @@ $(document).ready(function() {
 	});
 	
 	function after_buyer_name(res){
-		console.log("after buyer");
 		$(".buyerContainer").append("<select id='buyerName' name='nickname'></select>");
 		$(".buyerContainer").append("<button type='button' id='confirmBuyer'>거래결정</button>");
 		
@@ -24,11 +27,16 @@ $(document).ready(function() {
 		
 		$("#confirmBuyer").on('click', function(){
 			var buyer = $("#buyerName option:selected").val();
-			if (confirm(buyer+'님과 거래를 완료하겠습니까?')) {
-				$("#buyerConfirmFrm").submit();
-			} else {
-				alert('구매자 선택을 취소하였습니다.');
+			if (buyer === undefined){
 				return false;
+			} else{
+				if (confirm(buyer+'님과 거래를 완료하겠습니까?')) {
+					$("#buyerNickname").val(buyer);
+					$("#buyerConfirmFrm").submit();
+				} else {
+					alert('구매자 선택을 취소하였습니다.');
+					return false;
+				}
 			}
 		});
 	};
@@ -173,8 +181,9 @@ $(document).ready(function() {
 								var a	= '<div class="friend"><input type="hidden" id="itemId" value="'+$(this)[0].itemId+'"> '
 								+ '<input type="hidden" id="chatRoomId" value="'+$(this)[0].chatRoomId+'">'
 								+ '<input type="hidden" class="memberName" value="'+$(this)[0].memberName+'">  '
-								+ '<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />'
-								+ '<p><strong>"'+$(this)[0].memberName+'"</strong> <span>상품</span></p>'
+								+ '<input type="hidden" class="nickname" value="'+$(this)[0].nickname+'">  '
+								+ '<img style="object-fit:cover;" src="/sapare/img/'+$(this)[0].profileImg+'" />'
+								+ '<p><strong>'+$(this)[0].nickname+'</strong> <span>'+$(this)[0].itemName+'</span></p>'
 								if($(this)[0].isreadcount>0)
 								+ '<div class="readcount"><span>'+$(this)[0].isreadcount+'</span></div></div>'
 							$('#friends').prepend(a);

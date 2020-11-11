@@ -35,6 +35,6 @@
 	
 	<insert id="submitReview" parameterType="dto.reviewDTO">
 		insert into saparereview
-        values(saparereview_reviewno_seq.nextval,#{orderId},#{itemId},sysdate,#{reviewContent},#{reviewStar})
+        values(saparereview_reviewno_seq.nextval,#{orderId},#{memberName},#{itemId},sysdate,#{reviewContent},#{reviewStar})
 	</insert>
 </mapper>

@@ -6,7 +6,7 @@ public class chatviewDTO {
 
 	private String memberName, itemName, nickname, itemImagePath, profileImg;
 	private int chatRoomId, itemId, isreadcount;
-	private Timestamp myenter, myexit, enterTime, exitTime;
+	private Timestamp enterTime, exitTime;
 	public String getMemberName() {
 		return memberName;
 	}
@@ -30,18 +30,6 @@ public class chatviewDTO {
 	}
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
-	}
-	public Timestamp getMyenter() {
-		return myenter;
-	}
-	public void setMyenter(Timestamp myenter) {
-		this.myenter = myenter;
-	}
-	public Timestamp getMyexit() {
-		return myexit;
-	}
-	public void setMyexit(Timestamp myexit) {
-		this.myexit = myexit;
 	}
 	public int getIsreadcount() {
 		return isreadcount;

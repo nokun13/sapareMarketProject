@@ -347,7 +347,7 @@
 	padding: 20px;
 	border: 1px solid #888;
 	width: 35%;
-	height: 47%;
+	height: 52%;
 }
 
 /* The Close Button */
@@ -598,7 +598,9 @@
 		
 		// textarea 변경가능으로 바꾸고 소개글 뿌려주기, 확인 버튼 누르면 저장
 		function change_about_content(res){
-			
+			if(res.memberAbout === null){
+				res.memberAbout = "";
+			}
 			$(".memberAbout").html('<textarea id="aboutContent" rows="8" cols="65" maxlength="80" style="background-color:white;border:1px solid black;cursor:auto;">'+res.memberAbout+'</textarea>')
 			$(".aboutChangeBox").append('<button type="button" id="submitAbout" style="margin: 10px; cursor:pointer;">확인</button>');
 			
@@ -620,7 +622,9 @@
 		
 		// 소개글 저장 후 textarea 복구, 버튼 복구
 		function after_about_change(res){
-			
+			if(res.memberAbout === null){
+				res.memberAbout = "";
+			}
 			$("#submitAbout").remove();
 			$("#changeAbout").show();
 			$(".memberAbout").html('<textarea readonly id="aboutContent" rows="8" cols="65" maxlength="80">'+res.memberAbout+'</textarea>');
@@ -647,25 +651,28 @@
 			var result = str.match(patt);
 			
 			if($("#filepath").val() === ""){
+				$(".imgChangeBox").empty();
 				alert("프로필 사진 변경을 취소하였습니다.")
-				$('#memberImg').attr("src", "image/${member.profileImg }");
+				$('#memberImg').attr("src", "/sapare/img/${member.profileImg }");
 				$(".imgChangeBox").html('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
 				return false;
 			}
 			
 			if(!result){
+				$(".imgChangeBox").empty();
 				alert('jpeg, jpg, gif, png만 가능합니다.');
 				$('#filepath').val("");
-				$('#memberImg').attr("src", "image/${member.profileImg }");
+				$('#memberImg').attr("src", "/sapare/img/${member.profileImg }");
 				$(".imgChangeBox").html('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
 				return false;
 			}
 			
 			// 파일첨부 사이즈 체크
 			if(this.files[0].size > 100000000){
+				$(".imgChangeBox").empty();
 				alert('100MB 이하만 가능합니다.');
 				$('#filepath').val("");
-				$('#memberImg').attr("src", "image/${member.profileImg }");
+				$('#memberImg').attr("src", "/sapare/img/${member.profileImg }");
 				$(".imgChangeBox").html('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
 				return false;
 			}
@@ -715,7 +722,7 @@
 		
 		// 변경된 프로필 사진으로 보이게끔 한다
 		function profile_img_change(res){
-			$("#memberImg").attr('src', "image/"+res.profileImg);
+			$("#memberImg").attr('src', "/sapare/img/"+res.profileImg);
 			$("#submitProfileImg").remove();
 			$("#profileImgChange").show();
 		};
@@ -824,7 +831,7 @@
 			<!-- 아래 if 코드 신고하기 버튼 감싸기 !!! -->
 			<c:if test="${member.memberName != sessionScope.memberName}">
 				<button class="memberFlag" id="memberFlag" type="button" style="cursor:pointer; margin-right:15px;">
-					<img src="image/declaration.png" width=15px; height=15px; alt="신고 아이콘"> 
+					<img src="/sapare/img/declaration.png" width=15px; height=15px; alt="신고 아이콘"> 
 					<span>신고하기</span>
 				</button>
 			</c:if>
@@ -832,7 +839,7 @@
 			
 			<div class="profileContainer">
 				<div id="profileImageBox">
-					<img id="memberImg" style="height: 70%; width: 70%; border-radius: 15px;margin-bottom: 5px;cursor:pointer;object-fit:cover;" src="image/${member.profileImg }">
+					<img id="memberImg" style="height: 70%; width: 70%; border-radius: 15px;margin-bottom: 5px;cursor:pointer;object-fit:cover;" onerror="this.src='/sapare/img/default.png'" src="/sapare/img/${member.profileImg }">
 					<div class="nickname">
 						${member.nickname }
 					</div>
@@ -914,7 +921,7 @@
 							<c:forEach items="${reviewBoxList}" var="dto">
 								<div class="reviewBox">
 									<div class="reviewerImgBox">
-										<a href="profileSell.do?memberName=${dto.memberName }"><img class="reviewerImg" src="image/${dto.profileImg }" style="border-radius:5px;object-fit:cover;"></a>
+										<a href="profileSell.do?memberName=${dto.memberName }"><img class="reviewerImg" src="/sapare/img/${dto.profileImg }" onerror="this.src='/sapare/img/default.png'" style="border-radius:5px;object-fit:cover;"></a>
 									</div>
 									<div class="reviewInfoBox">
 										<div class="reviewerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis; white-space: nowrap;">${dto.nickname }</div>

@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class reviewDTO {
 
-	private String orderId, memberName, reviewContent, itemName;
-	private int reviewNo, itemId, reviewStar;
+	private String memberName, reviewContent, itemName;
+	private int orderId, reviewNo, itemId, reviewStar;
 	private Date reviewDate;
 	
-	public String getOrderId() {
+	public int getOrderId() {
 		return orderId;
 	}
-	public void setOrderId(String orderId) {
+	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
 	public String getMemberName() {

@@ -325,7 +325,7 @@
 }
 
 .writeReviewWrapper{
-	display: none;
+	display: flex;
 	width: 100%;
     height: 215px;
     flex-direction: row;
@@ -572,9 +572,9 @@
 		
 		// 후기 올리기 toggle 기능
 		$(".leaveReviewBtn").click(function(){
+			console.log("review button");
 			$('.' + this.id).slideToggle();
 			$('.' + this.id).css('display', 'flex');
-			$(".warning_msg").css("display", "flex");
 		});
 		
 		// 닉네임 변경 버튼 클릭 후 현재 닉네임 가져오기
@@ -647,7 +647,6 @@
 		
 		// 소개글 변경 버튼 클릭 후 소개글 가져오기
 		$("#changeAbout").click(function(){
-			
 			$.ajax({
 				type:'GET',
 				dataType:'json',
@@ -662,7 +661,9 @@
 		
 		// textarea 변경가능으로 바꾸고 소개글 뿌려주기, 확인 버튼 누르면 저장
 		function change_about_content(res){
-			
+			if(res.memberAbout === null){
+				res.memberAbout = "";
+			}
 			$(".memberAbout").html('<textarea id="aboutContent" rows="8" cols="65" maxlength="80" style="background-color:white;border:1px solid black;cursor:auto;">'+res.memberAbout+'</textarea>')
 			$(".aboutChangeBox").append('<button type="button" id="submitAbout" style="margin: 10px; cursor:pointer;">확인</button>');
 			
@@ -681,22 +682,23 @@
 			});
 			
 		};
-		
 		// 소개글 저장 후 textarea 복구, 버튼 복구
 		function after_about_change(res){
-			
+			if(res.memberAbout === null){
+				res.memberAbout = "";
+			}
 			$("#submitAbout").remove();
 			$("#changeAbout").show();
 			$(".memberAbout").html('<textarea readonly id="aboutContent" rows="8" cols="65" maxlength="80">'+res.memberAbout+'</textarea>');
 		};
 		
 		// 프로필 사진이나 사진수정버튼 누르면 '사진 고르기' 버튼 클릭
-		$("#profileImgChange").click(function() {
+		$("#profileImgChange").on('click', function() {
 		    $("#filepath").click();
 		});
 		$("#memberImg").click(function() {
 		    $("#filepath").click();
-		});
+ 		});
 		
 		// 새로운 프로필 사진 선택 후
 		$('#filepath').on('change', function(){
@@ -707,26 +709,29 @@
 			var result = str.match(patt);
 			
 			if($("#filepath").val() === ""){
+				$(".imgChangeBox").empty();
 				alert("프로필 사진 변경을 취소하였습니다.")
-				$('#memberImg').attr("src", "image/${member.profileImg }");
-				$(".imgChangeBox").html('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
+				$('#memberImg').attr("src", "/sapare/img/${member.profileImg }");
+				$(".imgChangeBox").append('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
 				return false;
 			}
 			
 			if(!result){
+				$(".imgChangeBox").empty();
 				alert('jpeg, jpg, gif, png만 가능합니다.');
 				$('#filepath').val("");
-				$('#memberImg').attr("src", "image/${member.profileImg }");
-				$(".imgChangeBox").html('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
+				$('#memberImg').attr("src", "/sapare/img/${member.profileImg }");
+				$(".imgChangeBox").append('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
 				return false;
 			}
 			
 			// 파일첨부 사이즈 체크
 			if(this.files[0].size > 100000000){
+				$(".imgChangeBox").empty();
 				alert('100MB 이하만 가능합니다.');
 				$('#filepath').val("");
-				$('#memberImg').attr("src", "image/${member.profileImg }");
-				$(".imgChangeBox").html('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
+				$('#memberImg').attr("src", "/sapare/img/${member.profileImg }");
+				$(".imgChangeBox").append('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
 				return false;
 			}
 			
@@ -775,7 +780,7 @@
 		
 		// 변경된 프로필 사진으로 보이게끔 한다
 		function profile_img_change(res){
-			$("#memberImg").attr('src', "image/"+res.profileImg);
+			$("#memberImg").attr('src', "/sapare/img/"+res.profileImg);
 			$("#submitProfileImg").remove();
 			$("#profileImgChange").show();
 		};
@@ -807,7 +812,7 @@
         	$("#searchFrm").submit();
 		});
 			
-}); // end ready()
+}) // end ready()
 	
 </script>
 </head>
@@ -826,7 +831,7 @@
 			
 			<div class="profileContainer">
 				<div id="profileImageBox">
-					<img id="memberImg" style="height: 70%; width: 70%; border-radius: 15px;margin-bottom: 5px;cursor:pointer;object-fit:cover;" src="image/${member.profileImg }">
+					<img id="memberImg" style="height: 70%; width: 70%; border-radius: 15px;margin-bottom: 5px;cursor:pointer;object-fit:cover;" onerror="this.src='/sapare/img/default.png'" src="/sapare/img/${member.profileImg }">
 					<div class="nickname">
 						${member.nickname }
 					</div>
@@ -916,7 +921,7 @@
 							<c:forEach items="${bList}" var="dto">
 								<div class="buyItemBox">
 									<div class="buyItemImg">
-										<a href="itemViewPage.do?itemId=${dto.itemId }"><img class="itemImg" style="object-fit:cover;" src="image/${dto.itemImagePath }"></a>
+										<a href="itemViewPage.do?itemId=${dto.itemId }"><img class="itemImg" style="object-fit:cover;" src="/sapare/img/${dto.itemImagePath }" onerror="this.src='/sapare/img/defaultAD.png'"></a>
 									</div>
 									<div class="buyItemInfo">
 										<div class="allItemInfo">
@@ -987,7 +992,7 @@
 								<c:if test="${dto.reviewNo != 0}">
 									<div class="reviewBox${dto.reviewNo }" style="display:none;width: 100%;height: 150px;background: rgb(231, 239, 243);box-shadow: rgb(226, 234, 238) 6px 6px 4px, rgb(236, 244, 248) -6px -6px 4px;flex-direction: row;margin-bottom: 2%;border-radius: 5px;">
 										<div class="buyerImgBox">
-											<a href="profileSell.do?memberName=${dto.memberName }"><img class="buyerImg" src="image/${dto.profileImg }" style="border-radius:5px;object-fit:cover;"></a>
+											<a href="profileSell.do?memberName=${dto.memberName }"><img class="buyerImg" src="/sapare/img/${dto.profileImg }" onerror="this.src='/sapare/img/default.png'" style="border-radius:5px;object-fit:cover;"></a>
 										</div>
 										<div class="buyerReviewBox">
 											<div class="buyerName" style="margin-top:10px; font-weight:bold; overflow: hidden; margin-left: 5px; height: 19%; text-overflow: ellipsis;white-space: nowrap;">${dto.nickname }</div>

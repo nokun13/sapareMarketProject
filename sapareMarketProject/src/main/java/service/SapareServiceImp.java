@@ -254,7 +254,7 @@ public class SapareServiceImp implements SapareService{
 		// 닉네임으로 회원 정보
 	@Override
 	public memberDTO getInfoByNickProcess(String nickname) {
-		return getInfoByNickProcess(nickname);
+		return dao.getInfoByNickMethod(nickname);
 	}
 	
 		// 거래완료 주문
@@ -369,6 +369,9 @@ public class SapareServiceImp implements SapareService{
 	@Override
 	public void logout(HttpSession session) {
 		// TODO Auto-generated method stub
+		session.removeAttribute("logOk");
+		session.removeAttribute("id");
+		session.removeAttribute("memberName");
 		session.invalidate();
 	}
 
@@ -517,6 +520,18 @@ public class SapareServiceImp implements SapareService{
 	}
 	public List<questionDTO> questionMessageProcess(){
 		return dao.questionMessageMethod();
+	}
+	@Override
+	public void memberFlagHoldProcess(int memberFlagNo) {
+		dao.adminMemberHoldMethod(memberFlagNo);
+	}
+	@Override
+	public void itemFlagHoldProcess(int itemFlagNo) {
+		dao.adminItemFlagHoldMethod(itemFlagNo);
+	}
+	@Override
+	public int itemFlagCheckProcess(memberDTO dto) {
+		return dao.adminItemFlagCheckMethod(dto);
 	}
 	
 	// 마정협 end //////////////////////////////////////////

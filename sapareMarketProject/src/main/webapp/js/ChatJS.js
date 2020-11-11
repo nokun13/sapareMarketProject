@@ -4,7 +4,9 @@ var messagedate =TimeStemp(new Date(Date.now()))[0];
 $(document).ready(function () {
 	
     $("#send").on('click', function () {
-    	sendmessage($(this));
+    	if( $("#sendmessage input").val()==""||$("#sendmessage input").val()=="Send message...")
+    	{}else{
+    		sendmessage($(this));}
         
     });
     $("#searchfield").focus(function () {
@@ -29,7 +31,9 @@ $(document).ready(function () {
     });
     $("#sendmessage input").on('keypress',function(){
     	  if ( window.event.keyCode == 13 ) {
-    		  sendmessage($(this).next())
+    		  if( $("#sendmessage input").val()==""||$("#sendmessage input").val()=="Send message...")
+    	    	{}else{
+    		  sendmessage($(this).next())}
           }
     	
     })
@@ -44,7 +48,7 @@ $(document).ready(function () {
         }
         else{
         	$(".friend").each(function(){
-        		var fr =$(this).children(".memberName");
+        		var fr =$(this).children(".nickname");
         		console.log(fr.val())
         		console.log(currentVal)
         		
@@ -103,21 +107,26 @@ function TimeStemp(date){
 
 }
 function chatOpen(room,openUser,status,id){
-var ttttt =null;
+var ttttt;
+console.log("log start");
 	$.ajax({
          type: 'GET',
          dataType: 'json',
          async: false,
          url: 'chatFrameOpen.do?roomNum=' + chatRoom.children('#chatRoomId').val()+'&memberid='+openUser+'&status='+status+'&fid='+id,
          success: function(Log){
-        	if(Log != null)
-        		if(Log.enterTime<Log.exitTime)
-        		 ttttt= Log.exitTime
+        	 console.log("log");
+        	
+        			ttttt= Log.exitTime
+        			console.log(Log);
+        			
+        		
          },erorr: function(e){
         	 console.log(e);
          }
 	 
 	 })
+	 console.log("log end");
 	return ttttt;
 	
 }
@@ -134,20 +143,21 @@ function onMessage(evt) { // 서버가 전송한 메세지 가져오기
     date.setUTCHours(date.getUTCHours()+9)
     console.log('메세지 왔다')
     console.log(data[0])
-    console.log(chatRoom.chatRoomId);
     // 이미지 주소 chat.chatImgPath
     // 아이템 아이디 chat.itemid
     if (chatRoom.children('#chatRoomId').val() == data[0]) 
     {
     	var dateTime;
-    	var dateTime = TimeStemp(date);
+    	var dateTime = TimeStemp(new Date(Date.now()));
         if(messagedate != dateTime[0]) {
         	messagedate = dateTime[0];
         	$("#chat-messages").append('<label>'+messagedate+'</label>')
         }
+       
+        
     	
     	
-        var message = '<div class="message"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" /> <div class="bubble">' + data[1] + '<div class="corner"></div>' + '<span>' + dateTime[1] + '</span></div></div>';
+        var message = '<div class="message"><img src="/sapare/img/defaultAD.png" /> <div class="bubble">' + data[1] + '<div class="corner"></div>' + '<span>' + dateTime[1] + '</span></div></div>';
         $("#chat-messages").append(message)
         var objDiv = document.getElementById("chat-messages");
         objDiv.scrollTop = objDiv.scrollHeight;
@@ -175,9 +185,13 @@ function addfriend(){
 	                    $("#chat-messages").children(".message").remove();
 	                    $("#chat-messages").children("label").remove();
 	                    chatRoom.children('.readcount').remove()
-	                    var memberName =chatRoom.children('#memberName').val();
+	                    var memberName =chatRoom.children('.memberName').val();
 	                    websocket.send("chatroomON|" + memberName);
-	                   var fLog =  chatOpen(chatRoom.children('#chatRoomId').val(),myid,"on",memberName)
+	                    console.log(chatRoom.children('#chatRoomId').val())
+	                    console.log(myid)
+	                    console.log("on")
+	                    console.log(memberName)
+	                   var fLog = chatOpen(chatRoom.children('#chatRoomId').val(),myid,"on",memberName)
 	                    var messagedate;
 	                 console.log(fLog)
 	                 console.log("aaaaa")
@@ -190,6 +204,8 @@ function addfriend(){
 	                        }
 	                        var id;
 	                        var isread;
+	                        consoel.log(chat.messageDate>fLog);
+	                        consoel.log("chat.messageDate>fLog");
 	                        if (chat.memberName == myid) 
 	                        {   id = '<div class="message right">';
 	                        	if(fLog==null){isread=''}
@@ -199,7 +215,7 @@ function addfriend(){
 	                        		isread=''
 	                        }
 	                         else 
-	                         {  id = '<div class="message"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />';
+	                         {  id = '<div class="message"><img src="/sapare/img/defaultAD.png" />';
 	                         isread =''
 	                         }
 	                        // 이미지 주소 chat.chatImgPath
@@ -253,6 +269,7 @@ function addfriend(){
 	            }, 150);
 	            $(".floatingImg").animate({
 	                width: "68px",
+	                height : "68px",
 	                left: "108px",
 	                top: "20px"
 	            }, 200);
@@ -287,7 +304,7 @@ function closeanim(){
 function sendmessage(sendBtn){
 	 var item = chatRoom.children('#itemId').val(); // 아이템번호.
      var Room = chatRoom.children('#chatRoomId').val(); // 아이템번호.
-     var nick = chatRoom.children('#memberName').val(); // 상대방 아이디
+     var nick = chatRoom.children('.memberName').val(); // 상대방 아이디
      var msg = $('#message').val();
      websocket.send("msg|" + item + "|" + Room + "|" + nick + "|" + myid + "|" + sendBtn.prev().val());
      var dateTime;

@@ -229,6 +229,9 @@ public interface SapareService {
 	public void MemberDeleteProcess(String memberId);
 	public List<itemCategoryDTO> countCategoeyProcess();
 	public List<questionDTO> questionMessageProcess();
+	public void memberFlagHoldProcess(int memberFlagNo);
+	public void itemFlagHoldProcess(int itemFlagNo);
+	public int itemFlagCheckProcess(memberDTO dto);
 	// 마정협 end //////////////////////////////////////////
 
 	

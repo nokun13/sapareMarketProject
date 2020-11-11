@@ -31,11 +31,11 @@
 					<!-- 카테고리 시작점 -->
 					<div class="ctg-start">
 						<a href="http://localhost:8090/sapare/mainPage.do"><img
-							src="image/home.jpg" width=20px; height=20px alt="홈"> 홈</a>
+							src="/sapare/img/home.jpg" width=20px; height=20px alt="홈"> 홈</a>
 					</div>
 					<!-- 첫번째 카테고리 구역 -->
 					<div class="ctg1-section">
-						<img src="image/loc.jpg" width=15px; height=15px;
+						<img src="/sapare/img/loc.jpg" width=15px; height=15px;
 							alt="카테고리 선택 아이콘">
 						<!-- 첫번째 카테고리 창 길이 -->
 						<div class="ctg1-width">
@@ -56,7 +56,7 @@
 					</div>
 					<!-- 두번째 카테고리 구역 -->
 					<div class="ctg2-section">
-						<img src="image/loc.jpg" width=15px; height=15px;
+						<img src="/sapare/img/loc.jpg" width=15px; height=15px;
 							alt="카테고리 선택 아이콘">
 						<!-- 두번째 카테고리 창 길이 -->
 						<div class="ctg2-width">
@@ -115,7 +115,7 @@
 					</div>
 					<!-- 세번째 카테고리 구역 -->
 					<div class="ctg3-section">
-						<img src="image/loc.jpg" width=15px; height=15px;
+						<img src="/sapare/img/loc.jpg" width=15px; height=15px;
 							alt="카테고리 선택 아이콘">
 						<!-- 세번째 카테고리 창 길이 -->
 						<div class="ctg3-width">
@@ -383,10 +383,10 @@
 								<!-- 상품사진  -->
 								<div class="pic-show">
 									<c:if test="${fn:contains(item.itemStatus, 'n')}">
-								    	<img src="image/soldout.png" class="sc-pic">
+								    	<img src="/sapare/img/soldout.png" class="sc-pic">
 									</c:if>
 									<c:if test="${fn:contains(item.itemStatus, 'y')}">
-									    <img src="image/${item.itemImagePath}" class="sc-pic">
+									    <img src="/sapare/img/${item.itemImagePath}" onerror="this.src='/sapare/img/defaultAD.png'" class="sc-pic">
 									</c:if>
 								</div>
 							</div>
@@ -429,31 +429,31 @@
 												<!-- 찜 틀 -->
 												<div class="sa-tle">
 													<c:if test="${want == 1 }">
-														<img src="image/safill.png" id="sa-img" width=16px;
+														<img src="/sapare/img/safill.png" id="sa-img" width=16px;
 															height=16px; alt="상품 상태 아이콘">
 														<div class="sa-count">${item.itemWantCnt }</div>
 													</c:if>
 													<c:if test="${want == 0 || want == null}">
-														<img src="image/sa.png" id="sa-img" width=16px;
+														<img src="/sapare/img/sa.png" id="sa-img" width=16px;
 															height=16px; alt="상품 상태 아이콘">
 														<div class="sa-count">${item.itemWantCnt }</div>
 													</c:if>
 												</div>
 												<!-- 조회수 틀 -->
 												<div class="co-tle">
-													<img src="image/eye.jpg" width=16px; height=16px;
+													<img src="/sapare/img/eye.jpg" width=16px; height=16px;
 														alt="상품 상태 아이콘">${item.itemViewCnt }
 												</div>
 												<!-- 올린 날짜 틀 -->
 												<div class="date-tle">
-													<img src="image/date.jpg" width=16px; height=16px;
+													<img src="/sapare/img/date.jpg" width=16px; height=16px;
 														alt="상품 상태 아이콘"><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${item.itemUploadDate }" />
 												</div>
 											</div>
 											<div id="singo">
 												<!-- 신고하기 버튼 -->
 												<button id="decl-btn" class="declaration" type="button">
-													<img src="image/declaration.png" width=15px; height=15px;
+													<img src="/sapare/img/declaration.png" width=15px; height=15px;
 														alt="신고 아이콘"> <span>신고하기</span>
 												</button>
 												<input type="hidden" value="${sessionScope.id}"
@@ -495,21 +495,21 @@
 											<div class="bt-container">
 												<c:if test="${want == 0 || want == null}">
 													<button type="button" class="bt bt-heart" id="btNotWant">
-														<img src="image/sa.png" id="bt-img" width="18" height="18"
+														<img src="/sapare/img/sa.png" id="bt-img" width="18" height="18"
 															alt="찜 아이콘"> <span>찜</span>
 													</button>
 												</c:if>
 												<c:if test="${want == 1 }">
 													<button type="button" class="bt bt-heart" id="btWant"
 														style="background: #FF6A6A;">
-														<img src="image/safill.png" id="bt-img" width="18"
+														<img src="/sapare/img/safill.png" id="bt-img" width="18"
 															height="18" alt="찜 아이콘"> <span>찜</span>
 													</button>
 												</c:if>
 												<!-- 버튼 취소 -->
 												<%-- <div class="cancle-bt">
 													<input type="hidden" value="${sessionScope.id}" class="session_id">
-													<img src="image/declaration.png" width="16" height="16"
+													<img src="/sapare/img/declaration.png" width="16" height="16"
 														alt="찜 아이콘"> <span class="cancle-bt-span">찜이
 														해제</span> 되었습니다.
 												</div> --%>
@@ -526,17 +526,19 @@
 										</div>
 									</div>
 									<div class="buyerContainer">
-										<form id="buyerConfirmFrm" method="post" action="buyerConfirm.do">
-											<input hidden="hidden" name="itemId" value="${item.itemId }" />
-											<input hidden="hidden" name="memberName" value="${sessionScope.memberName }" />
-											<input hidden="hidden" name="orderPrice" value="${item.itemPrice }" />
-										</form>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+			</form>
+			<!-- 거래결정 form -->
+			<form id="buyerConfirmFrm" method="post" action="buyerConfirm.do">
+				<input hidden="hidden" id="buyerNickname" name="nickname" />
+				<input hidden="hidden" name="itemId" value="${item.itemId }" />
+				<input hidden="hidden" name="memberName" value="${sessionScope.memberName }" />
+				<input hidden="hidden" name="orderPrice" value="${item.itemPrice }" />
 			</form>
 			<!-- 신고 모달창 -->
 			<div id="decl-modal" class="modal">
@@ -658,7 +660,7 @@
 							최신상품
 							<!-- 광고 틀 -->
 							<div class="ad-tle">AD</div>
-							<img src="image/ad.png" alt="AD 가이드" width="16" height="16"
+							<img src="/sapare/img/ad.png" alt="AD 가이드" width="16" height="16"
 								style="margin-top: 6px;">
 						</div>
 					</div>
@@ -675,8 +677,13 @@
 									</c:url>
 									<a class="ad-rink" href="${path}"> <!-- 광고 사진 -->
 										<div class="ad-pic">
-											<img src="image/${dto.itemImagePath}" width="155" height="155"
-												onerror="this.src='image/quokka.jpg'" alt="상품 이미지">
+											<c:if test="${fn:contains(dto.itemStatus, 'n')}">
+									    		<img src="/sapare/img/soldout.png" width="155" height="155" style="object-fit:contain;">
+											</c:if>
+											<c:if test="${fn:contains(dto.itemStatus, 'y')}">
+												<img src="/sapare/img/${dto.itemImagePath}" width="155" height="155"
+												onerror="this.src='/sapare/img/quokka.jpg'" alt="상품 이미지">
+											</c:if>
 											<div class="ad-pic2"></div>
 										</div>
 										<div class="ad-pic-title">"${dto.itemName}"</div>
@@ -686,7 +693,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> 광고 사진
 								<div class="ad-pic">
-									<img src="image/carrier.jpg" width="155" height="155"
+									<img src="/sapare/img/carrier.jpg" width="155" height="155"
 										alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -697,7 +704,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> 광고 사진
 								<div class="ad-pic">
-									<img src="image/carrier.jpg" width="155" height="155"
+									<img src="/sapare/img/carrier.jpg" width="155" height="155"
 										alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -708,7 +715,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> 광고 사진
 								<div class="ad-pic">
-									<img src="image/carrier.jpg" width="155" height="155"
+									<img src="/sapare/img/carrier.jpg" width="155" height="155"
 										alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -719,7 +726,7 @@
 							<a class="ad-rink"
 								href="http://localhost:8090/sapare/mainPage.do"> 광고 사진
 								<div class="ad-pic">
-									<img src="image/carrier.jpg" width="155" height="155"
+									<img src="/sapare/img/carrier.jpg" width="155" height="155"
 										alt="상품 이미지">
 									<div class="ad-pic2"></div>
 								</div>
@@ -747,8 +754,8 @@
 									<input hidden="hidden" id="sellerName"
 										value="${member.memberName }" /> <a
 										href="profileSell.do?memberName=${member.memberName }"> <img
-										src="image/${member.profileImg }"
-										onerror="this.src='image/default.png'" width="80" height="80"
+										src="/sapare/img/${member.profileImg }"
+										onerror="this.src='/sapare/img/default.png'" width="80" height="80"
 										alt="회원 이미지" style="object-fit: cover;">
 									</a>
 								</div>

@@ -9,6 +9,8 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
 	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
 	crossorigin="anonymous">
+<meta charset="UTF-8">
+<title>사파리 상품 신고관리</title>
 <style>
 * {
 	text-decoration: none;
@@ -355,19 +357,23 @@ header ul li a {
 	font-size: 20px;
 }
 </style>
-<meta charset="UTF-8">
-<title>사파리 상품 신고관리</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$('.Updd').click(function(){
-							alert('처리되었습니다.');
-							$('.'+ this.id).submit();
-						});
-					}); // end ready()
+$(document)
+.ready(
+		function() {
+			$('.Updd').click(function(){
+				alert('처리되었습니다.');
+				$('.'+ this.id).submit();
+			});
+			
+			$(".Modd").on('click', function(){
+				$("#frmm").attr('action', 'itemFlagHold.do');
+				$('.'+ this.id).submit();
+			});	
+			
+		}); // end ready()
 </script>
 </head>
 <body>
@@ -386,8 +392,8 @@ header ul li a {
 						<li><a href="adminMessage.do">문의메세지</a></li>
 					</ul>
 				</div>
-				<div id="members">
-					<table class="table" style="font-size: small; ">
+				<div id="members" style="overflow:auto;">
+					<table class="table" style="font-size: small; width: ">
 						<tr class="table-primary">
 							<th scope="col">신고번호</th>
 							<th scope="col">신고자아이디</th>
@@ -401,14 +407,15 @@ header ul li a {
 
 						<c:forEach items="${itemFlag}" var="dto">
 							<tr>
-								<form action="itemFlagUpdate.do" id="frmm" method="post" class="Updd${dto.itemFlagNo}">
+								<form action="itemFlagUpdate.do" id="frmm" method="post" class="Updd${dto.itemFlagNo} Modd${dto.itemFlagNo}">
 								<td>${dto.itemFlagNo}<input type="hidden" name="itemFlagNo" value="${dto.itemFlagNo}"></td>
 								<td>${dto.memberName}</td>
 								<td>${dto.itemId}</td>
 								<td>${dto.itemFlaggerName}</td>
 								<td>${dto.itemFlagCategory}</td>
 								<td>${dto.itemFlagContent}</td>
-								<td><button type="button" id="Updd${dto.itemFlagNo}" class="Updd">처리</button></td>
+								<td><button type="button" id="Updd${dto.itemFlagNo}" class="Updd">처리</button>
+								<button type="button" id="Modd${dto.itemFlagNo }" class="Modd">보류</button></td>
 								</form>
 							</tr>
 						</c:forEach>

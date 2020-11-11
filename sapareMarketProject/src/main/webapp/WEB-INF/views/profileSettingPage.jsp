@@ -588,7 +588,9 @@ input, button{
 		
 		// textarea 변경가능으로 바꾸고 소개글 뿌려주기, 확인 버튼 누르면 저장
 		function change_about_content(res){
-			
+			if(res.memberAbout === null){
+				res.memberAbout = "";
+			}
 			$(".memberAbout").html('<textarea id="aboutContent" rows="8" cols="65" maxlength="80" style="background-color:white;border:1px solid black;cursor:auto;">'+res.memberAbout+'</textarea>')
 			$(".aboutChangeBox").append('<button type="button" id="submitAbout" style="margin: 10px; cursor:pointer;">확인</button>');
 			
@@ -610,7 +612,9 @@ input, button{
 		
 		// 소개글 저장 후 textarea 복구, 버튼 복구
 		function after_about_change(res){
-			
+			if(res.memberAbout === null){
+				res.memberAbout = "";
+			}
 			$("#submitAbout").remove();
 			$("#changeAbout").show();
 			$(".memberAbout").html('<textarea readonly id="aboutContent" rows="8" cols="65" maxlength="80">'+res.memberAbout+'</textarea>');
@@ -633,25 +637,28 @@ input, button{
 			var result = str.match(patt);
 			
 			if($("#filepath").val() === ""){
+				$(".imgChangeBox").empty();
 				alert("프로필 사진 변경을 취소하였습니다.")
-				$('#memberImg').attr("src", "image/${member.profileImg }");
+				$('#memberImg').attr("src", "/sapare/img/${member.profileImg }");
 				$(".imgChangeBox").html('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
 				return false;
 			}
 			
 			if(!result){
+				$(".imgChangeBox").empty();
 				alert('jpeg, jpg, gif, png만 가능합니다.');
 				$('#filepath').val("");
-				$('#memberImg').attr("src", "image/${member.profileImg }");
+				$('#memberImg').attr("src", "/sapare/img/${member.profileImg }");
 				$(".imgChangeBox").html('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
 				return false;
 			}
 			
 			// 파일첨부 사이즈 체크
 			if(this.files[0].size > 100000000){
+				$(".imgChangeBox").empty();
 				alert('100MB 이하만 가능합니다.');
 				$('#filepath').val("");
-				$('#memberImg').attr("src", "image/${member.profileImg }");
+				$('#memberImg').attr("src", "/sapare/img/${member.profileImg }");
 				$(".imgChangeBox").html('<button type="button" id="profileImgChange" style="cursor:pointer; margin: 5px 0;">프로필사진수정</button>');
 				return false;
 			}
@@ -701,7 +708,7 @@ input, button{
 		
 		// 변경된 프로필 사진으로 보이게끔 한다
 		function profile_img_change(res){
-			$("#memberImg").attr('src', "image/"+res.profileImg);
+			$("#memberImg").attr('src', "/sapare/img/"+res.profileImg);
 			$("#submitProfileImg").remove();
 			$("#profileImgChange").show();
 		};
@@ -716,15 +723,15 @@ input, button{
 		// 전화번호 중복 체크
 		$(".phoneNumCheck").click(function(){
 			var phone = $("#phoneNum").val();
-			if($(".phoneNumInput").val().length != 11){
-				alert("전화번호는 11자리수로 입력해주세요!");
+			if($(".phoneNumInput").val().length != 8){
+				alert("전화번호는 11자리수가 되야 합니다!");
 				$(".phoneNumInput").val("");
 				return false;
-			}else{
+			} else{
 				$.ajax({
 					type:'GET',
 					dataType:'json',
-					url:'checkPhoneNum.do?phoneNum='+$(".phoneNumInput").val().slice(1,11),
+					url:'checkPhoneNum.do?phoneNum=10'+$(".phoneNumInput").val(),
 					success: after_check_phone,
 					error:function(request,status,error){
 					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -741,7 +748,7 @@ input, button{
 				$.ajax({
 					type:'GET',
 					dataType:'json',
-					url:'changePhoneNum.do?memberName=${member.memberName}&phoneNum=' + $(".phoneNumInput").val().slice(1,11),
+					url:'changePhoneNum.do?memberName=${member.memberName}&phoneNum=10' + $(".phoneNumInput").val(),
 					success: change_to_new_phone,
 					error:function(request,status,error){
 					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -800,7 +807,7 @@ input, button{
 			
 			<div class="profileContainer">
 				<div id="profileImageBox">
-					<img id="memberImg" style="height: 70%; width: 70%; border-radius: 15px;margin-bottom: 5px;cursor:pointer;object-fit:cover;" src="image/${member.profileImg }">
+					<img id="memberImg" style="height: 70%; width: 70%; border-radius: 15px;margin-bottom: 5px;cursor:pointer;object-fit:cover;" onerror="this.src='/sapare/img/default.png'" src="/sapare/img/${member.profileImg }">
 					<div class="nickname">
 						${member.nickname }
 					</div>
@@ -933,8 +940,9 @@ input, button{
 								
 								<li class="box7" style="display:none;">
 									<div>&nbsp;</div>
-									<div>
-										<input type="text" placeholder="휴대폰 번호를 입력해주세요" class="phoneNumInput" maxlength="11" />
+									<div style="display: flex;align-items: baseline;">
+										<input type="text" style="width: 15%;text-align: center;margin-right: 15px;" placeholder="010" disabled/>
+										<input type="text" style="width: 60%" class="phoneNumInput" maxlength="8"/>
 									</div>
 									<div>
 										<button type="button" class="phoneNumCheck">확인</button>

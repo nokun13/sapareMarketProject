@@ -33,9 +33,9 @@ var websocket;
 	$(document)
 			.ready(
 					function() {
-						if(login=="ok")
+						if(login=="ok"||login)
 							{
-						        websocket = new WebSocket("ws://localhost:8090/sapare/chatws.do");
+						        websocket = new WebSocket("ws://172.16.5.131:8090/sapare/chatws.do");
 						        // 웹 소켓 이벤트 처리 -> 로그인 할때 달아주기(주소 바꿔서)
 						        websocket.onopen = onOpen;
 						        websocket.onmessage = onMessage;
@@ -55,15 +55,18 @@ var websocket;
 						                async: false,
 						                url: 'start.do?memberName='+'<%=(String) session.getAttribute("memberName")%>' ,
 						                success: function (chatviewDTO) {
-												$(chatviewDTO).each(function(value){
+											console.log(chatviewDTO);
+						                	
+						                	 $(chatviewDTO).each(function(value){
 													var a	= '<div class="friend"><input type="hidden" id="itemId" value="'+$(this)[0].itemId+'"> '
 													+ '<input type="hidden" id="chatRoomId" value="'+$(this)[0].chatRoomId+'">'
 													+ '<input type="hidden" class="memberName" value="'+$(this)[0].memberName+'">  '
-													+ '<img src="image/'+$(this)[0].profileImg+'" />'
+													+ '<input type="hidden" class="nickname" value="'+$(this)[0].nickname+'">  '
+													+ '<img src="/sapare/img/'+$(this)[0].profileImg+'" />'
 													+ '<p><strong>'+$(this)[0].nickname+'</strong> <span>'+$(this)[0].itemName+'</span></p>'
 													if($(this)[0].isreadcount>0)
 													+ '<div class="readcount"><span>'+$(this)[0].isreadcount+'</span></div></div>'
-												$('#friends').prepend(a);
+												$('#friends').prepend(a); 
 												})
 						                }
 								 })
@@ -112,7 +115,7 @@ $(document).keydown(function (e) {
 <script type="text/javascript" src="js/ChatJS.js"></script>
 <body>
 	<div id="aaa">
-		<c:if test="${sessionScope.memberName != null }">
+		<c:if test="${sessionScope.memberName != null && sessionScope.memberName != 'admin'}">
 		<div id="mychatBtn">
 			<div class="background"></div>
 			<svg class="chat-bubble" width="100" height="100"

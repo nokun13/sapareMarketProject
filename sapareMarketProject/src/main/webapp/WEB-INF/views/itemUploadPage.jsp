@@ -30,7 +30,7 @@
 			<span>상품이미지</span>
 			<div id='text-center'>
 					<label for='filepath'> <!-- <img id="img" style="width: 150px; height: 100px; border: 0px solid white;">-->
-						<img src="image/defaultAD.png" class='img-circle'  id='ITEMIMAGEPATH' name='ITEMIMAGEPATH' style="width: 200px; height: 160px;object-fit: contain;cursor:pointer;" />  
+						<img src="/sapare/img/defaultAD.png" class='img-circle'  id='ITEMIMAGEPATH' name='ITEMIMAGEPATH' style="width: 200px; height: 160px;object-fit: contain;cursor:pointer;" />  
 						<input type="file" name='filepath' id='filepath' class='filepath'  style="display: none;" multiple />
 					</label>
 			</div>
@@ -48,7 +48,7 @@
 		<!-- about -->
 		<div id="information" style="font-weight: bold;" class='container'>
 			<span>설명</span> 
-			<input type="text" style="width: 500px; height: 100px" class="form-control"  maxlength="100"  placeholder="설명을 입력하세요" id='ITEMABOUT' name='itemAbout' value="${item.itemAbout }">
+			<textarea style="width: 500px; height: 100px;resize:none;" class="form-control"  maxlength="100"  placeholder="설명을 입력하세요" id='ITEMABOUT' name='itemAbout' value="${item.itemAbout }"></textarea>
 				<a style="color: red; font-size: x-small;">*100자이하로 입력하세요</a>
 		</div>
 		<hr />
@@ -100,7 +100,7 @@
 						<option value="뷰티미용">뷰티미용</option>
 						<option value="기타">기타</option>
 					</select> 
-					<select class="form-control" id="tType" name='itemMidCat'onchange="chnQnaTypes(this.value)"></select> 
+					<select class="form-control" id="tType" name='itemMidCat' onchange="chnQnaTypes(this.value)"></select> 
 					<select class="form-control" id="fType" name='itemSmallCat'></select>
 				
 		</div>
@@ -157,7 +157,7 @@
 </body>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/itemUploadPage.js"></script>
 <script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ecc21974f7a9cd9fe27a0dd05775674a&libraries=services"></script>
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aa04c3b97b12b7beac1c12496448235e&libraries=services"></script>
+<script type="text/javascript" src="js/itemUploadPage.js"></script>
 </html>

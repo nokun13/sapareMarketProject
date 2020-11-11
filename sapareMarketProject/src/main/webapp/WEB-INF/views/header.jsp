@@ -12,7 +12,7 @@
 	if (fid != null)
 		if (fid.equals("ok")) {
 			logok = true;
-			if (id.equals("admin@gg.com")) {
+			if (id.equals("admin@gmail.com")) {
 				admin = true;
 				System.out.println("admin");
 			}
@@ -51,7 +51,7 @@
 	text-decoration: none;
 	height: auto;
 	float: left;
-	width: 138px;
+	width: 137.6px;
 	height: auto;
 	list-style: none;
 }
@@ -374,6 +374,9 @@ input[type=email] {
 	outline: none;
 }
 
+#chatbox img{
+	object-fit: cover;
+}
 
 </style>
 <script
@@ -408,15 +411,11 @@ input[type=email] {
 			alert(document.body.onBeforeUnload);
 		}
 	} */
-
-	var login =
-<%=logok%>
-	;
-	var admin =
-<%=admin%>
-	;
+	var login;
+	var admin;
 	$(document).ready(function() {
-		
+		login =<%=logok%>;
+		admin =<%=admin%>;
 		$('.mypage').hide();
 		$('.modalbtnlogin').on('click', modalRun);
 
@@ -484,13 +483,14 @@ input[type=email] {
 		var id = $('#top_menu a:nth-child(3)').text();
 
 		console.log("admincheck: " + admin);
+		console.log(login);
 		console.log("1111111logincheck: " + login);
 
 		$('#top_menu a:nth-child(2)').hide();
 		/* if(admin==false)
 			$('#admin').remove(); */
 
-		if (login=="ok") {
+		if (login=="ok"||login) {
 
 			$('.login').each(function() {
 				$('.logout').show();
@@ -499,8 +499,10 @@ input[type=email] {
 				$('.mypage').show();
 			});
 		} else {
-
+			
+			
 			$('.logout').click(function() {
+			
 				$('.logout').hide();
 				$('.login').show();
 				$('.signup').show();
@@ -514,10 +516,10 @@ input[type=email] {
 		});
 		
 		$(".sale").click(function(){
-			if (login != 'ok'){
+			if (login != true){
 				console.log(login + " login");
 				$("#mylogin").click();
-			} else if(login == 'ok'){
+			} else if(login == true){
 				location.href="itemUploadPage.do";
 			}
 		});
@@ -555,7 +557,7 @@ input[type=email] {
 		<div class="headerwrap">
 			<div id="headerall">
 				<div class="categorymenu">
-					<img class="menubtn" src="image/menucategory.png">
+					<img class="menubtn" src="/sapare/img/menucategory.png">
 					<div class="dropdown-content">
 						<ul class="bigCategory">
 							<li><a href="searchcategory.do?searchWord=">카테고리 전체</a></li>
@@ -586,8 +588,8 @@ input[type=email] {
 					</div>
 				</div>
 
-				<a id="logo" href="http://localhost:8090/sapare/mainPage.do"><img
-					src="image/saparelogo3.png"></a>
+				<a id="logo" href="mainPage.do"><img
+					src="/sapare/img/saparelogo3.png"></a>
 
 				<div id="gg">
 					<div id="search">
@@ -596,7 +598,7 @@ input[type=email] {
 							<input type="text" id="search_form" name="searchWord"
 								placeholder="어떤 상품을 찾고 있나요?">
 							<button id="searchbtn">
-								<img class="ss" src='image/search1.PNG'>
+								<img class="ss" src='/sapare/img/search1.PNG'>
 							</button>
 						</form>
 					</div>
@@ -606,7 +608,7 @@ input[type=email] {
 						<button type="button" class="sale">판매하기</button> 
 					</c:if>
 					<a class="logout"
-						href="http://localhost:8090/sapare/logout.do">로그아웃</a>
+						href="logout.do" style="text-decoration:none;color:#999999;">로그아웃</a>
 					<button type="button" id="mylogin" class="login">
 						<p>로그인</p>
 					</button>
@@ -648,12 +650,12 @@ input[type=email] {
 					<!-- 로그인모달창 끝 -->
 
 
-					<a class="signup" href="http://localhost:8090/sapare/signupPage.do">회원가입</a>
+					<a class="signup" href="signupPage.do">회원가입</a>
 					<c:if test="${sessionScope.memberName != 'admin' }">
-						<a class="mypage" href="http://localhost:8090/sapare/profileSell.do?memberName=${sessionScope.memberName }">마이페이지</a>
+						<a class="mypage" style="text-decoration:none;color:#999999;" href="profileSell.do?memberName=${sessionScope.memberName }">마이페이지</a>
 					</c:if>
 					<c:if test="${sessionScope.memberName == 'admin'}">
-						<a class="mypage" href="http://localhost:8090/sapare/adminPage.do">관리자페이지</a>
+						<a class="mypage" href="adminPage.do">관리자페이지</a>
 					</c:if>
 
 				</div>

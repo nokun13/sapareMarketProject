@@ -271,15 +271,15 @@ a:hover {
 								<div class="wantItemInside">
 									<div class="itemImageBox">
 										<c:if test="${fn:contains(dto.itemStatus, 'n')}">
-									    	<img src="image/soldout.png" width=75 height=75 style="object-fit:contain;">
+									    	<img src="/sapare/img/soldout.png" width=75 height=75 style="object-fit:contain;">
 										</c:if> 
 										<c:if test="${fn:contains(dto.itemStatus, 'y')}">
-										    <img src="image/${dto.itemImagePath}" width=75 height=75 style="object-fit:contain;">
+										    <img src="/sapare/img/${dto.itemImagePath}" onerror="this.src='/sapare/img/defaultAD.png'" width=75 height=75 style="object-fit:contain;">
 										</c:if> 
 									</div>
 									<div class="itemDescribeBox">
 										<div>
-											<div class="itemName" style="font-size: smaller;line-height: 15px;">${dto.itemName }</div>
+											<div class="itemName" style="font-size: smaller;line-height: 15px;white-space:nowrap;overflow:hidden;">${dto.itemName }</div>
 										</div>
 									</div>
 								</div>
@@ -301,7 +301,7 @@ a:hover {
 	<div class="ADD">
 		<div class="ADD_position">
 			<a href="http://www.naver.com" target="_blank">
-				<img id="#left_banner_" alt="banner_" src="image/banner11.jpeg">
+				<img id="#left_banner_" alt="banner_" src="/sapare/img/banner11.jpeg">
 			</a>
 		</div>
 	</div>
@@ -328,10 +328,10 @@ a:hover {
 			<td class="c1"><a href="itemViewPage.do?itemId=${dto.itemId}"
 				style="text-decoration: none;"> 
 				<c:if test="${fn:contains(dto.itemStatus, 'n')}">
-			    	<img src="image/soldout.png" style="object-fit:contain;" width="235" height="240">
+			    	<img src="/sapare/img/soldout.png" style="object-fit:contain;" width="235" height="240">
 				</c:if> 
 				<c:if test="${fn:contains(dto.itemStatus, 'y')}">
-				    <img src="image/${dto.itemImagePath}" width="235" height="240">
+				    <img src="/sapare/img/${dto.itemImagePath}" onerror="this.src='/sapare/img/defaultAD.png'" width="235" height="240">
 				</c:if> 
 					<p
 						style="text-align: center; width: 245px; height: 20px; overflow: hidden;">

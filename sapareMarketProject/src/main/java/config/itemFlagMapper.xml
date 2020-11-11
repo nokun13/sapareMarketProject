@@ -31,4 +31,13 @@
 	WHERE ITEMFLAGNO = #{itemFlagNo}
 	</update>
 	
+	<update id="itemFlagHold" parameterType="int">
+	UPDATE SAPAREITEMFLAG SET ITEMFLAGRES = 'h'
+	WHERE ITEMFLAGNO = #{itemFlagNo}
+	</update>
+	
+	<select id="itemFlagCheck" parameterType="dto.memberDTO" resultType="int">
+		select count(*) from sapareitemflag where membername=#{memberName} and itemflagres='n'
+	</select>
+	
 </mapper>

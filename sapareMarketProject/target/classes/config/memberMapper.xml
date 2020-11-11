@@ -106,7 +106,7 @@
 	</select>
 
 	<select id="flagCheck" parameterType="dto.memberDTO" resultType="int">
-		select count(memberFlagRes) from sapareMemberFlag where memberName=#{memberName}
+		select count(memberflagres) from sapareMemberFlag where memberName=#{memberName} and memberflagres='y'
 	</select>
 	
 	<select id="idCheck" parameterType="dto.memberDTO" resultType="int">

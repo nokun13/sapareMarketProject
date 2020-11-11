@@ -28,10 +28,6 @@ input, button {
 	outline: none;
 }
 
-div {
-	overflow: hidden;
-}
-
 header {
 	position: sticky;
 	top: 0;

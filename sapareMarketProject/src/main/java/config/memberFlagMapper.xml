@@ -24,4 +24,9 @@
 		UPDATE SAPAREMEMBERFLAG SET MEMBERFLAGRES = 'y'
 		WHERE MEMBERFLAGNO = #{memberFlagNo}
 	</update>
+	
+	<update id="memberFlagHold" parameterType="int">
+		UPDATE SAPAREMEMBERFLAG SET MEMBERFLAGRES = 'h'
+		WHERE MEMBERFLAGNO = #{memberFlagNo}
+	</update>
 </mapper>

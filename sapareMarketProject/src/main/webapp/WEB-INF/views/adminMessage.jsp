@@ -25,10 +25,6 @@ input, button {
 	outline: none;
 }
 
-div {
-	overflow: hidden;
-}
-
 header {
 	position: sticky;
 	top: 0;
@@ -265,6 +261,7 @@ header ul li a {
 	margin-top: 35px;
 	margin-left: 15px;
 	margin-bottom: 15px;
+	overflow:auto;
 }
 
 .contents ul {

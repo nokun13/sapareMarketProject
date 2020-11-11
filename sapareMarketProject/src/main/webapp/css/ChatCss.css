@@ -1,6 +1,6 @@
 .chatmodal {
 	display: none; /* Hidden by default */
-	position: absolute; /* Stay in place */
+	position: fixed; /* Stay in place */
 	z-index: 1; /* Sit on top */
 	right: 10%;
 	bottom: 10%;
@@ -20,7 +20,7 @@
 	height: 484px;
 }
 #mychatBtn {
-  	position: absolute; /* Stay in place */
+  	position: fixed; /* Stay in place */
 	z-index: 1; /* Sit on top */
 	right: 6%;
 	bottom: 6%;
@@ -118,9 +118,11 @@
 
 .friend img {
 	width: 40px;
+	height : 40px;
 	border-radius: 50%;
 	margin: 14px;
 	float: left;
+	object-fit: cover;
 }
 
 .floatingImg {
@@ -184,6 +186,10 @@
 	left: 0;
 	display: none;
 	background: #fff;
+}
+
+#chatview img{
+	object-fit: cover;
 }
 
 #profile {

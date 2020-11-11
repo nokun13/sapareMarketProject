@@ -508,15 +508,15 @@ img.icon:hover {
 											<div class="wantItemInside">
 												<div class="itemImageBox">
 													<c:if test="${fn:contains(dto.itemStatus, 'n')}">
-												    	<img src="image/soldout.png" width=75 height=75 style="object-fit:contain;">
+												    	<img src="/sapare/img/soldout.png" width=75 height=75 style="object-fit:contain;">
 													</c:if> 
 													<c:if test="${fn:contains(dto.itemStatus, 'y')}">
-													    <img src="image/${dto.itemImagePath}" width=75 height=75 style="object-fit:contain;">
+													    <img src="/sapare/img/${dto.itemImagePath}" onerror="this.src='/sapare/img/defaultAD.png'" width=75 height=75 style="object-fit:contain;">
 													</c:if> 
 												</div>
 												<div class="itemDescribeBox">
 													<div>
-														<div class="itemName" style="font-size: smaller;line-height: 15px;">${dto.itemName }</div>
+														<div class="itemName" style="font-size: smaller;line-height: 15px;white-space:nowrap;overflow:hidden;">${dto.itemName }</div>
 													</div>
 												</div>
 											</div>
@@ -538,7 +538,7 @@ img.icon:hover {
 				<div class="ADD">
 					<div class="ADD_position">
 						<a href="http://www.naver.com" target="_blank">
-						<img id="#left_banner_" alt="banner_" src="image/banner11.jpeg">
+						<img id="#left_banner_" alt="banner_" src="/sapare/img/banner11.jpeg">
 						</a>
 					</div>
 				</div>
@@ -548,51 +548,42 @@ img.icon:hover {
 					<ul id="slider">
 						<li>
 							<div>
-								<h3>Slide #1</h3>
-							</div> <img src="image/banner1.jpg" style="object-fit:cover;">
+							</div> <img src="/sapare/img/banner1.jpg" style="object-fit:cover;">
 						</li>
 
 						<li>
 							<div>
-								<h3>Slide #2</h3>
-							</div> <img src="image/banner2.png" style="object-fit:cover;">
+							</div> <img src="/sapare/img/banner2.png" style="object-fit:cover;">
 						</li>
 
 						<li>
 							<div>
-								<h3>Slide #3</h3>
-							</div> <img src="image/banner3.jpg" style="object-fit:cover;">
+							</div> <img src="/sapare/img/banner3.jpg" style="object-fit:cover;">
 						</li>
 
 						<li>
 							<div>
-								<h3>Slide #4</h3>
-							</div> <img src="image/banner4.jpg" style="object-fit:cover;">
+							</div> <img src="/sapare/img/banner4.jpg" style="object-fit:cover;">
 						</li>
 						<li>
 							<div>
-								<h3>Slide #5</h3>
-							</div> <img src="image/banner5.jpg" style="object-fit:cover;">
+							</div> <img src="/sapare/img/banner5.jpg" style="object-fit:cover;">
 						</li>
 						<li>
 							<div>
-								<h3>Slide #6</h3>
-							</div> <img src="image/banner6.jpg" style="object-fit:cover;">
+							</div> <img src="/sapare/img/banner6.jpg" style="object-fit:cover;">
 						</li>
 						<li>
 							<div>
-								<h3>Slide #7</h3>
-							</div> <img src="image/banner7.jpg" style="object-fit:cover;">
+							</div> <img src="/sapare/img/banner7.jpg" style="object-fit:cover;">
 						</li>
 						<li>
 							<div>
-								<h3>Slide #8</h3>
-							</div> <img src="image/banner8.jpg" style="object-fit:cover;">
+							</div> <img src="/sapare/img/banner8.jpg" style="object-fit:cover;">
 						</li>
 						<li>
 							<div>
-								<h3>Slide #9</h3>
-							</div> <img src="image/banner9.jpg" style="object-fit:cover;">
+							</div> <img src="/sapare/img/banner9.jpg" style="object-fit:cover;">
 						</li>
 
 					</ul>
@@ -627,30 +618,30 @@ img.icon:hover {
 			</div>
 			<div class="icon_button">
 				<a href="searchcategory.do?searchWord=의류">
-					<img class="icon" alt="버튼 1" src="image/clothes.png" style="width: 100px; height: 100px;">
+					<img class="icon" alt="버튼 1" src="/sapare/img/clothes.png" style="width: 100px; height: 100px;">
 				</a> 
 				<a href="searchcategory.do?searchWord=스포츠">
-					<img class="icon" alt="버튼 2" src="image/bicycle.png" style="width: 100px; height: 100px;">
+					<img class="icon" alt="버튼 2" src="/sapare/img/bicycle.png" style="width: 100px; height: 100px;">
 				</a> 
 				<a href="searchcategory.do?searchWord=화장품">
-					<img class="icon" alt="버튼 3" src="image/cosmetics.png" style="width: 100px; height: 100px;">
+					<img class="icon" alt="버튼 3" src="/sapare/img/cosmetics.png" style="width: 100px; height: 100px;">
 				</a> 
 				<a href="searchcategory.do?searchWord=음식">
-					<img class="icon" alt="버튼 4" src="image/fork.png" style="width: 100px; height: 100px;"> 
+					<img class="icon" alt="버튼 4" src="/sapare/img/fork.png" style="width: 100px; height: 100px;"> 
 				</a> 
 				
 				<br />
 				<a href="searchcategory.do?searchWord=게임">
-					<img class="icon" alt="버튼 5" src="image/console.png" style="width: 100px; height: 100px;">
+					<img class="icon" alt="버튼 5" src="/sapare/img/console.png" style="width: 100px; height: 100px;">
 				</a> 
 				<a href="searchcategory.do?searchWord=책">
-					<img class="icon" alt="버튼 6" src="image/book.png" style="width: 100px; height: 100px;"> 
+					<img class="icon" alt="버튼 6" src="/sapare/img/book.png" style="width: 100px; height: 100px;"> 
 				</a> 
 				<a href="searchcategory.do?searchWord=전자">
-					<img class="icon" alt="버튼 7" src="image/desktop.png" style="width: 100px; height: 100px;">
+					<img class="icon" alt="버튼 7" src="/sapare/img/desktop.png" style="width: 100px; height: 100px;">
 				</a> 
 				<a href="search.do?searchWord=유아">
-					<img class="icon" alt="버튼 8" src="image/baby-products.png" style="width: 100px; height: 100px;"> 
+					<img class="icon" alt="버튼 8" src="/sapare/img/baby-products.png" style="width: 100px; height: 100px;"> 
 				</a>
 			</div>
 			<!-- icon_button End -->
@@ -672,11 +663,11 @@ img.icon:hover {
 	               <c:param name="itemId" value="${dto.itemId}" />
 	            </c:url>
 				<a href="${path}" style="text-decoration: none;">
-				<c:if test="${fn:contains(dto.itemStatus, 'n')}">
-			    	<img src="image/soldout.png" style="object-fit:contain;" width="235" height="235">
+				<c:if test="${fn:contains(dto.itemStatus, 'n')}"> <!-- JSTL: itemStatus = 판매상태 ('n'이면 판매완료) -->
+			    	<img src="/sapare/img/soldout.png" style="object-fit:contain;" width="235" height="235">
 				</c:if> 
-				<c:if test="${fn:contains(dto.itemStatus, 'y')}">
-				    <img src="image/${dto.itemImagePath}" width="235" height="235">
+				<c:if test="${fn:contains(dto.itemStatus, 'y')}"> <!-- JSTL: itemStatus = 판매상태 ('y'이면 판매중) -->
+				    <img src="/sapare/img/${dto.itemImagePath}" onerror="this.src='/sapare/img/defaultAD.png'" width="235" height="235">
 				</c:if> 
 					<p style="text-align: center; width: 235px; height: 20px; overflow: hidden; ">
 						${dto.itemName} <br />
@@ -719,7 +710,7 @@ img.icon:hover {
 					var itemImg = thisItem.split(':')[1];
 					
 					var ap = "<li><a href='http://localhost:8090/sapare/itemViewPage.do?itemId='"+itemId
-							+ "' target='_top'><img src='image/"+itemImg
+							+ "' target='_top'><img src='/sapare/img/"+itemImg
 							+ "' width='75' border=1></a>"
 							+ "<div class='detail'><a href='javascript:removeRecentItem('\'"+itemname+"'\')' class='btn_delete'>삭제</a></div></li>";
 							
@@ -826,6 +817,13 @@ img.icon:hover {
    		// 탈퇴/신고된 회원이면 파라미터값으로 넘겨준다
     	var cancel = getParam("cancelMember");
     	var flag = getParam("flagMember");
+    	var noid = getParam("noId");
+    	var itemFlag = getParam("itemFlag");
+    	
+    	// 없는 아이디 로그인 시
+    	if(noid == 1){
+    		alert("회원가입이 안 된 아이디입니다.");
+    	}
     	// 탈퇴/신고처리 확인
   		if (cancel == 1) {
   			alert("탈퇴한 회원입니다.");
@@ -833,6 +831,10 @@ img.icon:hover {
   		if (flag == 1) {
   			alert("신고처리된 회원입니다.");
   		};  
+  		if (itemFlag == 1){
+  			console.log("itemFlag");
+  			alert("신고처리된 회원입니다.");
+  		}
     	 
 		// 로그인 실패 시 알람 
 		var msg = getParam("msg");

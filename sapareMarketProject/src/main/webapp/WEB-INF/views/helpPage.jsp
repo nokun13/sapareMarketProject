@@ -1,7 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+	String fid = (String) session.getAttribute("logOk");
+	String id = (String) session.getAttribute("id");
+	System.out.println(id);
+	boolean logok = false;
+	boolean admin = false;
+	System.out.println(fid);
+	if (fid != null)
+		if (fid.equals("ok")) {
+			logok = true;
+			if (id.equals("admin@gmail.com")) {
+				admin = true;
+				System.out.println("admin");
+			}
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -210,7 +226,7 @@ form {
 .modal-content {
 	background-color: #fefefe;
 	margin: auto;
-	padding: 20px;
+	padding: 45px;
 	border: 1px solid #888;
 	width: 23%;
 	height: 53%;
@@ -288,7 +304,10 @@ padding:20px 65px 20px 0}
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-
+var login;
+var admin;
+login =<%=logok%>;
+admin =<%=admin%>;
 
 	$(document).ready(function() {
 		//관리자일때만 글쓰기,수정,삭제 버튼 보이기 admin@gg.com
@@ -344,8 +363,8 @@ padding:20px 65px 20px 0}
 		<div class="menu">
 
 			<nav class="menu1">
-				<a class="notice" href="http://localhost:8090/sapare/helpPage.do">공지사항
-				</a> <a class="faq" href="http://localhost:8090/sapare/helpFAQ.do">자주묻는질문</a>
+				<a class="notice" href="helpPage.do">공지사항
+				</a> <a class="faq" href="helpFAQ.do">자주묻는질문</a>
 			</nav>
 
 		</div>
@@ -369,7 +388,7 @@ padding:20px 65px 20px 0}
 					<c:param name="num" value="${dto.boardNo}" />
 				</c:url>
 				<th class="no1">${dto.boardTitle}</th>
-				<th>${dto.boardDate}</th>
+				<th><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${dto.boardDate}" /></th>
 			</tr>
 
 
@@ -420,5 +439,4 @@ padding:20px 65px 20px 0}
 
 
 </body>
-<jsp:include page="footer.jsp" />
 </html>

@@ -56,8 +56,9 @@ public class SapareController {
 /*	private String uploadPath = "C:\\Users\\user\\Desktop\\workspace-spring\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\sapareMarketProject\\image"; */
 
 	public String filePath(HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("/");//저장할 루트의 경로
-		String saveDirectory = root + "image" +File.separator;
+		/*String root = request.getSession().getServletContext().getRealPath("/");//저장할 루트의 경로
+*/		/*String saveDirectory = root + "image" +File.separator;*/
+		String saveDirectory = "C://img/";
 		return saveDirectory;
 	}
 	
@@ -122,7 +123,6 @@ public class SapareController {
 	public ModelAndView reviewSubmitProcess(ModelAndView mav, reviewDTO rdto, memberDTO dto) {
 
 		service.submitReviewProcess(rdto);
-		System.out.println(dto.getMemberName() + "review");
 		mav.setViewName("redirect:/profileBuy.do?memberName=" + dto.getMemberName());
 		return mav;
 
@@ -451,6 +451,7 @@ public class SapareController {
 		service.itemSoldProcess(itemId);
 		service.plusBuyCountProcess(dto);
 		service.plusSellCountProcess(pdto);
+		System.out.println("transaction done");
 		mav.setViewName("redirect:/itemViewPage.do?itemId=" + itemId);
 		return mav;
 	}
@@ -473,15 +474,28 @@ public class SapareController {
 
 	@RequestMapping(value = "/loginCheck.do", method = RequestMethod.POST)
 	public ModelAndView loginCheckMethod(memberDTO dto, HttpSession session, ModelAndView mav) {
+		int login = service.idCheckProcess(dto);
+		System.out.println(login);
+		if(login == 0) {
+			System.out.println("login is null");
+			mav.addObject("noId", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		memberDTO mdto = service.infoByIdProcess(dto);
 		boolean cancel = service.cancelCheckProcess(mdto);
 		boolean flag = service.flagCheckProcess(mdto);
+		int itemFlag = service.itemFlagCheckProcess(mdto);
 		if(cancel || flag) {
 			if(cancel) {
 				mav.addObject("cancelMember", "1");
 			} else if(flag) {
 				mav.addObject("flagMember", "1");
 			}
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		} else if(itemFlag >= 5) {
+			mav.addObject("itemFlag", 1);
 			mav.setViewName("redirect:/mainPage.do");
 			return mav;
 		}
@@ -509,6 +523,9 @@ public class SapareController {
 	@RequestMapping("/logout.do")
 	public ModelAndView logout(ModelAndView mav, HttpSession session) {
 		// service.logout(session);
+		session.removeAttribute("logOk");
+		session.removeAttribute("id");
+		session.removeAttribute("memberName");
 		session.invalidate();
 		mav.addObject("msg", "logout");
 		mav.addObject("itemList", service.selectProcess());
@@ -720,13 +737,17 @@ public class SapareController {
 	// 관리자 페이지
 	@RequestMapping("/adminPage.do")
 	public ModelAndView adminPageProcess(ModelAndView mav, HttpSession session) {
-		if(session.getAttribute("memberName") == "admin"){
-			mav.addObject("adminok", 1);
+		if(session.getAttribute("memberName").equals("admin")){
+			System.out.println("admin success");
+			List<itemCategoryDTO> counts = service.countCategoeyProcess();
+			mav.addObject("count", counts);
+			mav.setViewName("adminPage");
+			return mav;
+		} else {
+			System.out.println("admin failed");
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
 		}
-		List<itemCategoryDTO> counts = service.countCategoeyProcess();
-		mav.addObject("count", counts);
-		mav.setViewName("adminPage");
-		return mav;
 	}
 
 	// 관리자 회원정보 페이지
@@ -734,88 +755,164 @@ public class SapareController {
 	// http://localhost:8090/sapare/adminMember.do
 	@RequestMapping("/adminMember.do")
 	public ModelAndView adminMemberProcess(ModelAndView mav, HttpSession session) {
-		if(session.getAttribute("memberName") == "admin"){
+		if(session.getAttribute("memberName").equals("admin")){
 			mav.addObject("adminok", 1);
+			mav.addObject("memberJo", service.memberLookupProcess());
+			mav.setViewName("adminMember");
+			return mav;
+		} else {
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
 		}
-		mav.addObject("memberJo", service.memberLookupProcess());
-		mav.setViewName("adminMember");
-		return mav;
 	}
 
 	// 회원 탈퇴 시키기
 	@RequestMapping("/adminMemberDelete.do")
-	public ModelAndView adminMemberDeleteProcess(ModelAndView mav, String memberId) {
-		service.MemberDeleteProcess(memberId);
-		mav.addObject("memberJo", service.memberLookupProcess());
-		mav.setViewName("adminMember");
-		return mav;
+	public ModelAndView adminMemberDeleteProcess(ModelAndView mav, String memberId, HttpSession session) {
+		if(session.getAttribute("memberName").equals("admin")){
+			service.MemberDeleteProcess(memberId);
+			mav.addObject("memberJo", service.memberLookupProcess());
+			mav.setViewName("adminMember");
+			return mav;
+		} else {
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 	}
 
 	// 회원정보 이름순으로 불러오기
 	@RequestMapping("/adminMemberorder.do")
-	public ModelAndView adminMemberOrderProcess(ModelAndView mav) {
-		mav.addObject("memberJo", service.memberIdOrderProcess());
-		mav.setViewName("adminMember");
-		return mav;
+	public ModelAndView adminMemberOrderProcess(ModelAndView mav, HttpSession session) {
+		if(session.getAttribute("memberName").equals("admin")){
+			mav.addObject("memberJo", service.memberIdOrderProcess());
+			mav.setViewName("adminMember");
+			return mav;
+		} else {
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 	}
 	// 회원정보 가입일순으로 불러오기
 	@RequestMapping("/adminDateOrder.do")
-		public ModelAndView adminDateOrderProcess(ModelAndView mav) {
+		public ModelAndView adminDateOrderProcess(ModelAndView mav, HttpSession session) {
+		if(session.getAttribute("memberName").equals("admin")){
 			mav.addObject("memberJo", service.memberDateOrderProcess());
 			mav.setViewName("adminMember");
 			return mav;
+		} else {
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 	}
 	
 	// 회원정보 등급순으로 불러오기
 	@RequestMapping("/adminRankOrder.do")
-		public ModelAndView adminRankOrderProcess(ModelAndView mav) {
+		public ModelAndView adminRankOrderProcess(ModelAndView mav, HttpSession session) {
+		if(session.getAttribute("memberName").equals("admin")){
 			mav.addObject("memberJo", service.memberRankOrderProcess());
 			mav.setViewName("adminMember");
 			return mav;
+		} else {
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 	}
 
 	// 관리자 회원신고내역 페이지
 	// http://localhost:8090/sapare/adminMemberFlag.do
 	@RequestMapping("/adminMemberFlag.do")
-	public ModelAndView adminMemberFlagProcess(ModelAndView mav) {
-		mav.addObject("memberFlag", service.memberFlagProcess());
-		mav.setViewName("adminMemberFlag");
-		return mav;
+	public ModelAndView adminMemberFlagProcess(ModelAndView mav, HttpSession session) {
+		if(session.getAttribute("memberName").equals("admin")){
+			mav.addObject("memberFlag", service.memberFlagProcess());
+			mav.setViewName("adminMemberFlag");
+			return mav;
+		} else {
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 	}
 
 	// 회원신고 처리 메소드
 	@RequestMapping("/memberFlagUpdate.do")
-	public ModelAndView memberFlagUpdateProcess(ModelAndView mav, int memberFlagNo) {
-		service.memberFlagUpdateProcess(memberFlagNo);
-		mav.addObject("memberFlag", service.memberFlagProcess());
-		mav.setViewName("adminMemberFlag");
-		return mav;
+	public ModelAndView memberFlagUpdateProcess(ModelAndView mav, int memberFlagNo, HttpSession session) {
+		if(session.getAttribute("memberName").equals("admin")){
+			service.memberFlagUpdateProcess(memberFlagNo);
+			mav.addObject("memberFlag", service.memberFlagProcess());
+			mav.setViewName("adminMemberFlag");
+			return mav;
+		} else {
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
+	}
+	
+	// 회원신고 보류
+	@RequestMapping("/memberFlagHold.do")
+	public ModelAndView memberFlagHoldProcess(ModelAndView mav, int memberFlagNo, HttpSession session) {
+		if(session.getAttribute("memberName").equals("admin")){
+			service.memberFlagHoldProcess(memberFlagNo);
+			mav.addObject("memberFlag", service.memberFlagProcess());
+			mav.setViewName("adminMemberFlag");
+			return mav;
+		} else {
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 	}
 
 	// 관리자 게시글신고내역 페이지
 	// http://localhost:8090/sapare/adminItemFlag.do
 	@RequestMapping("/adminItemFlag.do")
-	public ModelAndView adminItemFlagProcess(ModelAndView mav) {
-		mav.addObject("itemFlag", service.itemFlagProcess());
-		mav.setViewName("adminItemFlag");
-		return mav;
+	public ModelAndView adminItemFlagProcess(ModelAndView mav, HttpSession session) {
+		if(session.getAttribute("memberName").equals("admin")){
+			mav.addObject("itemFlag", service.itemFlagProcess());
+			mav.setViewName("adminItemFlag");
+			return mav;
+		} else {
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 	}
 	
 	// 게시글신고 처리 메소드
 	@RequestMapping("/itemFlagUpdate.do")
-	public ModelAndView itemFlagUpdateProcess(ModelAndView mav, int itemFlagNo) {
-		service.itemFlagUpdateProcess(itemFlagNo);
-		mav.addObject("itemFlag", service.itemFlagProcess());
-		mav.setViewName("adminItemFlag");
-		return mav;
+	public ModelAndView itemFlagUpdateProcess(ModelAndView mav, int itemFlagNo, HttpSession session) {
+		if(session.getAttribute("memberName").equals("admin")){
+			service.itemFlagUpdateProcess(itemFlagNo);
+			mav.addObject("itemFlag", service.itemFlagProcess());
+			mav.setViewName("adminItemFlag");
+			return mav;
+		} else {
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
+	}
+	
+	// 게시글신고 보류
+	@RequestMapping("/itemFlagHold.do")
+	public ModelAndView itemFlagHoldProcess(ModelAndView mav, int itemFlagNo, HttpSession session) {
+		if(session.getAttribute("memberName").equals("admin")){
+			service.itemFlagHoldProcess(itemFlagNo);
+			mav.addObject("itemFlag", service.itemFlagProcess());
+			mav.setViewName("adminItemFlag");
+			return mav;
+		} else {
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 	}
 
 	// 관리자 메세지 페이지
 	@RequestMapping("/adminMessage.do")
-	public ModelAndView adminMessageProcess(ModelAndView mav) {
-		mav.addObject("Messages",service.questionMessageProcess());
-		mav.setViewName("adminMessage");
-		return mav;
+	public ModelAndView adminMessageProcess(ModelAndView mav, HttpSession session) {
+		if(session.getAttribute("memberName").equals("admin")){
+			mav.addObject("Messages",service.questionMessageProcess());
+			mav.setViewName("adminMessage");
+			return mav;
+		} else {
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 	}
 
 	// 마정협 end /////////////////////////////////
@@ -1095,7 +1192,7 @@ public class SapareController {
 				.println(status + " 접속" + " roomNum : " + dto.getChatRoomId() + " memberName : " + dto.getMemberName());
 		if (status.equals("on")) {
 			service.enterTimeProcess(dto);
-
+System.out.println("입장시간 반환");
 			return service.fenterTimeProcess(fdto);
 		} else if (status.equals("off")) {
 			service.exitTimeProcess(dto);
