@@ -384,6 +384,22 @@ white
 <title>사파리 회원 신고관리</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document)
+.ready(
+		function() {
+			$('.Updd').click(function(){
+				alert('처리되었습니다.');
+				$('.'+ this.id).submit();
+			});
+		
+		$(".Modd").on('click', function(){
+			$("#frmm").attr('action', 'memberFlagHold.do');
+			$('.'+ this.id).submit();
+		});
+			
+		}); // end ready()
+</script>
 </head>
 <body>
 	<jsp:include page="header.jsp" flush="false" />
