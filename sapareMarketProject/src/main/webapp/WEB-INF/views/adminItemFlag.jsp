@@ -392,8 +392,8 @@ $(document)
 						<li><a href="adminMessage.do">문의메세지</a></li>
 					</ul>
 				</div>
-				<div id="members" style="overflow:auto;">
-					<table class="table" style="font-size: small; width: ">
+				<div id="members" style="overflow:auto;width:100%;">
+					<table class="table" style="font-size: small;">
 						<tr class="table-primary">
 							<th scope="col">신고번호</th>
 							<th scope="col">신고자아이디</th>

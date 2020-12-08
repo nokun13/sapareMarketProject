@@ -75,7 +75,7 @@ $(document).ready(function () {
 
 function chatmessgcolse(){
 	chatOpen(chatRoom.children('#chatRoomId').val(),myid,"off")
-    chatRoom = null;
+    
     $("#chat-messages, #profile, #profile p").removeClass("animate");
     $(".cx, .cy").removeClass("s1 s2 s3");
     $(".floatingImg").animate({
@@ -89,7 +89,7 @@ function chatmessgcolse(){
         $("#chatview").fadeOut();
         $("#friendslist").fadeIn();
     }, 50);
-	
+    chatRoom = null;
 }
 
 
@@ -116,10 +116,13 @@ console.log("log start");
          url: 'chatFrameOpen.do?roomNum=' + chatRoom.children('#chatRoomId').val()+'&memberid='+openUser+'&status='+status+'&fid='+id,
          success: function(Log){
         	 console.log("log");
-        	
-        			ttttt= Log.exitTime
+        	 if(Log != null)
+         		if(Log.enterTime<Log.exitTime)
+         		 ttttt= Log.exitTime
+        	 
+        	/*		ttttt= Log.exitTime
         			console.log(Log);
-        			
+        			*/
         		
          },erorr: function(e){
         	 console.log(e);
@@ -140,12 +143,12 @@ function onOpen(evt) {
 function onMessage(evt) { // 서버가 전송한 메세지 가져오기
     var data = evt.data.split(":");
     var date = new Date(Date.now())
-    date.setUTCHours(date.getUTCHours()+9)
     console.log('메세지 왔다')
     console.log(data[0])
+    console.log(data)
     // 이미지 주소 chat.chatImgPath
     // 아이템 아이디 chat.itemid
-    if (chatRoom.children('#chatRoomId').val() == data[0]) 
+    if (chatRoom != null && chatRoom.children('#chatRoomId').val() == data[0]) 
     {
     	var dateTime;
     	var dateTime = TimeStemp(new Date(Date.now()));
@@ -153,15 +156,23 @@ function onMessage(evt) { // 서버가 전송한 메세지 가져오기
         	messagedate = dateTime[0];
         	$("#chat-messages").append('<label>'+messagedate+'</label>')
         }
-       
-        
-    	
-    	
         var message = '<div class="message"><img src="/sapare/img/defaultAD.png" /> <div class="bubble">' + data[1] + '<div class="corner"></div>' + '<span>' + dateTime[1] + '</span></div></div>';
         $("#chat-messages").append(message)
         var objDiv = document.getElementById("chat-messages");
         objDiv.scrollTop = objDiv.scrollHeight;
     }
+    if (chatRoom ==null){
+    	var ff = $('.friend')
+    	ff.each(function(){
+    		if($(this).children('#chatRoomId').val()==data[0])
+    		{	
+    			$(this).children('.readcount').remove();
+    			var b = '<div class="readcount"><span>'+data[2]+'</span></div>'	
+    		$(this).append(b);
+    		}	
+    	})
+    }
+    
     if(data[0]=="on"){
     	$(".isread").remove();
     	
@@ -187,14 +198,8 @@ function addfriend(){
 	                    chatRoom.children('.readcount').remove()
 	                    var memberName =chatRoom.children('.memberName').val();
 	                    websocket.send("chatroomON|" + memberName);
-	                    console.log(chatRoom.children('#chatRoomId').val())
-	                    console.log(myid)
-	                    console.log("on")
-	                    console.log(memberName)
 	                   var fLog = chatOpen(chatRoom.children('#chatRoomId').val(),myid,"on",memberName)
 	                    var messagedate;
-	                 console.log(fLog)
-	                 console.log("aaaaa")
 	                
 	                    chatDTO.forEach(function (chat) {
 	                        var date = TimeStemp(new Date(chat.messageDate));
@@ -204,8 +209,6 @@ function addfriend(){
 	                        }
 	                        var id;
 	                        var isread;
-	                        consoel.log(chat.messageDate>fLog);
-	                        consoel.log("chat.messageDate>fLog");
 	                        if (chat.memberName == myid) 
 	                        {   id = '<div class="message right">';
 	                        	if(fLog==null){isread=''}

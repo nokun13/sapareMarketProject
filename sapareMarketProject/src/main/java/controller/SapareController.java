@@ -3,7 +3,11 @@ package controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,18 +60,23 @@ public class SapareController {
 /*	private String uploadPath = "C:\\Users\\user\\Desktop\\workspace-spring\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\sapareMarketProject\\image"; */
 
 	public String filePath(HttpServletRequest request) {
-		/*String root = request.getSession().getServletContext().getRealPath("/");//저장할 루트의 경로
-*/		/*String saveDirectory = root + "image" +File.separator;*/
-		String saveDirectory = "C://img/";
+		String root = request.getSession().getServletContext().getRealPath("/");//저장할 루트의 경로
+		String saveDirectory = root + "img" +File.separator;
+		/*String saveDirectory = "C://img/";*/
 		return saveDirectory;
 	}
 	
 	// 프로필 페이지 판매 메뉴
 	@RequestMapping("/profileSell.do")
-	public ModelAndView profileSellPageProcess(ModelAndView mav, memberDTO dto, String memberName) {
+	public ModelAndView profileSellPageProcess(ModelAndView mav, memberDTO dto, String memberName, HttpSession session) {
 
 		if(memberName != null) {
 			dto.setMemberName(memberName);
+		}
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
 		}
 		mav.addObject("iList", service.sellInfoProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
@@ -78,8 +87,12 @@ public class SapareController {
 
 	// 판매 상품 검색
 	@RequestMapping("/sellSearch.do")
-	public ModelAndView sellSearchProcess(ModelAndView mav, String searchWord, memberDTO dto) {
-
+	public ModelAndView sellSearchProcess(ModelAndView mav, String searchWord, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		dto.setSearchWord(searchWord);
 
 		mav.addObject("iList", service.sellSearchProcess(dto));
@@ -91,8 +104,12 @@ public class SapareController {
 
 	// 구매 상품 검색
 	@RequestMapping("/buySearch.do")
-	public ModelAndView buySearchProcess(ModelAndView mav, String searchWord, memberDTO dto) {
-
+	public ModelAndView buySearchProcess(ModelAndView mav, String searchWord, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		dto.setSearchWord(searchWord);
 
 		mav.addObject("bList", service.buySearchProcess(dto));
@@ -104,10 +121,15 @@ public class SapareController {
 
 	// 프로필 페이지 구매 메뉴
 	@RequestMapping("/profileBuy.do")
-	public ModelAndView profileBuyPageProcess(ModelAndView mav, memberDTO dto, String memberName) {
+	public ModelAndView profileBuyPageProcess(ModelAndView mav, memberDTO dto, String memberName, HttpSession session) {
 
 		if (memberName != null) {
 			dto.setMemberName(memberName);
+		}
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
 		}
 		System.out.println(dto.getMemberName() + "profilebuy");
 		mav.addObject("bList", service.buyInfoProcess(dto));
@@ -120,8 +142,12 @@ public class SapareController {
 
 	// 후기 올리기
 	@RequestMapping("/reviewSubmit.do")
-	public ModelAndView reviewSubmitProcess(ModelAndView mav, reviewDTO rdto, memberDTO dto) {
-
+	public ModelAndView reviewSubmitProcess(ModelAndView mav, reviewDTO rdto, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		service.submitReviewProcess(rdto);
 		mav.setViewName("redirect:/profileBuy.do?memberName=" + dto.getMemberName());
 		return mav;
@@ -142,8 +168,12 @@ public class SapareController {
 
 	// 지난주 판매 가져오기
 	@RequestMapping("/getWeekSellProcess.do")
-	public ModelAndView getWeekSellProcess(ModelAndView mav, memberDTO dto) {
-
+	public ModelAndView getWeekSellProcess(ModelAndView mav, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		mav.addObject("iList", service.sellWeekProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(dto));
@@ -153,8 +183,12 @@ public class SapareController {
 
 	// 지난달 판매 가져오기
 	@RequestMapping("/getMonthSellProcess.do")
-	public ModelAndView getMonthSellProcess(ModelAndView mav, memberDTO dto) {
-
+	public ModelAndView getMonthSellProcess(ModelAndView mav, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		mav.addObject("iList", service.sellMonthProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(dto));
@@ -164,8 +198,12 @@ public class SapareController {
 
 	// 지난 6개월 판매 가져오기
 	@RequestMapping("/getSixMonthsProcess.do")
-	public ModelAndView getSixMonthsProcess(ModelAndView mav, memberDTO dto) {
-
+	public ModelAndView getSixMonthsProcess(ModelAndView mav, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		mav.addObject("iList", service.sellSixMonthsProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(dto));
@@ -175,8 +213,12 @@ public class SapareController {
 
 	// 지난주 구매 가져오기
 	@RequestMapping("/getWeekBuyProcess.do")
-	public ModelAndView getWeekBuyProcess(ModelAndView mav, memberDTO dto) {
-
+	public ModelAndView getWeekBuyProcess(ModelAndView mav, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		mav.addObject("bList", service.buyWeekProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(dto));
@@ -186,8 +228,12 @@ public class SapareController {
 
 	// 지난달 구매 가져오기
 	@RequestMapping("/getMonthBuyProcess.do")
-	public ModelAndView getMonthBuyProcess(ModelAndView mav, memberDTO dto) {
-
+	public ModelAndView getMonthBuyProcess(ModelAndView mav, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		mav.addObject("bList", service.buyMonthProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(dto));
@@ -197,8 +243,12 @@ public class SapareController {
 
 	// 지난 6개월 구매 가져오기
 	@RequestMapping("/getSixMonthsBuyProcess.do")
-	public ModelAndView getSixMonthsBuyProcess(ModelAndView mav, memberDTO dto) {
-
+	public ModelAndView getSixMonthsBuyProcess(ModelAndView mav, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		mav.addObject("bList", service.buySixMonthsProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(dto));
@@ -208,8 +258,12 @@ public class SapareController {
 
 	// 프로필 페이지 찜 메뉴
 	@RequestMapping("/profileWant.do")
-	public ModelAndView profileWantPageProcess(ModelAndView mav, memberDTO dto) {
-
+	public ModelAndView profileWantPageProcess(ModelAndView mav, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		mav.addObject("wantList", service.wantItemProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(dto));
@@ -246,8 +300,12 @@ public class SapareController {
 
 	// 프로필 페이지 후기 메뉴 (처음에는 받은 후기 보여준다)
 	@RequestMapping("/profileReview.do")
-	public ModelAndView profileReviewPageProcess(ModelAndView mav, memberDTO dto) {
-
+	public ModelAndView profileReviewPageProcess(ModelAndView mav, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		mav.addObject("reviewBoxList", service.receivedReviewProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(dto));
@@ -258,8 +316,12 @@ public class SapareController {
 
 	// 작성한 후기 가져오기
 	@RequestMapping("/sentReviewProcess.do")
-	public ModelAndView sentReviewProcess(ModelAndView mav, memberDTO dto) {
-
+	public ModelAndView sentReviewProcess(ModelAndView mav, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		mav.addObject("reviewBoxList", service.sentReviewProcess(dto));
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(dto));
@@ -269,8 +331,12 @@ public class SapareController {
 
 	// 프로필 페이지 프로필설정 메뉴
 	@RequestMapping("/profileSetting.do")
-	public ModelAndView profileSettingPageProcess(ModelAndView mav, memberDTO dto) {
-
+	public ModelAndView profileSettingPageProcess(ModelAndView mav, memberDTO dto, HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			mav.addObject("loginFirst", 1);
+			mav.setViewName("redirect:/mainPage.do");
+			return mav;
+		}
 		mav.addObject("member", service.memberInfoProcess(dto));
 		mav.addObject("status", service.memberStatInfoProcess(dto));
 		mav.setViewName("profileSettingPage");
@@ -1129,14 +1195,17 @@ public class SapareController {
 	@RequestMapping("/start.do")
 	@ResponseBody
 	public List<chatviewDTO> process( String memberName) throws IOException {
-	
 		List<chatviewDTO> aa = service.friendProcess(memberName);
 		List<chatviewDTO> bb = service.LogProcess(memberName);
+		System.out.println("aa size: "+aa.size());
+		System.out.println("bb size: "+bb.size());
 		for (int i = 0; i < aa.size(); i++) {
 			for (int j = 0; j < bb.size(); j++)
 				if (aa.get(i).getChatRoomId() == bb.get(j).getChatRoomId()) {
-					aa.get(i).setIsreadcount(bb.get(j).getIsreadcount());
+					int b = bb.get(j).getIsreadcount();
+					aa.get(i).setIsreadcount(b);
 					System.out.println(bb.get(j).getIsreadcount());
+					System.out.println(aa.get(i).getIsreadcount()+"aa "+ aa.get(i).getMemberName());
 					break;
 				}
 		}

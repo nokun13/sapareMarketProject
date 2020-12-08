@@ -413,7 +413,7 @@ header ul li a {
 			
 			var options ={
 				title:"카테고리별 물품수",
-				subtitle:"어떤물품이 많이 팔렸을까요~?",
+				subtitle:"어떤 상품이 많이 등록될까요~?",
 				hAxis:{ title:"카테고리",},
 				vAxis:{ title:"제품수"},
 				isStacked:true,

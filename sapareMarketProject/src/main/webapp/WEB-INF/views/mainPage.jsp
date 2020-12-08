@@ -378,19 +378,19 @@ h2 {
 }
 
 .icon_section_body {
-	width: 53%;
-	height: 270px;
+	width: 57%;
+	height: 240px;
 	margin: auto;
 }
 
 .icon_button {
-	width: 720px;
+	width: 810px;
 	height: 220px;
 	margin: auto;
 }
 
 .icon {
-	margin: 0 4.5% 2.5% 4.5%;
+	margin: 0 6% 2.5% 6%;
 }
 
 img.icon {
@@ -819,6 +819,7 @@ img.icon:hover {
     	var flag = getParam("flagMember");
     	var noid = getParam("noId");
     	var itemFlag = getParam("itemFlag");
+    	var loginFirst = getParam("loginFirst");
     	
     	// 없는 아이디 로그인 시
     	if(noid == 1){
@@ -832,8 +833,10 @@ img.icon:hover {
   			alert("신고처리된 회원입니다.");
   		};  
   		if (itemFlag == 1){
-  			console.log("itemFlag");
   			alert("신고처리된 회원입니다.");
+  		}
+  		if (loginFirst == 1){
+  			alert("로그인을 먼저 해주세요!");
   		}
     	 
 		// 로그인 실패 시 알람 

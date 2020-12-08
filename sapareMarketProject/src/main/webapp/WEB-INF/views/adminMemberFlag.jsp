@@ -416,7 +416,7 @@ $(document)
 						<li><a href="adminMessage.do">문의메세지</a></li>
 					</ul>
 				</div>
-				<div id="members" style="height: 800px; overflow:auto;">
+				<div id="members" style="height: 800px; overflow:auto;width:100%;">
 				
 					<table class="table " style="font-size: small;">
 						<tr class="table-primary">

@@ -158,6 +158,6 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aa04c3b97b12b7beac1c12496448235e&libraries=services"></script>
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3ec1c2284c7a4f191f27e8b3aac2611e&libraries=services"></script>
 <script type="text/javascript" src="js/itemUploadPage.js"></script>
 </html>

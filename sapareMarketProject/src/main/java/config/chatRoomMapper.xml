@@ -6,7 +6,8 @@
 <mapper namespace="chatRoom">
 	 <resultMap id="test" type="hashmap"></resultMap>
 	<select id="RoomList" parameterType="String" resultType="dto.chatviewDTO">
-		select e.entertime as myenter, e.exittime as myexit, r.* from
+		
+		select  r.* ,c.maxdate from
 		(select *
 		from chatview where chatRoomid
 		in (select distinct chatroomid from
@@ -16,9 +17,11 @@
 		(select distinct chatroomid
 		from
 		sapareChatlog where membername=#{id}) and
-		membername != #{id}) r
-		where e.chatroomid = r.chatroomid
-		order by r.chatroomid
+		membername != #{id}) r,(select max(m.messagedate) as maxdate,m.chatroomid from chatview c,saparechatmsg m 
+        where  c.chatroomid = m.chatroomid and c.membername =#{id}
+        GROUP BY m.chatroomid) c
+		where e.chatroomid = r.chatroomid and e.chatroomid = c.chatroomid(+)
+        order by maxdate nulls first
 	</select>
 	<update id="enterupdate" parameterType="dto.chatviewDTO">
 		UPDATE saparechatlog set
@@ -36,7 +39,7 @@
 		select
 		b.chatroomid,count(CASE WHEN a.messagedate > b.time THEN 1 ELSE NULL
 		END)as isreadcount from saparechatmsg a,
-		(select GREATEST(entertime, exittime) as time, chatroomid from chatview where
+		(select GREATEST(NVL(entertime,'20/01/01'), NVL(exittime,'20/01/01')) as time, chatroomid from chatview where
 		chatRoomid
 		in (select distinct chatroomid from sapareChatlog where
 		membername=#{id}) and membername = #{id}) b

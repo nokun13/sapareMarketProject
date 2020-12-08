@@ -479,7 +479,7 @@ white
 						</select>
 					</div>
 					<div class="contents">
-						<div id="members">
+						<div id="members" style="width:100%;">
 							<table class="table" style="font-size: small;">
 								<tr class="table-primary">
 									<th scope="col">닉네임</th>

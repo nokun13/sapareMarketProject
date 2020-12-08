@@ -452,10 +452,12 @@
 											</div>
 											<div id="singo">
 												<!-- 신고하기 버튼 -->
+												<c:if test="${member.memberId != sessionScope.id }">
 												<button id="decl-btn" class="declaration" type="button">
 													<img src="/sapare/img/declaration.png" width=15px; height=15px;
 														alt="신고 아이콘"> <span>신고하기</span>
 												</button>
+												</c:if>
 												<input type="hidden" value="${sessionScope.id}"
 													class="session_id2">
 											</div>
@@ -761,9 +763,9 @@
 								</div>
 								<!-- 회원 닉네임 등급 틀 -->
 								<div class="nik-rank-tle">
-									<a href="profileSell.do?memberName=${member.memberName }">
+									<%-- <a href="profileSell.do?memberName=${member.memberName }"> --%>
 										<div class="nik">${member.nickname }</div>
-										<div class="rank">${memberStat.memberRank }</div>
+										<%-- <div class="rank">${memberStat.memberRank }</div> --%>
 									</a>
 								</div>
 							</div>

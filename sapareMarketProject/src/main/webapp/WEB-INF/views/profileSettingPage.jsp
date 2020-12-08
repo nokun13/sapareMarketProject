@@ -777,7 +777,8 @@ input, button{
 							alert("비밀번호가 틀렸습니다.");
 							$("#cancelMemberPw").val("");
 						} else if(msg == "success"){
-							window.location.href = "http://localhost:8090/sapare/mainPage.do";
+							// 임시 방편 !!!
+							window.location.href = "http://172.16.5.131:8090/sapare/mainPage.do";
 						} else{
 							alert("에러: 회원탈퇴에 실패하였습니다.");
 						}

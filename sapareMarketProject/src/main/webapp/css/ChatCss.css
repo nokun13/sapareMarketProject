@@ -82,7 +82,7 @@
 #friendslist {
 	position: relatvie;
 	width: 290px;
-	height: 484px;
+	height: 425px;
 	overflow-y: auto;
 }
 #friendslist::-webkit-scrollbar {

@@ -58,6 +58,7 @@ var websocket;
 											console.log(chatviewDTO);
 						                	
 						                	 $(chatviewDTO).each(function(value){
+														console.log("$(this)[0].isreadcount -true")
 													var a	= '<div class="friend"><input type="hidden" id="itemId" value="'+$(this)[0].itemId+'"> '
 													+ '<input type="hidden" id="chatRoomId" value="'+$(this)[0].chatRoomId+'">'
 													+ '<input type="hidden" class="memberName" value="'+$(this)[0].memberName+'">  '
@@ -65,7 +66,10 @@ var websocket;
 													+ '<img src="/sapare/img/'+$(this)[0].profileImg+'" />'
 													+ '<p><strong>'+$(this)[0].nickname+'</strong> <span>'+$(this)[0].itemName+'</span></p>'
 													if($(this)[0].isreadcount>0)
-													+ '<div class="readcount"><span>'+$(this)[0].isreadcount+'</span></div></div>'
+													{a	+= '<div class="readcount"><span>'+$(this)[0].isreadcount+'</span></div>'
+														console.log("$(this)[0].isreadcount -true")
+														}
+													a	+='</div>'
 												$('#friends').prepend(a); 
 												})
 						                }
